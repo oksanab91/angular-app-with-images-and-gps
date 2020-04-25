@@ -1,0 +1,16 @@
+@import "../abstracts/variables";
+
+.container-form {
+    @include box-shadow;
+    @include container-border;
+    margin-top: 15px;
+    background-color: #fff;
+    // box-shadow: 0 0 30px -15px #875e5e;    
+    // border: 1px solid rgba(0,0,0,.125);      
+}
+
+@media screen and (max-width: 800px) {
+    .container-form {
+        margin-top: 0;
+    }
+}

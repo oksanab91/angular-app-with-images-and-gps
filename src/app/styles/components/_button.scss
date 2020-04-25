@@ -1,0 +1,148 @@
+@import "../abstracts/variables";
+
+@mixin button-hover($backgroundColor: $btnColorDark) {
+    @include box-shadow;
+    @include container-border;	
+    background-color: $backgroundColor;
+    color: $btnActiveColor;
+}
+
+// @mixin button-submit() {
+//     // @include box-shadow;    
+//     @include container-border;    
+// 	color: $btnColorDark;	
+// 	cursor: $cursor;
+//     background-color: $btnActiveColor;
+// }
+
+@mixin sprite-icon($url, $left, $top) {
+    width: 24px;
+    height: 14px;
+    // background: url('/assets/sprite-icone.png') -281px 0;
+    background: url($url) $left $top;
+    display: inline-block;    
+}
+
+@mixin button-round($diameter: 60px, $color: $btnColor) {
+    background-color: $btnActiveColor;
+    color: $color;
+    margin-bottom: auto;
+    margin-top: auto;
+    height: $diameter;
+    width: $diameter;    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;    
+    text-decoration: none;
+
+    &:not(:disabled) {
+        cursor: $cursor;
+    }   
+}
+
+button, a:hover {
+    cursor: $cursor;
+}
+
+.btn-close {    
+    @include button-round(2.8rem);
+    margin-left: auto;
+    margin-bottom: auto;
+    margin-top: auto;
+    margin-right: -.5rem;    
+    padding: 1rem 1rem;
+    font-size: 1.6rem;
+    opacity: .5;
+
+    span {
+        position: absolute;
+        padding-bottom: 5px;
+    }
+    &:hover:not([disabled]) {
+        @include button-hover($btnSecondColorDark);                     
+    }
+}
+
+.btn-cancel {
+    @include button-round(2.8rem);
+    // @include container-border;    
+
+    &:hover:not([disabled]) {
+        @include button-hover($btnWarnColor);      
+    }
+}
+
+.btn-submit {    
+    @include button-round(2.8rem, $btnColorDark);
+    // @include container-border;    
+
+    &:hover:not([disabled]) {
+        @include button-hover;      
+    }
+}
+
+.btn-card-delete {    
+    @include button-round(2.8rem);        
+
+    &:hover:not([disabled]) {
+        @include button-hover($btnWarnColor);      
+    }
+}
+            
+.btn-card-edit {
+    @include button-round(2.8rem);
+
+    &:hover:not([disabled]) {
+        @include button-hover($btnEditColor);      
+    } 
+}
+
+.btn-plus{
+    @include button-round;
+    @include container-border;
+    @include box-shadow;
+
+    &:hover{
+        @include button-hover;       
+    }
+}
+
+
+.btn-sm-icon {
+    padding-right: 0;
+    font-size: $font-size;
+
+    &:focus {
+        border: none;
+        outline: none;
+        box-shadow: none;
+    }
+    &:hover {
+        color: #e74c3c;
+    }
+    &:active {
+        position: relative;
+        top: 1px;
+    }      
+}
+
+.maps-link{
+    color: $btnColor;
+    font-size: $font-size;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: none;
+        cursor:$cursor;
+        color: #e74c3c; 
+    }
+}
+
+#save-i {
+    @include sprite-icon('/assets/sprite-icone.png', -281px, 0);    
+}
+
+#image-round {
+    border-radius: 50%;
+}

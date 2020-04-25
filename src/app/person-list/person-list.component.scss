@@ -1,0 +1,44 @@
+.list-container-fluid {
+    padding: 0;
+    position: absolute;
+    top: 80px;
+}
+
+.card-wrapper {
+    padding-bottom: 15px;
+}
+
+.row-list {
+    position: relative;    
+    margin: 0;
+    padding-top: 20px;
+}
+
+.row-alert {
+    padding-top: 0;
+}
+  
+  @media screen and (max-width: 800px) {
+    .list-container-fluid {
+        top: 110px;
+    }
+
+    .row-list {        
+        padding-top: 5px;        
+    }
+
+    .card-wrapper {
+        padding: 0;
+    
+        &:nth-last-child(2) {
+            padding-bottom: 0;
+        }
+        &:last-child {
+            padding: 0;
+        }
+    }
+
+    .row-alert {
+        padding-top: 0;
+    }    
+  }

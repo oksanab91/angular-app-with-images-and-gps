@@ -1,0 +1,38 @@
+$errorMessageColor: #cc0000;
+$boxShadowColor: #3d4851; // #875e5e; ??
+$backgroundColor: #f4f5f5;
+
+$font: "font-family: 'Open Sans', sans-serif";
+$font-size: 18px;
+$cursor: pointer; 
+
+$boxBorder: 1px; //??
+
+$cardMinWidth: 300px;
+$cardMinHeight: 300px;
+
+$btnColorDark: #006097; // #0063cc;
+$btnColorLight: #0071b3;
+$btnSecondColorDark: #595959;
+$btnWarnColor: #e74c3c;
+$btnEditColor: #26734d;
+$btnColor: #212529;
+$btnActiveColor: #ffffff;
+
+@mixin box-shadow {
+    // box-shadow: 0 0 30px -15px #3d4851;
+    // box-shadow: 0 5px 12px 0 rgba(61,72,81,0.4);
+    box-shadow: 0 1px 10px rgba(61,72,81,0.4);
+}
+
+@mixin container-border {
+    // border: 1px solid #3d4851; //rgba(0,0,0,.125);
+    border: 1px solid rgba(73, 80, 87, 0.5);
+}
+
+@mixin modal-background-color {
+    background-color: rgba(0,0,0,0.4);
+}
+
+// background: #3d4851;
+//     opacity: 0.4;

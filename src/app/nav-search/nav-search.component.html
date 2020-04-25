@@ -1,0 +1,14 @@
+<nav class="navbar navbar-light bg-light fixed-top">
+  <div class="container-fluid h-100">
+    <span class="navbar-brand mb-0 h1">Data Manager</span>
+    
+    <div class="d-flex justify-content-center h-100">
+      <div class="searchbar">
+        <input #searchBox id="search-box" class="search-input" type="text" name="" 
+          placeholder="Search..." (input)="search(searchBox.value)">
+        <span class="search-icon"><i class="fa fa-search"></i></span>
+      </div>
+    </div>
+
+  </div>
+</nav>

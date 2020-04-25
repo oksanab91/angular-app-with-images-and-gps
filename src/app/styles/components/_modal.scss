@@ -1,0 +1,41 @@
+@import "../abstracts/variables";
+
+.modal {
+    // background-color: rgb(0,0,0); /* Fallback color */
+    // background-color: rgba(0,0,0,0.4); /* Black w/ opacity */    
+    @include modal-background-color;
+}
+
+.show {
+    display: block;
+}
+
+.modal-title {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.modal-dialog {
+    max-width: 450px;
+    min-width: 250px;
+    border-radius: 0; 
+}
+
+.modal-content {
+    border-radius: 0;    
+}
+
+.custom-file > label {
+    border-radius: 0;
+}
+
+
+
+@media screen and (max-width: 800px) {
+    .modal-content {
+        align-items: center;
+    }
+    .modal-header {
+        width: 100%
+    }
+}

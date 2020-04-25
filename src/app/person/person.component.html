@@ -1,0 +1,43 @@
+<div class="card app-card">
+  <div class="row no-gutters row-max-height">
+
+    <div class="col-lg-4 col-md-4 col-sm-4 col-4 text-center card-block-left">      
+      <img src="{{person.picture.url}}" class="card-img img-fluid" id="image-round" alt="{{person.name}}">                  
+      <h6 class="card-text text-muted">{{person.position}}</h6>
+    </div>
+
+    <div class="col-lg-8 col-md-8 col-sm-8 col-8 px-3">
+      <ul class="card-block-list">
+
+        <li>
+          <div class="card-block">
+            <h5 class="card-title">{{person.name}}</h5>            
+            <a href="{{person.googleMapUrl}}" class="maps-link" *ngIf="person.googleMapUrl!==''">
+              <i class="fa fa-map-marker fa-sm" aria-hidden="true">                  
+              </i><span class="card-text text-muted">  {{person.shortAddress}}</span>
+            </a>
+          </div>
+        </li>    
+        <li>
+          <div class="card-block">              
+            <h6 class="card-subtitle">{{person.company}}</h6>            
+            <!-- <p class="card-text text-muted">{{person.shortAddress}}</p> -->
+            <p class="card-text text-muted">P: {{person.phone}}</p>
+          </div>            
+        </li>
+        <li>
+          <div class="card-block card-footer">                
+            <a href="#" class="btn btn-small btn-card-edit" [routerLink]="['edit', person.id]">
+              <i class="fa fa-pencil fa-sm"></i>                             
+            </a>
+            <button class="btn btn-small btn-card-delete" (click)="remove(person)">
+              <i class="fa fa-trash fa-sm"></i>                         
+            </button>             
+          </div>
+        </li>
+
+      </ul>
+    </div>
+
+  </div>
+</div>

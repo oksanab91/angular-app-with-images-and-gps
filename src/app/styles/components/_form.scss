@@ -1,0 +1,65 @@
+@import "../abstracts/variables";
+
+.app-form {
+    padding: 0 15px 15px 15px;
+    line-height: 1.1rem;
+
+    .form-group > input {    
+        border-color: rgba(73, 80, 87, 0.5);
+        border-radius: 0;
+    }
+    
+    .form-group-img {
+        margin: auto;
+    }
+    
+    .form-group > img {
+        max-width: 300px;
+    }
+    
+    .form-group-inline-flex {
+        display: inline-flex; 
+        width: 100%;
+    }    
+}
+
+.form-header {
+    padding: 1rem;
+}
+
+.form-footer {
+    display: flex;
+    justify-content: flex-end;
+
+    >* {    
+        margin-right: 0.25rem;
+        margin-left: 0.25rem;    
+    }
+}
+
+.error-message {
+    color: $errorMessageColor;
+}
+
+.text-center {
+    margin: auto;
+}
+
+
+@media screen and (max-width: 800px) {
+    .app-form {
+        padding: 15px;        
+    }
+
+    .form-group {
+        margin-bottom: 0.5rem;
+    }
+
+    // .form-footer{
+    //     text-align: center;        
+    // }
+
+    // .form-footer .btn{        
+    //     width: 100%;
+    // }   
+}

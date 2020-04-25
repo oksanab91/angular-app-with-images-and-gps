@@ -1,0 +1,119 @@
+<div class="container container-form">
+  
+  <div class="row form-header">
+    <a [routerLink]="['/person-list']" class="btn btn-close" role="button">
+      <span>&times;</span>
+    </a>
+  </div>  
+
+  <ng-container *ngIf="person$ | async as cont; else loading">
+    <form [formGroup]="personForm" class="app-form" (ngSubmit)="onSubmit()">
+      
+      <div class="form-row">
+
+        <div class="col-lg-4 col-md-4 col-sm-12 col-12 align-self-end form-group-img">
+          <div class="form-group text-center">
+            <img src="{{personPicture.url}}" class="card-img" id="image-round" alt="{{personPicture.caption}}">
+          </div>
+
+          <div formGroupName="picture">
+            <div class="form-group">
+              <input type="text" class="form-control" id="url" formControlName="url" value="{{personPicture.url}}" readonly hidden>
+            </div>
+            
+            <div class="form-group form-group-inline-flex">                
+              <input type="text" class="form-control text-center" id="caption" formControlName="caption" 
+                value="{{personPicture.caption}}" readonly>                
+ 
+              <button type="button" class="btn btn-small btn-submit btn-get" (click)="openModal()">
+                Get                
+                <!-- <div style="min-width: 3.5rem;"><i class="fa fa-picture-o fa-sm"></i> Get</div> -->
+              </button>             
+            </div>            
+          </div>          
+        </div>
+
+        <image-modal></image-modal>
+
+        <div class="col-lg-8 col-md-8 col-sm-12 col-12 align-self-end">        
+          <div class="form-group">            
+            <input type="text" class="form-control" id="name" formControlName="name"
+              placeholder="Name" required>
+            <span class="text-danger" *ngIf="(name.dirty || name.touched) && name.invalid && name.errors">
+              Please enter a Name.
+            </span>
+          </div>          
+
+          <div class="form-group">            
+            <input type="text" class="form-control" id="position" formControlName="position"
+              placeholder="Position">
+          </div>
+
+          <div class="form-group">           
+            <input type="text" class="form-control" id="company" formControlName="company"
+              placeholder="Company">
+          </div>
+
+          <div class="form-group">            
+            <input type="text" class="form-control" id="phone" formControlName="phone"
+              placeholder="Phone" required>
+            <span class="text-danger" *ngIf="(phone.dirty || phone.touched) && phone.invalid && phone.errors">
+              Please enter a valid Phone Number.
+            </span> 
+          </div>
+
+          <div formGroupName="address">            
+            <h4>Address</h4>
+            
+            <div class="form-group">            
+              <input type="text" class="form-control" id="street" formControlName="street" #street
+                placeholder="Street">
+            </div>            
+
+            <div class="form-row">
+              <div class="form-group col-md-4">                            
+                  <input type="text" class="form-control" id="city" formControlName="city" #city
+                    placeholder="City">                
+              </div>
+              <div class="form-group col-md-2">                            
+                  <input type="text" class="form-control" id="state" formControlName="state" #state
+                    placeholder="State">                
+              </div>
+              <div class="form-group col-md-4">                            
+                  <input type="text" class="form-control" id="country" formControlName="country" #country
+                    placeholder="Country">                
+              </div>
+              <div class="form-group col-md-2">                            
+                  <input type="text" class="form-control" id="postalcode" formControlName="postalcode" #postalcode
+                    placeholder="Postal Code">                
+              </div>
+            </div>
+            
+          </div>
+
+          <div class="form-group">                        
+            <input type="text" class="form-control" id="shortAddress" formControlName="shortAddress"
+              value="{{setShortAddress()}}" readonly>
+          </div>                   
+        </div>
+      </div>
+
+      <div class="form-footer">
+        <a [routerLink]="['/person-list']" class="btn btn-small btn-cancel" role="button">
+          <span>Close</span>
+        </a>        
+        <button class="btn btn-small btn-submit" type="submit" [disabled]="personForm.invalid || personForm.disabled">
+          <!-- <div id="save-i"></div> -->
+          Save          
+        </button>
+      </div>
+      
+    </form>
+    <app-alert></app-alert>
+
+  </ng-container> 
+  
+  <ng-template #loading>
+    Loading person...
+  </ng-template>
+</div>

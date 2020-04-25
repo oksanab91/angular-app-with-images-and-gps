@@ -1,0 +1,40 @@
+<div class="container container-form container-image">
+  <div class="row">    
+    <a [routerLink]="['/person-list/edit', personId]"
+      class="btn close btn-close" role="button"><span>&times;</span>
+    </a>
+  </div>
+
+  <ng-container>
+
+  <!-- <label class="image-upload-container btn btn-bwm">
+    <span>Select Image</span>
+    <input #imageInput
+           type="file"
+           accept="image/*"
+           (change)="processFile(imageInput)">
+  </label> -->
+  
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <button class="btn btn-outline-secondary" type="button">Button</button>
+      </div>
+      <div class="custom-file">      
+        <input type="file" accept="image/*" class="custom-file-input" id="inputGroupFile03" 
+          (change)="processFile($event)">
+        <label class="custom-file-label" for="inputGroupFile03">Choose file</label>
+      </div>
+    </div>
+
+  
+    <div *ngIf="image; else loading">  
+      <img src="{{image.url}}" class="card-img" id="image-round" alt="{{image.caption}}">
+    </div>
+  </ng-container>
+
+  <ng-template #loading>
+    Loading Image...
+  </ng-template>
+
+</div>
+

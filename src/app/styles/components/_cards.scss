@@ -1,0 +1,96 @@
+@import "../abstracts/variables";
+
+@mixin app-card {    
+    min-width: $cardMinWidth;
+    min-height: $cardMinHeight;
+    height: 100%;
+    border-radius: 0px;    
+    @include box-shadow;
+    @include container-border;
+}
+
+.app-card {
+    @include app-card;
+    
+    h6{
+        padding-top: 25px;
+    }
+
+    h5 {
+        overflow: hidden;
+        overflow-wrap: normal;
+    }
+
+    p {
+        margin: 0;
+    }    
+}
+
+.card-plus {
+    @include app-card;
+    
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+}
+
+// .center-card-plus {
+//     margin-top: auto;
+//     margin-bottom: auto;
+//     text-align: center;
+// }
+
+.card-block-left {
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 10px 0 10px 10px;    
+}
+
+.card-block-list {    
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: nowrap;    
+}
+
+.card-footer {
+    display: flex;
+    justify-content: flex-end;
+    border: none;
+    padding: 15px 0;    
+    background-color: transparent;
+
+    >* {    
+        margin-right: 0.25rem;
+        margin-left: 0.25rem;    
+    }
+}
+
+.card-title {    
+    margin: 0;
+    padding: 15px 0;
+}
+
+.row-max-height {
+    height: 100%;
+}
+
+
+@media screen and (max-width: 800px) {
+    .card-block-left {
+        text-align-last: end;
+    }
+
+    .card-plus {        
+        padding: 0;
+        min-height: auto;
+        position: fixed;
+        bottom: 0;
+        height: 80px;
+        width: 100%;       
+    }
+}

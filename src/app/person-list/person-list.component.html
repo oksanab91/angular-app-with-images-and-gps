@@ -1,0 +1,19 @@
+
+<nav-search></nav-search>
+
+<div class="container-fluid list-container-fluid">
+  <div class="row row-list">              
+    <ng-container *ngFor="let person of personList; let i = index; trackBy: trackByFn">
+      <div class="col-md-12 col-sm-12 col-12 col-lg-4 card-wrapper">
+        <card-plus *ngIf="i==lastInd"></card-plus>
+        <person [person]="person" *ngIf="i<lastInd"></person>      
+      </div>
+    </ng-container>  
+  </div>
+  
+  <div class="row row-list row-alert justify-content-center">
+    <div class="col-md-12 col-sm-12 col-12 col-lg-4">
+      <app-alert></app-alert>
+    </div>
+  </div>
+</div>

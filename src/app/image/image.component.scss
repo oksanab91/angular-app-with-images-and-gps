@@ -1,0 +1,49 @@
+.container-image {    
+    padding-bottom: 15px;
+    max-width: 500px;   
+}
+
+.btn-submit-wrap {    
+    text-align: end;
+}
+
+.btn-submit {
+    box-shadow: 10px 10px 20px -15px #875e5e;
+    border: 1px solid rgba(73, 80, 87, 0.5);        
+	color:#212529;
+	font-family:Arial;
+	cursor: default;
+    background-color: #ffffff;
+}
+
+.btn-submit:not(:disabled) {
+    cursor:pointer;
+}
+
+.btn-submit:hover:not([disabled]) {	
+    background-color:#0063cc;
+    color:#ffffff;
+}
+
+#save-i {
+    width: 24px;
+    height: 14px;
+    background: url('/assets/sprite-icone.png') -281px 0;
+    display:inline-block;
+}
+
+
+@media screen and (max-width: 800px) {
+    .container-image {
+        margin-top: 0;
+        box-shadow: none;  
+    }
+
+    .btn-submit-wrap{
+        text-align: center;        
+    }
+
+    .btn-submit-wrap .btn{        
+        width: 100%;
+    }
+}

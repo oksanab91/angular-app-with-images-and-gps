@@ -1,0 +1,50 @@
+[
+    {
+        "id": 1,
+        "name": "Lucas Norton",
+        "company": "Skype Inc",
+        "position": "Sales manager",
+        "picture": {"url": "boy.jpg", "caption":"boy"},               
+        "address":
+        {"street": "1600 Amphitheatre Parkway", "city": "Mountain View", "country": "USA", "state": "CA", "postalcode": "94043" },
+        "phone": "(08)7073268",
+        "gpsCoordinate": {},
+        "googleMap": ""
+    },
+    {
+        "id": 2,
+        "name": "Emma Stivenson",
+        "company": "Facebook Inc",
+        "position": "Sales manager",
+        "picture": {"url": "girl-blond.jpg", "caption":"girl-blond"},        
+        "address":
+        {"street": "1600 Amphitheatre Parkway", "city": "Mountain View", "country": "USA", "state": "CA", "postalcode": "94043" },
+        "phone": "(+972)547073268",
+        "gpsCoordinate": {},
+        "googleMap": ""
+    },
+    {
+        "id": 3,
+        "name": "Olivia Pratt",
+        "company": "Twitter Inc",
+        "position": "Sales manager",
+        "picture": {"url": "girl-red.jpg", "caption":"girl-red"},        
+        "address":
+        {"street": "1600 Amphitheatre Parkway", "city": "Mountain View", "country": "USA", "state": "CA", "postalcode": "94043" },
+        "phone": "(+972)547073268",
+        "gpsCoordinate": {},
+        "googleMap": ""
+    },
+    {
+        "id": 4,
+        "name": "Benjamin Carlton",
+        "company": "Google Inc",
+        "position": "Sales manager",
+        "picture": {"url": "man-mustaches.jpg", "caption":"man-mustaches"},        
+        "address":
+        {"street": "58 La Guardia", "city": "Tel-Aviv", "country": "Israel", "state": "", "postalcode": "" },
+        "phone": "(+972)553331055",
+        "gpsCoordinate": {},
+        "googleMap": ""
+    }
+  ]

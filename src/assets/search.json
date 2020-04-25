@@ -1,0 +1,38 @@
+[
+    {
+      "place_id": 89475179,
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+      "osm_type": "way",
+      "osm_id": 23733659,
+      "boundingbox": [
+        "37.4221124",
+        "37.4228508",
+        "-122.0859868",
+        "-122.0851511"
+      ],
+      "lat": "37.42248575",
+      "lon": "-122.08558456613565",
+      "display_name": "Google Building 41, 1600, Amphitheatre Parkway, Mountain View, Santa Clara County, California, 94043, United States of America",
+      "class": "building",
+      "type": "commercial",
+      "importance": 0.411
+    },
+    {
+      "place_id": 22126382,
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+      "osm_type": "node",
+      "osm_id": 2192620021,
+      "boundingbox": [
+        "37.4217136",
+        "37.4218136",
+        "-122.084664",
+        "-122.084564"
+      ],
+      "lat": "37.4217636",
+      "lon": "-122.084614",
+      "display_name": "Google Headquarters, 1600, Amphitheatre Parkway, Mountain View, Santa Clara County, California, 94043, United States of America",
+      "class": "office",
+      "type": "commercial",
+      "importance": 0.411
+    }
+  ]
