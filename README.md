@@ -2,17 +2,26 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.
 
-Main librarie and techniques:
-- Bootstrap 4 anf Font Awesome for design and styling
-- In-memory cache technique to improve performance
-- RxJs to get and manage data
-- Nominatim to get address longitude and latitude
+The application displays cards with items' details and allows to manage the data, including add, delete and modify options.
+
+The app creates links with gps coordinates per entered address.
+
+Also, it has an option to find and update item's image.
+
+
+### Main libraries and techniques:
+
+- [Bootstrap 4](https://getbootstrap.com/docs/4.4/getting-started/introduction/) and Font Awesome Web Application icons for   design and styling
+- In-memory cache technique to improve app performance
+- [RxJs](https://angular.io/guide/rx-library) to get and manage data
+- [Nominatim](https://nominatim.org/release-docs/develop/api/Overview/) to find address longitude and latitude dynamically
 
 ## Views:
 
 - Person List
 - Person Edit/Add
 - Navigation bar with search panel
+- Image modal selector
 
 ## Components:
 
@@ -22,12 +31,14 @@ Main librarie and techniques:
 - PersonEdit/Add
 - Alert
 - NavSearch
+- ImageModal
 
 ## Services:
 
 - Person
 - GpsCoordinate
 - Alert
+- Modal
 
 ## Development server
 
