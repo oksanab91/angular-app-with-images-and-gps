@@ -1,11 +1,10 @@
 @import "../styles/components/cards";
+@import "../styles/components/images";
 @import "../styles/components/button";
 @import "../styles/components/form";
 
-// #caption {
-//     margin: auto;    
-// }
 
-.btn-get {
-    margin-left: 0.5rem;    
+.btn-get {    
+    background-color: transparent;
+    margin: 0.25rem;
 }

@@ -1,12 +1,15 @@
+
 $errorMessageColor: #cc0000;
 $boxShadowColor: #3d4851; // #875e5e; ??
 $backgroundColor: #f4f5f5;
 
 $font: "font-family: 'Open Sans', sans-serif";
 $font-size: 18px;
-$cursor: pointer; 
+$cursor: pointer;
 
-$boxBorder: 1px; //??
+$inputDisabled: rgb(233, 236, 239);
+$inputBorderColor: rgba(73, 80, 87, 0.5);
+$inputLineHeight: 1.1rem;
 
 $cardMinWidth: 300px;
 $cardMinHeight: 300px;

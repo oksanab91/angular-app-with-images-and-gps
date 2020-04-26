@@ -65,8 +65,7 @@ button, a:hover {
 }
 
 .btn-cancel {
-    @include button-round(2.8rem);
-    // @include container-border;    
+    @include button-round(2.8rem);        
 
     &:hover:not([disabled]) {
         @include button-hover($btnWarnColor);      
@@ -74,8 +73,7 @@ button, a:hover {
 }
 
 .btn-submit {    
-    @include button-round(2.8rem, $btnColorDark);
-    // @include container-border;    
+    @include button-round(2.8rem, $btnColorDark);     
 
     &:hover:not([disabled]) {
         @include button-hover;      
@@ -143,6 +141,6 @@ button, a:hover {
     @include sprite-icon('/assets/sprite-icone.png', -281px, 0);    
 }
 
-#image-round {
-    border-radius: 50%;
-}
+// #image-round {
+//     border-radius: 50%;
+// }
