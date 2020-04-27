@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './person-list.component.html',
   styleUrls: ['./person-list.component.scss']
 })
-export class PersonList implements OnInit, OnDestroy {  
+export class PersonListComponent implements OnInit, OnDestroy {  
   personList: Person[] = [];
   selectedId: number;
   lastInd = 0;

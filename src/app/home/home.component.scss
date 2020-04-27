@@ -1,0 +1,19 @@
+@import "../styles/abstracts/variables";
+
+.container-fluid {
+  height: 100%;
+  display: flex;      
+  justify-content: center;
+  text-align: center;
+  background-color: $btnColorDark;
+
+  a {
+    margin: auto;    
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    padding: 15px 30px;  
+    text-transform: uppercase;
+    display: block;    
+  }  
+}  
