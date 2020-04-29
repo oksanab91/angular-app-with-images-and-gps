@@ -2,6 +2,8 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.
 
+And then it was [migrated to version 9](https://update.angular.io/#8.0:9.0l2) of Angular.
+
 The application displays cards with items' details and allows to manage the data, including add, delete and modify options.
 
 The app creates links with gps coordinates per entered address.
@@ -18,13 +20,15 @@ Also, it has an option to find and update item's image.
 
 ## Views:
 
+- Home
 - Person List
 - Person Edit/Add
 - Navigation bar with search panel
-- Image modal selector
+- Modal Image selector
 
 ## Components:
 
+- Home
 - PersonList
 - Person
 - CardPlus
