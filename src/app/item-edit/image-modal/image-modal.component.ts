@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalService } from '../service/modal.service';
+import { ModalService } from '../../service/modal.service';
 import { Subscription, of } from 'rxjs';
-import { ImageService } from '../service/image.service';
-import { Picture } from '../models/person';
+import { ImageService } from '../../service/image.service';
+import { Picture } from '../../models/person';
 
 @Component({
   selector: 'image-modal',

@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Person, Picture } from '../models/person';
+import { Person, Picture } from '../../models/person';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { PersonService } from '../service/person.service';
+import { PersonService } from '../../service/person.service';
 import { of, Observable, Subject, Subscription } from 'rxjs';
-import { AlertService } from '../service/alert.service';
+import { AlertService } from '../../service/alert.service';
 import { map, tap, take, switchMap } from 'rxjs/operators';
-import { Alert } from '../models/Alert';
-import { ModalService } from '../service/modal.service';
+import { Alert } from '../../models/Alert';
+import { ModalService } from '../../service/modal.service';
 
 @Component({
   selector: 'person-edit',

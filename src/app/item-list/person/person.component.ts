@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Person } from '../models/person';
-import { PersonService } from '../service/person.service';
-import { AlertService } from '../service/alert.service';
+import { Person } from '../../models/person';
+import { PersonService } from '../../service/person.service';
+import { AlertService } from '../../service/alert.service';
 
 @Component({
   selector: 'person',
