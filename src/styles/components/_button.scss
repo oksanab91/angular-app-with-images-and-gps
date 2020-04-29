@@ -1,4 +1,4 @@
-@import "../abstracts/variables";
+@import "../abstracts/app-variables";
 
 @mixin button-hover($backgroundColor: $btnColorDark) {
     @include box-shadow;

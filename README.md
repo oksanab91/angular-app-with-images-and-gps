@@ -1,8 +1,6 @@
 # Person Data Manager Angular App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.
-
-And then it was [migrated to version 9](https://update.angular.io/#8.0:9.0l2) of Angular.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7. And then it was [migrated to version 9](https://update.angular.io/#8.0:9.0l2) of Angular.
 
 The application displays cards with items' details and allows to manage the data, including add, delete and modify options.
 
