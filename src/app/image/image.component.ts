@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ImageService } from '../service/image.service';
-import {  of } from 'rxjs';
-
-import { Picture, Person } from '../models/person';
-import { ActivatedRoute } from '@angular/router';
-import { PersonService } from '../service/person.service';
+import { ImageService, PersonService } from '@core/service';
+import { of } from 'rxjs';
 import { take } from 'rxjs/operators';
+
+import { Picture, Person } from '@models/models';
+import { ActivatedRoute } from '@angular/router';
+
 
 
 

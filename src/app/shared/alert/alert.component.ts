@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertService } from '../../service/alert.service';
+import { AlertService } from '@core/service';
 
 
 @Component({

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { GpsCoordinate } from '../models/person';
+import { GpsCoordinate } from '@models/models';
 import { map, catchError, shareReplay } from 'rxjs/operators';
 
 @Injectable({

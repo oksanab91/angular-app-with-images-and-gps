@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of, from, BehaviorSubject } from 'rxjs';
-import { Person, GpsCoordinate, PersonMapped } from '../models/person';
+import { Person, GpsCoordinate, PersonMapped, Address } from '@models/models';
 import { map, catchError, concatMap,  mergeMap,  toArray, shareReplay, take } from 'rxjs/operators';
 import { GpsCoordinateService } from './gps-coordinate.service';
-import { Address } from '../models/address';
+// import { Address } from '../../models/address';
 
 
 @Injectable({
