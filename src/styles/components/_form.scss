@@ -12,8 +12,13 @@
         @include input-border;
     }
     
-    .form-group-img {
+    .form-group-right {
+        padding-left: 10px;
+    }
+
+    .form-group-left {
         margin: auto;
+        padding-right: 10px;
 
         .form-group-inline-flex {
             @include input-border;
@@ -63,7 +68,12 @@
 
 @media screen and (max-width: 800px) {
     .app-form {
-        padding: 15px;        
+        padding: 15px;
+        
+        .form-group-left, .form-group-right {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
     }
 
     .form-group {

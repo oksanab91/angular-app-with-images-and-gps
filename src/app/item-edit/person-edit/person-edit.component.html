@@ -1,7 +1,7 @@
 <div class="container container-form">
   
   <div class="row form-header">
-    <a [routerLink]="['/person-list']" class="btn btn-close" role="button">
+    <a [routerLink]="['/person-list']" class="btn btn-close" role="button" aria-label="Close">
       <span>&times;</span>
     </a>
   </div>  
@@ -11,7 +11,7 @@
       
       <div class="form-row">
 
-        <div class="col-lg-4 col-md-4 col-sm-12 col-12 align-self-end form-group-img">
+        <div class="col-lg-4 col-md-4 col-sm-12 col-12 align-self-end form-group-left">
           <div class="form-group text-center">
             <img src="{{personPicture.url}}" class="card-img img-round" alt="{{personPicture.caption}}">
           </div>
@@ -23,7 +23,7 @@
             
             <div class="form-group form-group-inline-flex">                
               <input type="text" class="form-control text-vertical-center" id="caption" formControlName="caption" 
-                value="{{personPicture.caption}}" readonly>                
+                value="{{personPicture.caption}}" aria-label="Image Name" readonly>                
  
               <button type="button" class="btn btn-small btn-submit btn-get" (click)="openModal()">
                 Get                
@@ -35,8 +35,9 @@
 
         <image-modal></image-modal>
 
-        <div class="col-lg-8 col-md-8 col-sm-12 col-12 align-self-end">        
-          <div class="form-group">            
+        <div class="col-lg-8 col-md-8 col-sm-12 col-12 align-self-end form-group-right">        
+          <div class="form-group">
+            <label for="name">Name</label>            
             <input type="text" class="form-control" id="name" formControlName="name"
               placeholder="Name" required>
             <span class="text-danger" *ngIf="(name.dirty || name.touched) && name.invalid && name.errors">
@@ -44,17 +45,20 @@
             </span>
           </div>          
 
-          <div class="form-group">            
+          <div class="form-group">
+            <label for="position">Position</label>            
             <input type="text" class="form-control" id="position" formControlName="position"
               placeholder="Position">
           </div>
 
-          <div class="form-group">           
+          <div class="form-group">
+            <label for="company">Company</label>           
             <input type="text" class="form-control" id="company" formControlName="company"
               placeholder="Company">
           </div>
 
-          <div class="form-group">            
+          <div class="form-group">
+            <label for="phone">Phone</label>                       
             <input type="text" class="form-control" id="phone" formControlName="phone"
               placeholder="Phone" required>
             <span class="text-danger" *ngIf="(phone.dirty || phone.touched) && phone.invalid && phone.errors">
@@ -65,26 +69,31 @@
           <div formGroupName="address">            
             <h4>Address</h4>
             
-            <div class="form-group">            
+            <div class="form-group">
+              <label for="street">Street</label>
               <input type="text" class="form-control" id="street" formControlName="street" #street
                 placeholder="Street">
             </div>            
 
             <div class="form-row">
-              <div class="form-group col-md-4 col-12">                            
-                  <input type="text" class="form-control" id="city" formControlName="city" #city
+              <div class="form-group col-md-4 col-12">
+                <label for="city">City</label>
+                <input type="text" class="form-control" id="city" formControlName="city" #city
                     placeholder="City">                
               </div>
-              <div class="form-group col-md-2 col-sm-4 col-4">                            
-                  <input type="text" class="form-control" id="state" formControlName="state" #state
+              <div class="form-group col-md-2 col-sm-4 col-4">
+                <label for="state">State</label>                            
+                <input type="text" class="form-control" id="state" formControlName="state" #state
                     placeholder="State">                
               </div>
-              <div class="form-group col-md-4 col-sm-4 col-4">                            
-                  <input type="text" class="form-control" id="country" formControlName="country" #country
+              <div class="form-group col-md-4 col-sm-4 col-4">
+                <label for="country">Country</label>                            
+                <input type="text" class="form-control" id="country" formControlName="country" #country
                     placeholder="Country">                
               </div>
-              <div class="form-group col-md-2 col-sm-4 col-4">                            
-                  <input type="text" class="form-control" id="postalcode" formControlName="postalcode" #postalcode
+              <div class="form-group col-md-2 col-sm-4 col-4">
+                <label for="postalcode">Postal Code</label>
+                <input type="text" class="form-control" id="postalcode" formControlName="postalcode" #postalcode
                     placeholder="Postal Code">                
               </div>
             </div>
@@ -93,13 +102,13 @@
 
           <div class="form-group">                        
             <textarea type="text" class="form-control" id="shortAddress" formControlName="shortAddress"
-              value="{{setShortAddress()}}" readonly></textarea>
+              value="{{setShortAddress()}}" aria-label="Short Address" readonly></textarea>
           </div>                   
         </div>
       </div>
 
       <div class="form-footer">
-        <a [routerLink]="['/person-list']" class="btn btn-small btn-cancel" role="button">
+        <a [routerLink]="['/person-list']" class="btn btn-small btn-cancel" role="button" aria-label="Cancel">
           <span>Close</span>
         </a>                
         <button class="btn btn-small btn-submit" type="submit" [disabled]="personForm.invalid || personForm.disabled">
