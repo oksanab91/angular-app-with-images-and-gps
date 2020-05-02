@@ -1,41 +1,22 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { Person } from '@models/models';
 import { PersonService } from '@core/service';
-import { Subscription } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'person-list',
   templateUrl: './person-list.component.html',
   styleUrls: ['./person-list.component.scss']
 })
-export class PersonListComponent implements OnInit, OnDestroy {  
-  personList: Person[] = [];
+export class PersonListComponent {
+  personList$: Observable<Person[]> = of([]);
   selectedId: number;
-  lastInd = 0;
-  subscription: Subscription;
-
+  
   constructor(private personService: PersonService) {
-    this.getAll(); 
+    this.personList$ = this.personService.sharedPersonList$;
    }
-
-  ngOnInit() {   
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }  
-
-  getAll() {
-    if(this.subscription) this.subscription.unsubscribe();    
-    this.subscription = this.personService.sharedPersonList.subscribe(
-      items => {        
-        this.personList = [...items, {...new Person(), id: -1}];
-        this.lastInd = this.personList.length - 1;        
-      }
-    );
-  }
-
+  
   trackByFn(index, item) {
-    return index;
+    return item.id;
   }
 }

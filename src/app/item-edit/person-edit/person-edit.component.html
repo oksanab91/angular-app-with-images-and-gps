@@ -6,7 +6,7 @@
     </a>
   </div>  
 
-  <ng-container *ngIf="person$ | async as cont; else loading">
+  <ng-container *ngIf="person as cont; else loading">
     <form [formGroup]="personForm" class="app-form" (ngSubmit)="onSubmit()">
       
       <div class="form-row">
@@ -25,7 +25,7 @@
               <input type="text" class="form-control text-vertical-center" id="caption" formControlName="caption" 
                 value="{{personPicture.caption}}" aria-label="Image Name" readonly>                
  
-              <button type="button" class="btn btn-small btn-submit btn-get" (click)="openModal()">
+              <button type="button" class="btn btn-small btn-submit btn-get" (click)="openModalPicture()">
                 Get                
                 <!-- <div style="min-width: 3.5rem;"><i class="fa fa-picture-o fa-sm"></i> Get</div> -->
               </button>             
@@ -92,7 +92,7 @@
                     placeholder="Country">                
               </div>
               <div class="form-group col-md-2 col-sm-4 col-4">
-                <label for="postalcode">Postal Code</label>
+                <label for="postalcode">ZIP</label>
                 <input type="text" class="form-control" id="postalcode" formControlName="postalcode" #postalcode
                     placeholder="Postal Code">                
               </div>

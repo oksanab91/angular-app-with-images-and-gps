@@ -18,9 +18,11 @@ export class PersonComponent implements OnInit {
   }
 
   remove(person: Person) {    
-    const result = this.personService.remove(person.id);
-    if(result) this.alertService.set({type: 'warning', message: `${person.name} deleted`});
-    else this.alertService.set({type: 'danger', message: `${person.name} not deleted`});
+    const result = this.personService.remove(person.id, person.name);
+    this.alertService.set(result);
   }
 
+  hasMapUrl(): boolean {
+    return this.person.googleMapUrl !== '';
+  }
 }

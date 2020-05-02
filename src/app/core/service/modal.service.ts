@@ -13,11 +13,10 @@ export class ModalService {
 
   constructor() { }
 
-  open(img: Picture): Observable<string> {
+  open(img: Picture) {
     this.picture = {...img};       
     this.show = true;        
-    this.subject.next(this.picture);   
-    return of('open');
+    this.subject.next(this.picture);
   }
 
   ok(img: Picture): Observable<string> {

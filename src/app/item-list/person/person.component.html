@@ -12,7 +12,7 @@
         <li>
           <div class="card-block">
             <h5 class="card-title">{{person.name}}</h5>            
-            <a href="{{person.googleMapUrl}}" class="maps-link" *ngIf="person.googleMapUrl!==''" aria-label="Map">
+            <a href="{{person.googleMapUrl}}" class="maps-link" *ngIf="hasMapUrl()" aria-label="Map">
               <i class="fa fa-map-marker fa-sm" aria-hidden="true">                  
               </i><span class="card-text text-muted">  {{person.shortAddress}}</span>
             </a>

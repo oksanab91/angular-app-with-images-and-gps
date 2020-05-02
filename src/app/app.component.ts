@@ -14,8 +14,7 @@ export class AppComponent {
 
     router.events.subscribe(
       (event: RouterEvent): void => {
-        if (event instanceof NavigationStart) {
-          console.log(this.loading);
+        if (event instanceof NavigationStart) {          
           this.loading = true;
         } else if (event instanceof NavigationEnd) {
           this.loading = false;

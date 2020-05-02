@@ -11,14 +11,17 @@ const routes: Routes = [
   { path: 'edit/:id',
     loadChildren: () => import('./item-edit/person-edit.module').then(m => m.PersonEditModule)
   },
+  { path: 'add/:id',
+    loadChildren: () => import('./item-edit/person-edit.module').then(m => m.PersonEditModule)
+  },
   { path: 'about',
     loadChildren: () => import('./about/about.module').then(m => m.AboutModule)
   },
   { path: '', redirectTo: '/home', pathMatch: 'full' } 
 ];
-// { preloadingStrategy: PreloadAllModules }
+
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

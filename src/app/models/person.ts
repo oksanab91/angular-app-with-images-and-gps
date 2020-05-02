@@ -1,4 +1,3 @@
-import { Observable } from 'rxjs';
 import { Address } from './address';
 
 export class Person {
@@ -22,12 +21,6 @@ export class Person {
 export class GpsCoordinate {
     lat: number;
     lng: number;
-}
-
-export class PersonMapped
-{
-    person: Person;
-    callGps: () => Observable<any>;
 }
 
 export class Picture

@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Person, Picture, Alert } from '@models/models';
+import { Person, Picture } from '@models/models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PersonService, AlertService, ModalService } from '@core/service';
-import { of, Observable, Subscription } from 'rxjs';
-import { map, tap, take } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'person-edit',
@@ -12,7 +12,7 @@ import { map, tap, take } from 'rxjs/operators';
   styleUrls: ['./person-edit.component.scss']
 })
 export class PersonEditComponent implements OnInit, OnDestroy {  
-  person$: Observable<Person>;
+  person: Person;
   persontId = -1;
   personPicture = new Picture();
   defaultPicture: Picture = {url: "assets/empty.jpg", caption: 'Empty'};
@@ -20,13 +20,14 @@ export class PersonEditComponent implements OnInit, OnDestroy {
   personForm: FormGroup;
   addressGroup: FormGroup;  
   subscriptionModal: Subscription;
+  subscriptionAlert: Subscription;
   
   constructor(private personService: PersonService, 
               private route: ActivatedRoute, 
               private alertService: AlertService,
               private modalService: ModalService) {
 
-      this.getModalResult();       
+      this.getModalPictureResult();       
   }
 
   ngOnInit() {    
@@ -39,13 +40,11 @@ export class PersonEditComponent implements OnInit, OnDestroy {
    
     this.buildForm();
 
-    this.person$ = this.getPerson().pipe(
-      tap(person => {
-        if(person.picture && person.picture.url) this.personPicture = {...person.picture};
-        else this.personPicture = {...this.defaultPicture};
+    this.person = this.getPerson();
+    if(this.person.picture && this.person.picture.url) this.personPicture = {...this.person.picture};
+    else this.personPicture = {...this.defaultPicture};
 
-        this.personForm.patchValue(person)}
-        ));
+    this.personForm.patchValue(this.person);    
   }
 
   buildForm(){
@@ -80,17 +79,14 @@ export class PersonEditComponent implements OnInit, OnDestroy {
     this.url.setValue(this.personPicture.url);
     this.caption.setValue(this.personPicture.caption);   
 
-    this.updatePerson(this.personForm.value);
+    if(this.formMode == 'edit') this.updatePerson(this.personForm.value);
+    else this.addPerson(this.personForm.value);
     
-    this.person$ = this.getPerson().pipe(
-      map(person => {        
-        const obj = {...person, picture: person.picture.url ? person.picture : this.defaultPicture};
-        this.personPicture = {...obj.picture};        
-        this.personForm.reset(obj);
-        
-        return obj;
-      }
-    ));
+    this.person = this.getPerson();
+            
+    this.person = {...this.person, picture: this.person.picture.url ? this.person.picture : this.defaultPicture};
+    this.personPicture = {...this.person.picture};        
+    this.personForm.reset(this.person);    
   }
 
   get name() {
@@ -110,44 +106,41 @@ export class PersonEditComponent implements OnInit, OnDestroy {
 
   get shortAddress() {    
     return this.personForm.get('shortAddress');
+  }  
+
+  get street() {
+    return this.addressGroup.get('street');
   }
 
   setShortAddress(): string {
     return this.personService.buildShortAddress(this.addressGroup.value);    
   }
 
-  get street() {
-    return this.addressGroup.get('street');
-  }
-
-  getPerson() {
-    if(this.persontId<0) return of(new Person());
+  getPerson(): Person {
+    if(this.persontId<0) return new Person();
     return this.personService.get(this.persontId);    
   }
 
-  updatePerson(person) {
-    const updated = this.personService.update(person);    
-    let alert;
-
-    updated.pipe(take(1)).subscribe(item => {  
-      if(item) {
-        alert = this.getSuccess(item.name);
-      }
-      else {
-        alert = this.getError();    
-      }
-
-      this.alertService.set(alert);      
-    });              
+  updatePerson(person: Person) {
+    const alert = this.personService.update(person);
+    if(this.subscriptionAlert) this.subscriptionAlert.unsubscribe();
+    
+    this.subscriptionAlert = alert.pipe(take(1)).subscribe(res => this.alertService.set(res));              
   }
 
-  openModal() {    
+  addPerson(person: Person) {
+    const alert = this.personService.add(person);    
+    if(this.subscriptionAlert) this.subscriptionAlert.unsubscribe();
+
+    this.subscriptionAlert = alert.pipe(take(1)).subscribe(res => this.alertService.set(res));
+  }
+
+  openModalPicture() {    
     this.modalService.reset();
-    this.modalService.open(this.personPicture)
-      .pipe(take(1)).subscribe();
+    this.modalService.open(this.personPicture);    
   }  
 
-  getModalResult() {        
+  getModalPictureResult() {        
     if(this.subscriptionModal) this.subscriptionModal.unsubscribe();
     
     this.subscriptionModal = this.modalService.sharedResult.subscribe(
@@ -157,20 +150,9 @@ export class PersonEditComponent implements OnInit, OnDestroy {
     );    
   }
 
-  private getSuccess(name: string): Alert {    
-    const message = this.formMode === 'add' 
-      ? `Thank you for adding ${name}` 
-      : `Thank you for updating ${name}`;
-      
-    return {type: 'success', message: message};
-  }
-
-  private getError(): Alert {    
-    return {type: 'danger', message: `Error updating`};
-  }
-
   ngOnDestroy() {
-    if(this.subscriptionModal) this.subscriptionModal.unsubscribe();    
+    if(this.subscriptionModal) this.subscriptionModal.unsubscribe();
+    if(this.subscriptionAlert) this.subscriptionAlert.unsubscribe();
   }
 
 }

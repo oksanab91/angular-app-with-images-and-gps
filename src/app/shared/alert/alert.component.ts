@@ -15,4 +15,7 @@ export class AlertComponent implements OnInit {
     
   }
 
+  trackByFn(index, item) {
+    return index;
+  }
 }

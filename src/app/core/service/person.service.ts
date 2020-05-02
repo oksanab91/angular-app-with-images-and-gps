@@ -1,63 +1,88 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of, from, BehaviorSubject } from 'rxjs';
-import { Person, GpsCoordinate, PersonMapped, Address } from '@models/models';
-import { map, catchError, concatMap,  mergeMap,  toArray, shareReplay, take } from 'rxjs/operators';
+import { Person, GpsCoordinate, Address, Alert } from '@models/models';
+import { map, catchError, concatMap,  mergeMap,  toArray, shareReplay } from 'rxjs/operators';
 import { GpsCoordinateService } from './gps-coordinate.service';
-// import { Address } from '../../models/address';
 
+
+class PersonMapped
+{
+    person: Person;
+    callGps: () => Observable<any>;
+}
 
 @Injectable({
   providedIn: 'root'
 })
-export class PersonService {
-  private observablePersonListCache: Observable<Person[]>; //without gps filled
-  private personListCache: Person[] = [];  //without gps filled
-  private observablePersonListFullCache: Observable<Person[]>; //with gps filled, to display on Person List page
+export class PersonService {  
+  private personListShortCache: Person[] = [];  //without gps filled  
   private personListFullCache: Person[] = [];  //with gps filled
-  private subject = new BehaviorSubject(this.personListFullCache);  
-  sharedPersonList = this.subject.asObservable();
+  private readonly subject = new BehaviorSubject(this.personListFullCache);
+  readonly sharedPersonList$ = this.subject.asObservable();
   
   private headers: HttpHeaders;
   
-  constructor(private http: HttpClient, private gpsService: GpsCoordinateService) {    
-    this.getSubject();    
-  }
-  
-  public getSubject() {    
-    this.personListFull.pipe(take(1)).subscribe(items => this.subject.next(items));      
-  }
+  constructor(private http: HttpClient, private gpsService: GpsCoordinateService) {
+    this.fetchAll();    
+  }  
 
-  public search(filter: string): Observable<Person[]> {    
-    if (!filter.trim()) this.subject.next([]);
+  public search(filter: string) {    
+    if (!filter.trim()) this.sharedList = [];
 
     return this.personListFull.pipe(
       map(items => {       
         const rx = new RegExp(filter, 'i');
         const filtered = items.filter(item => { return rx.test(item.name) });
-        this.subject.next(filtered);
+        this.sharedList = [...filtered];
         return filtered;
       })      
     );        
   }
 
-  get personListFull() {
-    // Data available
-    if (this.personListFullCache.length > 0) return of(this.personListFullCache);
-    // Request pending
-    else if (this.observablePersonListFullCache) return this.observablePersonListFullCache;
-    // New request needed
-    else this.observablePersonListFullCache = this.fetchFull();   
-
-    return this.observablePersonListFullCache;
+  async fetchAll() {
+    this.sharedList = await this.personListFull.toPromise();
   }
 
-  get personList() {
-    if (this.personListCache.length > 0) return of(this.personListCache);
-    else if (this.observablePersonListCache) return this.observablePersonListCache;
-    else this.observablePersonListCache = this.fetch();
+  // the getter will return the last value emitted in the subject (sharedPersonList)
+  get sharedList(): Person[] {
+    return this.subject.getValue();
+  }
 
-    return this.observablePersonListCache;  
+  // assigning a value to this.subject will push it onto the observable 
+  // and down to all of its subsribers
+  set sharedList(val: Person[]) {
+    this.subject.next(val);
+  }
+
+  //=================================
+  private addToList(person: Person) {
+    this.sharedList = [
+      ...this.sharedList, 
+      person
+    ];
+  }
+
+  private removeFromList(id: number) {
+    this.sharedList = this.sharedList.filter(item => item.id !== id);
+  }
+
+  private updateList(ind: number, item: Person) {
+    this.sharedList[ind] = item;
+    this.sharedList = [...this.sharedList];
+  }
+  //=================================
+
+
+  //============ list data ===========
+  get personListFull(): Observable<Person[]> {    
+    if (this.personListFullCache.length > 0) return of(this.personListFullCache);
+    return this.fetchFull();
+  }
+
+  get personListShort() {
+    if (this.personListShortCache.length > 0) return of(this.personListShortCache);
+    return this.fetch();  
   }  
 
   fetch(): Observable<Person[]> {
@@ -65,7 +90,7 @@ export class PersonService {
 
     return this.http.get<Person[]>(url)
     .pipe(map(data => { 
-        return this.mapCachedPersonList(data);
+        return this.personListShortCache = [...data];
        }),      
       catchError(error => {
         alert('No data to display'); 
@@ -76,17 +101,16 @@ export class PersonService {
 
   fetchFull(): Observable<Person[]> {    
     return this.getFull().pipe(
-      map(items => { return this.mapCachedPersonListFull(items) })
+      map(items => { return this.personListFullCache = [...items]; })
       ,shareReplay(10) // for subscribing to the same observable by many components
     );
   }  
 
   getFull(): Observable<Person[]> {
     const data = this.mapPersonList();
-
     const listData = data.pipe( mergeMap(item => { return from(item); } ));
 
-    this.observablePersonListFullCache = listData.pipe( 
+    const observableFull = listData.pipe( 
       mergeMap((item: PersonMapped) => {
         return item.callGps.call(item.person.address).pipe(
           map((gps: GpsCoordinate) => { return this.set(item, gps) })
@@ -95,14 +119,19 @@ export class PersonService {
       ,toArray<Person>()    
     );
    
-    return this.observablePersonListFullCache;    
-  }
- 
-  get(id: number): Observable<Person> {
-    if (id < 0) return null;
+    return observableFull;    
+  } 
+  //=================================
 
-    return this.personListFull.pipe(
-      map(data => { return data.find(item => item.id == id) }));    
+  //============ per item ===========
+  get(id: number): Person {
+    if (id < 0) return null;
+    return this.sharedList.find(item => item.id == id);       
+  }
+
+  findIndex(id: number): number {
+    if(!id) return -1; //??
+    return this.sharedList.findIndex(item => item.id == id);
   }
 
   set(personMapped: PersonMapped, gps: GpsCoordinate): Person {
@@ -112,39 +141,51 @@ export class PersonService {
     return person;
   }
 
-  update(person: Person): Observable<Person>{    
-    let personId = 11;
-    if (person.id) personId = person.id;
-    else personId = this.personListFullCache.length > 0 ? Math.max(...this.personListFullCache.map(item => item.id)) + 1 : personId;    
+  add(person: Person): Observable<Alert> {    
+    const personId = this.sharedList.length > 0 ? Math.max(...this.sharedList.map(item => item.id)) + 1 : 11;    
 
-    let updated: Person = { ...person, id: personId, gpsCoordinate: new GpsCoordinate(), googleMapUrl: "" };
-    let mapped =  this.mapPerson(updated);
+    let added: Person = { ...person, id: personId, gpsCoordinate: new GpsCoordinate(), googleMapUrl: "" };
+    const mapped =  this.mapPerson(added);
    
-    let ind = this.personListFullCache.findIndex(item => item.id == personId);
-
     return mapped.callGps.call(mapped.person.address).pipe(
-      map((gps: GpsCoordinate) => { 
-        updated = this.set(mapped, gps);
-
-        if(ind >= 0) this.personListFullCache[ind] = updated;
-        else this.personListFullCache = [...this.personListFullCache,  updated];
-
-        this.getSubject();
-        return updated;
+      map((gps: GpsCoordinate) => {
+        added = this.set(mapped, gps);
+        this.addToList(added);
+        // this.sharedList = [...this.sharedList,  added];        
+        return {type: 'success', message: `Thank you for adding ${added.name}`};
       }
-    ));
+      ),
+      catchError(error => { return of({type: 'danger', message: `Error adding`}) })
+    );   
   
   }
 
-  remove(id: number){
-    if(this.personListFullCache.findIndex(h => h.id === id) < 0) return null;
+  update(person: Person): Observable<Alert>{   
+    if(!person.id) return;
+    
+    const updated: Person = { ...person, gpsCoordinate: new GpsCoordinate(), googleMapUrl: "" };
+    const mapped =  this.mapPerson(updated);  
+    const ind = this.findIndex(person.id);
 
-    this.personListFullCache = this.personListFullCache.filter(h => h.id !== id);
-    this.getSubject();
-    return id;
+    return mapped.callGps.call(mapped.person.address).pipe(
+      map((gps: GpsCoordinate) => {
+        this.updateList(ind, this.set(mapped, gps));
+        return {type: 'success', message: `Thank you for updating ${updated.name}`};
+      }
+      ),
+      catchError(error => { return of({type: 'danger', message: `Error updating`}) })
+    );
+    
   }
 
-  buildShortAddress(address: Address) {
+  remove(id: number, name: string): Alert{
+    if(this.findIndex(id) < 0) return {type: 'danger', message: `error deleting ${name}`};
+
+    this.removeFromList(id);
+    return {type: 'warning', message: `${name} deleted successfully`};
+  }  
+
+  buildShortAddress(address: Address): string {
     if(!address || !address.street) return '';
     
     let shortAddress = '';
@@ -156,39 +197,10 @@ export class PersonService {
 
     return shortAddress;
   }
-
-  // ============== http calls ===========
-  add(payload) {
-    const url = "../../assets/people.json";
-    return this.http.post(url, payload, {headers: this.headers});
-  }
-
-  delete(payload) {
-    const url = "../../assets/people.json";
-    return this.http.delete(url + '/' + payload.id, {headers: this.headers});
-  }
-
-  save(payload) {
-    const url = "../../assets/people.json";
-    return this.http.put(url + '/' + payload.id, payload, {headers: this.headers});
-  }
-  // =========================
-
-  private mapCachedPersonListFull(list: Person[]) {
-    this.observablePersonListFullCache = null;
-    this.personListFullCache = [...list];
-        
-    return this.personListFullCache;
-  }
-
-  private mapCachedPersonList(list: Person[]) {
-    this.observablePersonListCache = null;
-    this.personListCache = [...list];
-        
-    return this.personListCache;
-  }
+  //=================================
   
-  private mapPerson(item: Person) {    
+  //============= mapping ====================
+  private mapPerson(item: Person): PersonMapped {    
     if(!item) return null;
   
     const shortAddress = item.shortAddress || this.buildShortAddress(item.address);    
@@ -202,22 +214,8 @@ export class PersonService {
     };    
   }  
 
-  private formatAddress(person: Person) {
-    let formated = '';    
-    formated = (person.address.street !== '' ? `${this.formatAddressField(person.address.street)}` : '');
-    formated += (person.address.city !== '' ? `+${this.formatAddressField(person.address.city)}` : '');    
-    formated += (person.address.state !== '' ? `+${person.address.state}` : '');
-    formated += (person.address.country !== '' ? `+${this.formatAddressField(person.address.country)}` : '');
-
-    return formated;
-  }
-
-  private formatAddressField(field: string) {
-    return field.replace(/,/g, ',+').replace(/\s/g, '+');
-  }
-
   private mapPersonList(): Observable<PersonMapped[]> {    
-    const data = this.personList;
+    const data = this.personListShort;
 
     const dataMapped = data.pipe(
       concatMap(item => {
@@ -230,5 +228,37 @@ export class PersonService {
 
     return dataMapped;
   }
+  //=================================
+
+  private formatAddress(person: Person): string {
+    let formated = '';    
+    formated = (person.address.street !== '' ? `${this.formatAddressField(person.address.street)}` : '');
+    formated += (person.address.city !== '' ? `+${this.formatAddressField(person.address.city)}` : '');    
+    formated += (person.address.state !== '' ? `+${person.address.state}` : '');
+    formated += (person.address.country !== '' ? `+${this.formatAddressField(person.address.country)}` : '');
+
+    return formated;
+  }
+
+  private formatAddressField(field: string): string {
+    return field.replace(/,/g, ',+').replace(/\s/g, '+');
+  }
+
+  // ============== http calls ===========
+  // add(payload) {
+  //   const url = "../../assets/people.json";
+  //   return this.http.post(url, payload, {headers: this.headers});
+  // }
+
+  // delete(payload) {
+  //   const url = "../../assets/people.json";
+  //   return this.http.delete(url + '/' + payload.id, {headers: this.headers});
+  // }
+
+  // save(payload) {
+  //   const url = "../../assets/people.json";
+  //   return this.http.put(url + '/' + payload.id, payload, {headers: this.headers});
+  // }
+  // =========================  
 
 }
