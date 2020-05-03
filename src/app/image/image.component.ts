@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ImageService, PersonService } from '@core/service';
-import { of } from 'rxjs';
-import { take } from 'rxjs/operators';
-
+import { ImageService } from '@core/service';
 import { Picture, Person } from '@models/models';
 import { ActivatedRoute } from '@angular/router';
-
-
+import { PersonListStore } from '@core/store/person-list.store';
 
 
 @Component({
@@ -18,22 +14,22 @@ export class ImageComponent implements OnInit {
   image = new Picture();
   personId: number;  
 
-  constructor(private imageService: ImageService, private route: ActivatedRoute, private personService: PersonService) { }
+  constructor(private imageService: ImageService, private route: ActivatedRoute, private store: PersonListStore) { }
 
   ngOnInit() {
     this.personId = + this.route.snapshot.paramMap.get('id');
 
-    this.getPerson().pipe(take(1)).subscribe((person: Person) => 
-      this.image = {...person.picture});
+    const person = this.getPerson(); 
+    this.image = {...person.picture};
   }
 
   getPerson() {
-    if(this.personId<0) return of(new Person());
-    return this.personService.get(this.personId);    
+    if(this.personId<0) return new Person();
+    this.store.get(this.personId);
+    return this.store.state.person;
   }
 
-  onSubmit() { 
-    
+  onSubmit() {   
   }
 
   processFile(input: any) {

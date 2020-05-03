@@ -1,8 +1,8 @@
 <nav-search></nav-search>
 
 <div class="container-fluid list-container-fluid">
-  <div class="row row-list">              
-    <ng-container *ngFor="let person of personList$ | async as personList; trackBy: trackByFn">      
+  <div class="row row-list">
+    <ng-container *ngFor="let person of (store.state$ | async).list as personList; trackBy: trackByFn">      
       <div class="col-md-12 col-sm-12 col-12 col-lg-4 card-container">        
         <person [person]="person"></person>      
       </div>

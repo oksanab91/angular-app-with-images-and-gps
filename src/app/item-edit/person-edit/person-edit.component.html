@@ -35,7 +35,7 @@
 
         <image-modal></image-modal>
 
-        <div class="col-lg-8 col-md-8 col-sm-12 col-12 align-self-end form-group-right">        
+        <div class="col-lg-8 col-md-8 col-sm-12 col-12 align-self-end form-group-right">          
           <div class="form-group">
             <label for="name">Name</label>            
             <input type="text" class="form-control" id="name" formControlName="name"
@@ -46,24 +46,26 @@
           </div>          
 
           <div class="form-group">
-            <label for="position">Position</label>            
-            <input type="text" class="form-control" id="position" formControlName="position"
-              placeholder="Position">
-          </div>
-
-          <div class="form-group">
             <label for="company">Company</label>           
             <input type="text" class="form-control" id="company" formControlName="company"
               placeholder="Company">
           </div>
 
-          <div class="form-group">
-            <label for="phone">Phone</label>                       
-            <input type="text" class="form-control" id="phone" formControlName="phone"
-              placeholder="Phone" required>
-            <span class="text-danger" *ngIf="(phone.dirty || phone.touched) && phone.invalid && phone.errors">
-              Please enter a valid Phone Number.
-            </span> 
+          <div class="form-row">
+            <div class="form-group col-md-7 col-sm-12 col-12">
+              <label for="position">Position</label>            
+              <input type="text" class="form-control" id="position" formControlName="position"
+                placeholder="Position">
+            </div>
+  
+            <div class="form-group col-md-5 col-sm-12 col-12">
+              <label for="phone">Phone</label>                       
+              <input type="text" class="form-control" id="phone" formControlName="phone"
+                placeholder="Phone" required>
+              <span class="text-danger" *ngIf="(phone.dirty || phone.touched) && phone.invalid && phone.errors">
+                Please enter a valid Phone Number.
+              </span> 
+            </div>
           </div>
 
           <div formGroupName="address">            

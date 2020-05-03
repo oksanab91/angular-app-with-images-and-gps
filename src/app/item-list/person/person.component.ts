@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Person } from '@models/models';
-import { PersonService, AlertService } from '@core/service';
+import { AlertService } from '@core/service';
+import { PersonListStore } from '@core/store/person-list.store';
 
 @Component({
   selector: 'person',
@@ -10,16 +11,16 @@ import { PersonService, AlertService } from '@core/service';
 export class PersonComponent implements OnInit {
   @Input()  person: Person;
 
-  constructor(private personService: PersonService, private alertService: AlertService) {
+  constructor(private store: PersonListStore, private alertService: AlertService) {
     this.alertService.reset();
-   }
+  }
 
   ngOnInit() {
   }
 
-  remove(person: Person) {    
-    const result = this.personService.remove(person.id, person.name);
-    this.alertService.set(result);
+  remove(person: Person) {
+    this.store.removePerson(person.id, person.name);
+    this.alertService.set(this.store.state.message);
   }
 
   hasMapUrl(): boolean {

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PersonService } from '@core/service';
 import { Subscription, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { PersonListStore } from '@core/store/person-list.store';
 
 @Component({
   selector: 'nav-search',
@@ -14,7 +14,7 @@ export class NavSearchComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
   
 
-  constructor(private personService: PersonService) { }
+  constructor(private store: PersonListStore) { }
 
   ngOnInit() {
     this.subscription = this.searchName.pipe(      
@@ -25,7 +25,7 @@ export class NavSearchComponent implements OnInit, OnDestroy {
       distinctUntilChanged(),
 
       // switch to new search observable each time the filter changes
-      switchMap((filter: string) => this.personService.search(filter))                
+      switchMap((filter: string) => this.store.search(filter))                
     )
     .subscribe();
 

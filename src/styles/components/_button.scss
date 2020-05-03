@@ -5,6 +5,7 @@
     @include container-border;	
     background-color: $backgroundColor;
     color: $btnActiveColor;
+    cursor: $cursor;
 }
 
 // @mixin button-submit() {
@@ -34,14 +35,14 @@
     justify-content: center;
     align-items: center;
     border-radius: 50%;    
-    text-decoration: none;
-
-    &:not(:disabled) {
-        cursor: $cursor;
-    }   
+    text-decoration: none;  
 }
 
-button, a:hover {
+button {
+    cursor: default;
+}
+
+a:hover {
     cursor: $cursor;
 }
 
@@ -106,7 +107,6 @@ button, a:hover {
     }
 }
 
-
 .btn-sm-icon {
     padding-right: 0;
     font-size: $font-size;
@@ -144,3 +144,9 @@ button, a:hover {
 // #image-round {
 //     border-radius: 50%;
 // }
+
+@media screen and (max-width: 800px) {
+    .btn-sm-icon, .btn-card-edit, .btn-card-delete, btn-close, .btn-cancel, .btn-submit {
+        @include container-border;
+    }    
+}

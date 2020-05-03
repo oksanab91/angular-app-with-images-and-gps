@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PersonService, AlertService, ModalService } from '@core/service';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { PersonListStore } from '@core/store/person-list.store';
 
 @Component({
   selector: 'person-edit',
@@ -13,16 +14,17 @@ import { take } from 'rxjs/operators';
 })
 export class PersonEditComponent implements OnInit, OnDestroy {  
   person: Person;
-  persontId = -1;
+  personId = -1;
   personPicture = new Picture();
-  defaultPicture: Picture = {url: "assets/empty.jpg", caption: 'Empty'};
+  defaultPicture: Picture = {url: "assets/empty.jpg", caption: 'Image'};
   formMode: string ='edit';
   personForm: FormGroup;
   addressGroup: FormGroup;  
   subscriptionModal: Subscription;
   subscriptionAlert: Subscription;
   
-  constructor(private personService: PersonService, 
+  constructor(private store: PersonListStore,
+              private personService: PersonService,
               private route: ActivatedRoute, 
               private alertService: AlertService,
               private modalService: ModalService) {
@@ -34,9 +36,9 @@ export class PersonEditComponent implements OnInit, OnDestroy {
     this.alertService.reset();
     this.modalService.reset();
 
-    this.persontId = + this.route.snapshot.paramMap.get('id');    
-    this.persontId = this.persontId ? this.persontId : -1;
-    this.formMode = this.persontId<0 ? 'add' : 'edit';   
+    this.personId = + this.route.snapshot.paramMap.get('id');    
+    this.personId = this.personId ? this.personId : -1;
+    this.formMode = this.personId<0 ? 'add' : 'edit';   
    
     this.buildForm();
 
@@ -117,22 +119,21 @@ export class PersonEditComponent implements OnInit, OnDestroy {
   }
 
   getPerson(): Person {
-    if(this.persontId<0) return new Person();
-    return this.personService.get(this.persontId);    
+    if(this.personId<0) return new Person();
+    this.store.get(this.personId);
+    return this.store.state.person;    
   }
 
-  updatePerson(person: Person) {
-    const alert = this.personService.update(person);
+  async updatePerson(person: Person) {
+    await this.store.updatePerson(person);
     if(this.subscriptionAlert) this.subscriptionAlert.unsubscribe();
-    
-    this.subscriptionAlert = alert.pipe(take(1)).subscribe(res => this.alertService.set(res));              
+    this.subscriptionAlert = this.store.state$.pipe(take(1)).subscribe(res => this.alertService.set(res.message));                  
   }
 
-  addPerson(person: Person) {
-    const alert = this.personService.add(person);    
+  async addPerson(person: Person) {
+    await this.store.addPerson(person);
     if(this.subscriptionAlert) this.subscriptionAlert.unsubscribe();
-
-    this.subscriptionAlert = alert.pipe(take(1)).subscribe(res => this.alertService.set(res));
+    this.subscriptionAlert = this.store.state$.pipe(take(1)).subscribe(res => this.alertService.set(res.message));   
   }
 
   openModalPicture() {    

@@ -1,4 +1,5 @@
 import { Address } from './address';
+import { Observable } from 'rxjs';
 
 export class Person {
     id?: number;
@@ -16,6 +17,12 @@ export class Person {
         this.picture = new Picture();
         this.gpsCoordinate = new GpsCoordinate();
     }
+}
+
+export class PersonMapped
+{
+    person: Person;
+    callGps: () => Observable<any>;
 }
 
 export class GpsCoordinate {
