@@ -17,23 +17,14 @@ export class StoreService {
         // this.fetchAll();    
     }
 
-    async fetchAll() {
-        this.listFull = await this.personListFull.toPromise();
-    }
-
-    resetAll() {
-        this.listShort = [];
-        this.listFull = [];
-        this.fetchAll();
-    }
-
+    //============== mutators ===============
     findIndex(id: number): number {
         if(!id) return -1;
         return this.listFull.findIndex(item => item.id == id);
     }
 
     get(id: number): Person {
-        if (id < 0) return null;
+        if (id < 0) return null;        
         return this.listFull.find(item => item.id == id);       
     }
 
@@ -47,31 +38,30 @@ export class StoreService {
           map((gps: GpsCoordinate) => {
             added = this.personService.setPerson(mapped, gps);
             this.listFull = [...this.listFull, added];
+
             return added;
           }
-          )
-        //   catchError(error => { 
-        //     //   return of({type: 'danger', message: `Error adding`}) 
-        //     })
+          ),
+          catchError(error => { return of(null) })
         );
     }
-    
+
     update(person: Person): Observable<Person>{
         if(!person.id) return;
         
         let updated: Person = { ...person, gpsCoordinate: new GpsCoordinate(), googleMapUrl: '' };
         const mapped =  this.personService.mapPerson(updated);  
         const ind = this.findIndex(person.id);
-
+        
         return mapped.callGps.call(mapped.person.address).pipe(
             map((gps: GpsCoordinate) => {
-            updated = this.personService.setPerson(mapped, gps);                
+                updated = this.personService.setPerson(mapped, gps);                
+                this.updateList(ind, updated);
                 
-            this.updateList(ind, updated);
-            return updated;
+                return updated;
             }
             ),
-            //catchError(error => { return of({type: 'danger', message: `Error updating`}) })
+            catchError(error => { return of(null) })
         );    
     }
 
@@ -88,9 +78,19 @@ export class StoreService {
             })      
         );        
     }
-    //=================================
+    //==================================
 
     //============ list data ===========
+    async fetchAll() {
+        this.listFull = await this.personListFull.toPromise();
+    }
+
+    resetAll() {
+        this.listShort = [];
+        this.listFull = [];
+        this.fetchAll();
+    }
+
     load(): Observable<Person[]> {
         return this.personListFull;
     }
@@ -124,7 +124,7 @@ export class StoreService {
         this.listFull = [...this.listFull];
     }
     
-    private get personListFull(): Observable<Person[]> {    
+    private get personListFull(): Observable<Person[]> {        
         if (this.listFull.length > 0) return of(this.listFull);
         return this.fetchFull();
     }
@@ -132,7 +132,6 @@ export class StoreService {
     private get personListShort() {
         if (this.listShort.length > 0) return of(this.listShort);
         return this.fetch();  
-    }
-    
+    }    
   
 }

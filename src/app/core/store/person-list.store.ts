@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Store } from './store';
-import { PersonListState, PersonState } from './person-list-state';
+import { PersonListState, PersonState } from './store-state';
 import { Person } from '@models/models';
 import { StoreService } from '@core/service';
 
 @Injectable({
     providedIn: 'root'
 })
+
+//============== List Store ==================
 export class PersonListStore extends Store<PersonListState> {    
     constructor (private mutator: StoreService) {
         super(new PersonListState());
@@ -32,16 +34,6 @@ export class PersonListStore extends Store<PersonListState> {
             person: {...person}
         });
     }
-
-    async addPerson (person: Person) {
-        const item = await this.mutator.add(person).toPromise();
-        
-        this.setState({
-            ...this.state,
-            list: [...this.state.list, item],
-            message: {type: 'success', message: `Thank you for adding ${item.name}`}            
-        });        
-    }
     
     removePerson (id: number, name: string) {
         let message = {type: 'warning', message: `${name} deleted successfully`};       
@@ -54,22 +46,6 @@ export class PersonListStore extends Store<PersonListState> {
         });        
     }
 
-    async updatePerson (person: Person) {
-        const ind = this.mutator.findIndex(person.id);
-        const item = await this.mutator.update(person).toPromise();
-        if(item) this.state.list[ind] = item;
-
-        let message = {type: 'success', message: `Thank you for updating ${item.name}`};        
-        if(!item) message = {type: 'danger', message: `Error updating ${person.name}`};
-
-        this.setState({
-            ...this.state,
-            list: [...this.state.list],
-            message: message
-        });         
-                
-    }
-
     async search(filter: string) {
         const items = await this.mutator.search(filter).toPromise();
                 
@@ -80,17 +56,66 @@ export class PersonListStore extends Store<PersonListState> {
     }
 }
 
-@Injectable()
+export const personListSelect = (state: PersonListState) => state.list;
+export const messageSelect = (state: PersonListState) => state.message;
+
+//============== Person Store ==================
+
+const InitPersonState: PersonState = {
+    person: new Person({url: "assets/empty.jpg", caption: 'Image'}),
+    message: null
+}
+
+@Injectable({
+    providedIn: 'root'
+})
 export class PersonStore extends Store<PersonState> {
     constructor (private mutator: StoreService) {
         super(new PersonState());
+        this.setState( InitPersonState );
     }
 
-    load (id: number) {
+    load (id: number) {        
         const person = this.mutator.get(id);
         this.setState({
             ...this.state,
             person: {...person}
         });
     }
+
+    init () {
+        this.setState({
+            ...InitPersonState
+        });
+    }
+    
+    async update (person: Person) {        
+        const item = await this.mutator.update(person).toPromise();
+        let message = {type: 'success', message: `Thank you for updating contact ${item.name}`};        
+        if(!item) message = {type: 'danger', message: `Error updating contact ${person.name}`};
+
+        this.setState({
+            ...this.state,
+            person: {...item},
+            message: message
+        });
+                
+    }
+
+    async create (person: Person) {        
+        const item = await this.mutator.add(person).toPromise();        
+        let message = {type: 'success', message: `Thank you for adding contact ${item.name}`};        
+        if(!item) message = {type: 'danger', message: `Error adding contact ${person.name}`};
+
+        this.setState({
+            ...this.state,
+            person: {...item},
+            message: message
+        });
+                
+    }
+
 }
+
+export const personSelect = (state: PersonState) => state.person;
+export const pictureSelect = (state: PersonState) => state.person.picture;

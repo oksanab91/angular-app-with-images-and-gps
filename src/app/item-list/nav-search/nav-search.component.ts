@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+
 import { Subscription, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { PersonListStore } from '@core/store/person-list.store';
+import { PersonListStore } from '@core/store';
 
 @Component({
   selector: 'nav-search',

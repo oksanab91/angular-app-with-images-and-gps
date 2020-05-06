@@ -34,9 +34,9 @@ export class PersonService {
 
     return shortAddress;
   }
-  //=================================
+  //=================================================
   
-  //============= mapping ====================
+  //============ mapping & formatting ===============
   mapPerson(item: Person): PersonMapped {    
     if(!item) return null;
   
@@ -67,9 +67,7 @@ export class PersonService {
     );
 
     return observableFull;    
-  } 
-
-  //=================================
+  }
 
   private formatAddress(person: Person): string {
     let formated = '';    

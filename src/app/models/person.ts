@@ -13,9 +13,10 @@ export class Person {
     gpsCoordinate: GpsCoordinate;
     googleMapUrl: string;
 
-    constructor() {
+    constructor(image?: Picture) {        
         this.picture = new Picture();
-        this.gpsCoordinate = new GpsCoordinate();
+        if(image) this.picture = image;
+        this.gpsCoordinate = new GpsCoordinate();        
     }
 }
 

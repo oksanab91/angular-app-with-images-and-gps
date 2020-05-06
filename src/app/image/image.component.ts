@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ImageService } from '@core/service';
 import { Picture, Person } from '@models/models';
 import { ActivatedRoute } from '@angular/router';
-import { PersonListStore } from '@core/store/person-list.store';
+import { PersonListStore } from '@core/store';
 
 
 @Component({

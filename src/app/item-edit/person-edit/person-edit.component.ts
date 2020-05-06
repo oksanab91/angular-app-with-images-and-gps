@@ -1,11 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Person, Picture } from '@models/models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { PersonService, AlertService, ModalService } from '@core/service';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { PersonListStore } from '@core/store/person-list.store';
+
+import {
+  PersonListStore, PersonStore, ModalImageStore, 
+  personSelect, imageUrlSelect, imageCaptionSelect } from '@core/store';
+import { PersonService, AlertService } from '@core/service';
+import { Person } from '@models/models';
+
 
 @Component({
   selector: 'person-edit',
@@ -14,39 +18,35 @@ import { PersonListStore } from '@core/store/person-list.store';
 })
 export class PersonEditComponent implements OnInit, OnDestroy {  
   person: Person;
-  personId = -1;
-  personPicture = new Picture();
-  defaultPicture: Picture = {url: "assets/empty.jpg", caption: 'Image'};
+  personId = -1;  
   formMode: string ='edit';
   personForm: FormGroup;
-  addressGroup: FormGroup;  
+  addressGroup: FormGroup;
+  pictureGroup: FormGroup;  
   subscriptionModal: Subscription;
   subscriptionAlert: Subscription;
   
-  constructor(private store: PersonListStore,
+  constructor(private listStore: PersonListStore,
+              public personStore: PersonStore,
+              private modalStore: ModalImageStore,
               private personService: PersonService,
               private route: ActivatedRoute, 
-              private alertService: AlertService,
-              private modalService: ModalService) {
+              private alertService: AlertService) {
 
-      this.getModalPictureResult();       
+      // this.getModalPictureResult();       
   }
 
-  ngOnInit() {    
+  async ngOnInit() {    
     this.alertService.reset();
-    this.modalService.reset();
+    this.modalStore.reset();
 
     this.personId = + this.route.snapshot.paramMap.get('id');    
     this.personId = this.personId ? this.personId : -1;
     this.formMode = this.personId<0 ? 'add' : 'edit';   
    
-    this.buildForm();
-
-    this.person = this.getPerson();
-    if(this.person.picture && this.person.picture.url) this.personPicture = {...this.person.picture};
-    else this.personPicture = {...this.defaultPicture};
-
-    this.personForm.patchValue(this.person);    
+    this.buildForm()
+    await this.getPerson();    
+    this.personForm.patchValue(this.person);
   }
 
   buildForm(){
@@ -56,6 +56,11 @@ export class PersonEditComponent implements OnInit, OnDestroy {
       country: new FormControl(),
       state: new FormControl(),
       postalcode: new FormControl()
+    });
+
+    this.pictureGroup = new FormGroup({      
+      url: new FormControl(),
+      caption: new FormControl()      
     });
 
     this.personForm = new FormGroup({
@@ -68,27 +73,20 @@ export class PersonEditComponent implements OnInit, OnDestroy {
 
       shortAddress: new FormControl(),     
       phone: new FormControl('',[Validators.required, Validators.pattern(/^(\({1}\+{1}\d+\){1})?(\({1}\d+\){1})?([0-9]+)$/)]),  
-      picture: new FormGroup({
-        url: new FormControl(this.defaultPicture.url),
-        caption: new FormControl(this.defaultPicture.caption)
-      })
+
+      picture: this.pictureGroup
     });
     
   }
   
-  onSubmit() {    
-    this.shortAddress.setValue(this.setShortAddress());
-    this.url.setValue(this.personPicture.url);
-    this.caption.setValue(this.personPicture.caption);   
+  async onSubmit() {    
+    this.shortAddress.setValue(this.setShortAddress());    
 
-    if(this.formMode == 'edit') this.updatePerson(this.personForm.value);
+    if(this.formMode == 'edit') await this.updatePerson(this.personForm.value);
     else this.addPerson(this.personForm.value);
-    
-    this.person = this.getPerson();
-            
-    this.person = {...this.person, picture: this.person.picture.url ? this.person.picture : this.defaultPicture};
-    this.personPicture = {...this.person.picture};        
-    this.personForm.reset(this.person);    
+
+    await this.getPerson();
+    this.personForm.reset(this.person);
   }
 
   get name() {
@@ -100,10 +98,10 @@ export class PersonEditComponent implements OnInit, OnDestroy {
   }
 
   get url() {
-    return this.personForm.get('picture.url');
+    return this.pictureGroup.get('url');
   }
   get caption() {
-    return this.personForm.get('picture.caption');
+    return this.pictureGroup.get('caption');
   }
 
   get shortAddress() {    
@@ -118,35 +116,48 @@ export class PersonEditComponent implements OnInit, OnDestroy {
     return this.personService.buildShortAddress(this.addressGroup.value);    
   }
 
-  getPerson(): Person {
-    if(this.personId<0) return new Person();
-    this.store.get(this.personId);
-    return this.store.state.person;    
+  async getPerson() {
+    if(this.personId<0) this.personStore.init();
+    else {
+      await this.listStore.load();
+      this.personStore.load(this.personId);
+    }
+    
+    this.person = personSelect(this.personStore.state);    
   }
 
   async updatePerson(person: Person) {
-    await this.store.updatePerson(person);
+    await this.personStore.update(person);
+
     if(this.subscriptionAlert) this.subscriptionAlert.unsubscribe();
-    this.subscriptionAlert = this.store.state$.pipe(take(1)).subscribe(res => this.alertService.set(res.message));                  
+    this.subscriptionAlert = this.personStore.state$.pipe(take(1)).subscribe(res => this.alertService.set(res.message));
+    
+    await this.listStore.load();
   }
 
   async addPerson(person: Person) {
-    await this.store.addPerson(person);
+    await this.personStore.create(person);    
+
     if(this.subscriptionAlert) this.subscriptionAlert.unsubscribe();
-    this.subscriptionAlert = this.store.state$.pipe(take(1)).subscribe(res => this.alertService.set(res.message));   
+    this.subscriptionAlert = this.personStore.state$.pipe(take(1)).subscribe(res => this.alertService.set(res.message));
+    
+    await this.listStore.load();
   }
 
-  openModalPicture() {    
-    this.modalService.reset();
-    this.modalService.open(this.personPicture);    
+  openModalPicture() {   
+    this.modalStore.reset();
+    this.modalStore.open(this.pictureGroup.value);
+
+    this.getModalPictureResult();
   }  
 
-  getModalPictureResult() {        
+  async getModalPictureResult() {        
     if(this.subscriptionModal) this.subscriptionModal.unsubscribe();
     
-    this.subscriptionModal = this.modalService.sharedResult.subscribe(
-      result => {
-        if(result && result.url) this.personPicture = {...result};
+    this.subscriptionModal = this.modalStore.state$.subscribe(
+      state => {        
+        if(state.image && imageUrlSelect(state)) 
+          { this.pictureGroup.setValue({url: imageUrlSelect(state), caption: imageCaptionSelect(state)}) }
       }
     );    
   }
