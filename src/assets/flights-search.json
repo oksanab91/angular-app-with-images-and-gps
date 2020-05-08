@@ -1,0 +1,51 @@
+{
+    "success": true,
+    "data": {
+        "HKT": {
+            "0": {
+                "price": 37972,
+                "airline": "SU",
+                "flight_number": 278,
+                "departure_at": "2020-11-30T08:10:00Z",
+                "return_at": "2020-12-14T18:25:00Z",
+                "expires_at": "2020-05-08T19:23:48Z"
+            },
+            "1": {
+                "price": 31680,
+                "airline": "EY",
+                "flight_number": 68,
+                "departure_at": "2020-11-19T12:15:00Z",
+                "return_at": "2020-12-05T06:55:00Z",
+                "expires_at": "2020-05-08T15:12:38Z"
+            },
+            "2": {
+                "price": 34474,
+                "airline": "QR",
+                "flight_number": 234,
+                "departure_at": "2020-11-26T13:25:00Z",
+                "return_at": "2020-12-10T07:40:00Z",
+                "expires_at": "2020-05-08T12:54:55Z"
+            },
+            "3": {
+                "price": 68404,
+                "airline": "PC",
+                "flight_number": 387,
+                "departure_at": "2020-11-30T15:35:00Z",
+                "return_at": "2020-12-15T10:30:00Z",
+                "expires_at": "2020-05-10T09:28:20Z"
+            }
+        },
+        "HRK": {
+            "0": {
+                "price": 22357,
+                "airline": "PS",
+                "flight_number": 794,
+                "departure_at": "2020-09-10T01:20:00Z",
+                "return_at": "2020-09-14T00:30:00Z",
+                "expires_at": "2020-05-09T10:26:30Z"
+            }
+        }
+    },
+    "error": null,
+    "currency": "RUB"
+}

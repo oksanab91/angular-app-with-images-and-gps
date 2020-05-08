@@ -1,0 +1,31 @@
+.list-container-fluid {
+    padding: 0;
+    position: absolute;
+    top: 80px;
+}
+
+.card-container {
+    padding: 9px;
+}
+
+.row-list {
+    position: relative;    
+    margin: 0;
+    padding: 9px;
+}
+
+  
+  @media screen and (max-width: 800px) {
+    .list-container-fluid {
+        top: 110px;
+    }
+
+    .row-list {        
+        padding: 9px 0 0 0;        
+    }
+
+    .card-container {
+        padding: 0; 
+    }
+   
+  }

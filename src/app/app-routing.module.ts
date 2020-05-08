@@ -14,10 +14,13 @@ const routes: Routes = [
   { path: 'add/:id',
     loadChildren: () => import('./item-edit/person-edit.module').then(m => m.PersonEditModule)
   },
+  { path: 'widget', 
+    loadChildren: () => import('./widgets/widget.module').then(m => m.WidgetModule)    
+  },
   { path: 'about',
     loadChildren: () => import('./about/about.module').then(m => m.AboutModule)
   },
-  { path: '', redirectTo: '/home', pathMatch: 'full' } 
+  { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
 
 @NgModule({

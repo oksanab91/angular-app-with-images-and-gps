@@ -1,0 +1,61 @@
+{
+    "success": true,
+    "data": {
+        "AAQ": {
+            "2": {
+                "price": 552,
+                "airline": "JU",
+                "flight_number": 811,
+                "departure_at": "2020-05-19T14:35:00Z",
+                "return_at": "2020-05-27T13:50:00Z",
+                "expires_at": "2020-05-10T16:31:25Z"
+            }
+        },
+        "AER": {
+            "2": {
+                "price": 494,
+                "airline": "9U",
+                "flight_number": 548,
+                "departure_at": "2020-05-17T23:20:00Z",
+                "return_at": "2020-05-24T22:30:00Z",
+                "expires_at": "2020-05-08T14:12:59Z"
+            },
+            "3": {
+                "price": 568,
+                "airline": "9U",
+                "flight_number": 548,
+                "departure_at": "2020-05-17T23:20:00Z",
+                "return_at": "2020-05-24T22:30:00Z",
+                "expires_at": "2020-05-08T14:12:59Z"
+            }
+        },
+        "AGP": {
+            "1": {
+                "price": 335,
+                "airline": "W6",
+                "flight_number": 2812,
+                "departure_at": "2020-05-21T11:10:00Z",
+                "return_at": "2020-05-29T13:20:00Z",
+                "expires_at": "2020-05-08T06:09:12Z"
+            },
+            "2": {
+                "price": 149,
+                "airline": "W6",
+                "flight_number": 2812,
+                "departure_at": "2020-05-21T11:10:00Z",
+                "return_at": "2020-05-30T08:25:00Z",
+                "expires_at": "2020-05-08T06:09:12Z"
+            },
+            "3": {
+                "price": 224,
+                "airline": "W6",
+                "flight_number": 2812,
+                "departure_at": "2020-05-21T11:10:00Z",
+                "return_at": "2020-05-30T08:25:00Z",
+                "expires_at": "2020-05-08T06:09:12Z"
+            }
+        }
+    },
+    "error": null,
+    "currency": "USD"
+}
