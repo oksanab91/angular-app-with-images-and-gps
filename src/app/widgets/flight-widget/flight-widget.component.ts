@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FlightWidgetService } from '@core/service/flight-widget.service';
-import { map } from 'rxjs/operators';
 import { FlightFilter, Flight } from '@models/models';
 import { Observable } from 'rxjs';
+import { WidgetStore } from '@core/store/widget.store';
 
 @Component({
   selector: 'app-flight-widget',
@@ -14,13 +13,14 @@ export class FlightWidgetComponent implements OnInit {
   iata$;
   filter: FlightFilter;
   
-  constructor(private service: FlightWidgetService) { }
+  constructor(public store: WidgetStore) { }
 
   ngOnInit(): void {
     this.filter = new FlightFilter();
-    this.filter = {...this.filter, destination: 'HRK', origin: 'TLV'};
-  
-    this.getChipFlights();
+    this.filter = {...this.filter, destination: 'HRK', origin: 'TLV', displayCount: 6};    
+    this.store.setFilter(this.filter);
+
+    this.getDirectFlights();
   }
 
   getIata() {
@@ -34,29 +34,11 @@ export class FlightWidgetComponent implements OnInit {
   }
 
   getDirectFlights() {
-    this.flights$ = this.service.getDirectFlights(this.filter).pipe(map(
-      response => {          
-          return this.filterFlights(response, 6);             
-      }
-    ));
+    this.store.getDirectFlights();
   }
 
   getChipFlights() {
-    this.flights$ = this.service.getChipFlights(this.filter).pipe(map(
-      response => {          
-          return this.filterFlights(response, 6);             
-      }
-    ));
-  }
-
-  filterFlights(collect: Flight[], count?: number) {
-    count = (count && count > collect.length) ? collect.length : count || 0 ;    
-    const cl=[...collect.slice(0, count)];
-
-    const list = cl.sort((a, b) => {return a.price - b.price});
-
-    console.log(list);
-    return list;
+    this.store.getChipFlights();
   }
 
   trackByFn(index, item) {

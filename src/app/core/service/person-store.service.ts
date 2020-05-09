@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
     providedIn: 'root'
 })
-export class StoreService {
+export class PersonStoreService {
     private listShort: Person[] = [];  //without gps filled  
     private listFull: Person[] = [];   //with gps filled
  

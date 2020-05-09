@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from './store';
 import { PersonListState, PersonState } from './store-state';
 import { Person } from '@models/models';
-import { StoreService } from '@core/service';
+import { PersonStoreService } from '@core/service';
 
 @Injectable({
     providedIn: 'root'
@@ -10,7 +10,7 @@ import { StoreService } from '@core/service';
 
 //============== List Store ==================
 export class PersonListStore extends Store<PersonListState> {    
-    constructor (private mutator: StoreService) {
+    constructor (private mutator: PersonStoreService) {
         super(new PersonListState());
         this.load();
 
@@ -70,7 +70,7 @@ const InitPersonState: PersonState = {
     providedIn: 'root'
 })
 export class PersonStore extends Store<PersonState> {
-    constructor (private mutator: StoreService) {
+    constructor (private mutator: PersonStoreService) {
         super(new PersonState());
         this.setState( InitPersonState );
     }

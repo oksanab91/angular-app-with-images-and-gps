@@ -21,4 +21,5 @@ export class FlightFilter {
     return_date: string;
     currency: string;
     page: number;
+    displayCount: number;
 }

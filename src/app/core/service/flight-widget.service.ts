@@ -79,13 +79,13 @@ export class FlightWidgetService {
   getChipFlights(filter: FlightFilter) {
     return this.fetchChipFlights(filter).pipe(map(
       response => {
-        // console.log(response);
+        // console.log('in service ', response);
 
         if(response['success']) {                      
           const data = response['data'];
           const flightsCollect = this.mapFlightsCollection(data, filter);
 
-          return flightsCollect;
+          return this.filterFlights(flightsCollect, filter.displayCount);
         }            
         else{
           return "Server returned error " + response['error'];
@@ -108,7 +108,7 @@ export class FlightWidgetService {
             const data = response['data'];
             const flightsCollect = this.mapFlightsCollection(data, filter);
           
-            return flightsCollect;
+            return this.filterFlights(flightsCollect, filter.displayCount);
           }            
           else{
             return "Server returned error " + response['error'];
@@ -152,6 +152,16 @@ export class FlightWidgetService {
     });
 
     return flightsArr;
+  }
+
+  private filterFlights(collect: Flight[], count?: number) {
+    count = (count && count > collect.length) ? collect.length : count || 0 ;    
+    const cl=[...collect.slice(0, count)];
+
+    const list = cl.sort((a, b) => {return a.price - b.price});
+
+    console.log(list);
+    return list;
   }
 
   getIata() {

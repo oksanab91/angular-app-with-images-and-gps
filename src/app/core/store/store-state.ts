@@ -1,4 +1,5 @@
-import { Person, Alert, Picture } from '@models/models';
+import { Person, Alert, Picture, Flight, FlightFilter } from '@models/models';
+import { Observable } from 'rxjs';
 
 export class PersonListState {
     list: Person[] = [];
@@ -14,5 +15,11 @@ export class PersonState {
 export class ModalImageState {
   image: Picture = null;
   show: boolean;
+  message: string;
+}
+
+export class WidgetFlightState {
+  flights$: Observable<Flight[]>;
+  filter: FlightFilter;
   message: string;
 }
