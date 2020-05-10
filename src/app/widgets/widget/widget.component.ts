@@ -14,5 +14,9 @@ export class WidgetComponent implements OnInit {
   ngOnInit(): void {    
   }
 
+  hasMapUrl(): boolean {
+    return this.widget.cityDestination && this.widget.cityDestination.googleMapUrl !== '';
+  }
+
   show() {}
 }

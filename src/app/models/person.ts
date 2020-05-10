@@ -28,7 +28,7 @@ export class PersonMapped
 
 export class GpsCoordinate {
     lat: number;
-    lng: number;
+    lon: number;
 }
 
 export class Picture

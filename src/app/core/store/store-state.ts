@@ -1,4 +1,4 @@
-import { Person, Alert, Picture, Flight, FlightFilter } from '@models/models';
+import { Person, Alert, Picture, Flight, FlightFilter, City } from '@models/models';
 import { Observable } from 'rxjs';
 
 export class PersonListState {
@@ -19,7 +19,9 @@ export class ModalImageState {
 }
 
 export class WidgetFlightState {
-  flights$: Observable<Flight[]>;
+  flights: Flight[];  
   filter: FlightFilter;
+  cities: City[] = [];
+  citiesLoaded: boolean;
   message: string;
 }

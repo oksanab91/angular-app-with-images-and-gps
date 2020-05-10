@@ -1,0 +1,132 @@
+[
+    {
+        "time_zone": "Asia/Jerusalem",
+        "name": "Tel Aviv-Yafo",
+        "coordinates": {
+            "lon": 34.870743,
+            "lat": 32.000454
+        },
+        "code": "TLV",
+        "name_translations": {
+            "en": "Tel Aviv-Yafo"
+        },
+        "country_code": "IL"
+    },
+    {
+        "time_zone": "Europe/Kiev",
+        "name": "Kharkov",
+        "coordinates": {
+            "lon": 36.281185,
+            "lat": 49.92078
+        },
+        "code": "HRK",
+        "name_translations": {
+            "en": "Kharkov"
+        },
+        "country_code": "UA"
+    },
+    {
+        "time_zone": "Australia/Sydney",
+        "name": "Sydney",
+        "coordinates": {
+            "lon": 151.2070914,
+            "lat": -33.8689009
+        },
+        "code": "SYD",
+        "name_translations": {
+            "en": "Sydney"
+        },
+        "country_code": "AU"
+    },
+    {
+        "time_zone": "Europe/London",
+        "name": "London",
+        "coordinates": {
+            "lon": 0.06,
+            "lat": 51.51
+        },
+        "code": "LON",
+        "name_translations": {
+            "en": "London"
+        },
+        "country_code": "GB"
+    },
+    {
+        "time_zone": "Asia/Vladivostok",
+        "name": "Vladivostok",
+        "coordinates": {
+            "lon": 132.14075,
+            "lat": 43.378574
+        },
+        "code": "VVO",
+        "name_translations": {
+            "en": "Vladivostok"
+        },
+        "country_code": "RU"
+    },
+    {
+        "time_zone": "Asia/Bangkok",
+        "name": "Phuket",
+        "coordinates": {
+            "lon": 98.306435,
+            "lat": 8.107619
+        },
+        "code": "HKT",
+        "name_translations": {
+            "en": "Phuket"
+        },
+        "country_code": "TH"
+    },
+    {
+        "time_zone": "Asia/Bangkok",
+        "name": "Bangkok",
+        "coordinates": {
+            "lon": 100.4762319,
+            "lat": 13.7234186
+        },
+        "code": "BKK",
+        "name_translations": {
+            "en": "Bangkok"
+        },
+        "country_code": "TH"
+    },
+    {
+        "time_zone": "Europe/Moscow",
+        "name": "Anapa",
+        "coordinates": {
+            "lon": 37.316666,
+            "lat": 44.9
+        },
+        "code": "AAQ",
+        "name_translations": {
+            "en": "Anapa"
+        },
+        "country_code": "RU"
+    },
+    {
+        "time_zone": "Europe/Moscow",
+        "name": "Adler/Sochi",
+        "coordinates": {
+            "lon": 39.941105,
+            "lat": 43.44884
+        },
+        "code": "AER",
+        "name_translations": {
+            "en": "Adler/Sochi"
+        },
+        "country_code": "RU"
+    },
+    {
+        "time_zone": "Europe/Madrid",
+        "name": "Malaga",
+        "coordinates": {
+            "lon": -4.4200163,
+            "lat": 36.7196484
+        },
+        "code": "AGP",
+        "name_translations": {
+            "en": "Malaga"
+        },
+        "country_code": "ES"
+    }
+]

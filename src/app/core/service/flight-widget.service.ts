@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-
-import { Flight, FlightFilter, IFlights } from '@models/models';
+import { FlightFilter, City } from '@models/models';
 import configRapidapi from 'src/app/config.rapidapi';
 
 
@@ -34,8 +31,6 @@ export class FlightWidgetService {
     this.setHeaders();
     let url = "../../assets/chip-flights-search.json";
 
-    // const url = 'https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/v1/prices/cheap?destination=-&origin=TLV' +
-    // '&depart_date=2020-05&return_date=2020-05&currency=USD&page=2';
     if(configRapidapi.environment != 'dev') 
       url = `https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/v1/prices/cheap?destination=-&origin=${filter.origin}` +
       `&depart_date=${filter.depart_date || ''}&return_date=${filter.return_date  || ''}&currency=${filter.currency || 'USD'}&page=${filter.page || 'None'}`;
@@ -46,8 +41,7 @@ export class FlightWidgetService {
   fetchDirectFlights(filter: FlightFilter) {    
     this.setHeaders();
     let url = "../../assets/flights-search.json";
-        
-    // const url = 'https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/v1/prices/direct/?destination=HRK&origin=TLV';
+    
     if(configRapidapi.environment != 'dev') 
       url = `https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/v1/prices/direct/?` +
         `return_date=${filter.return_date || ''}&depart_date=${filter.depart_date || ''}&destination=${filter.destination}&origin=${filter.origin}`;
@@ -64,118 +58,25 @@ export class FlightWidgetService {
     
     return this.http.get(url,  {headers: this.headers});
   }
+  
+  fetchCities() {
+    this.setHeaders();
+    let url = "../../assets/city-search.json";
 
-//   {
-//     "success": true,
-//     "data": {},
-//     "error": null,
-//     "currency": "RUB"
-// }
+    if(configRapidapi.environment != 'dev')
+      url = `https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/data/en-GB/cities.json`;
 
-//SYD, TLV, HRK, yyyy-mm
-// https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/v1/prices/cheap?destination=-&origin=TLV
-// &depart_date=2020-05&return_date=2020-05&currency=USD&page=None
-
-  getChipFlights(filter: FlightFilter) {
-    return this.fetchChipFlights(filter).pipe(map(
-      response => {
-        // console.log('in service ', response);
-
-        if(response['success']) {                      
-          const data = response['data'];
-          const flightsCollect = this.mapFlightsCollection(data, filter);
-
-          return this.filterFlights(flightsCollect, filter.displayCount);
-        }            
-        else{
-          return "Server returned error " + response['error'];
-        }    
-      }
-    ),
-    catchError(error => { 
-      console.log('error ', error);
-      return of(null); })    
-    );
+    return this.http.get<City[]>(url, {headers: this.headers});
   }
 
-  // https://2ality.com/2015/08/es6-map-json.html ??
-  getDirectFlights(filter: FlightFilter) {    
-    return this.fetchDirectFlights(filter).pipe(map(
-      response => {
-          // console.log(response);
-
-          if(response['success']) {            
-            const data = response['data'];
-            const flightsCollect = this.mapFlightsCollection(data, filter);
-          
-            return this.filterFlights(flightsCollect, filter.displayCount);
-          }            
-          else{
-            return "Server returned error " + response['error'];
-          }    
-      }
-    ),
-    catchError(error => { 
-      console.log('error ', error);
-      return of(null); })    
-    );
+  fetchAutoCompleteCity() {
+    // http://autocomplete.travelpayouts.com/places2?term=Tel-Avi&locale=en&types[]=city
+    // http://autocomplete.travelpayouts.com/places2?term=TLV&locale=en&types[]=city,airport
   }  
 
-  private mapFlightsCollection(data: JSON, filter: FlightFilter) {
-    let flightsArr: Flight[] = [];
-    let flightsCollect: IFlights[] = [];
-    let mapCollect = new Map<string, Object>()
-    let mapFlights = new Map<string, Flight>();
-                
-    for (let value in data) {  
-      mapCollect.set(value, data[value]);  
-    }
-    // console.log(mapCollect);
+  getAutocompleteCity() {
 
-    mapCollect.forEach((value, key) => {
-      let flights: Flight[] = [];
-
-      for (let key in value) {  
-        mapFlights.set(key, value[key]);                
-      }
-      // console.log(mapFlights);
-    
-      mapFlights.forEach((flight: Flight, k: string) => {
-        flights = [...flights, {...flight, destination: key, origin: filter.origin}];
-      });
-
-      // console.log(flights);
-
-      flightsCollect = [...flightsCollect, {destination: key, flights: flights}];
-      flightsArr = [...flightsArr, ...flights];
-
-    });
-
-    return flightsArr;
-  }
-
-  private filterFlights(collect: Flight[], count?: number) {
-    count = (count && count > collect.length) ? collect.length : count || 0 ;    
-    const cl=[...collect.slice(0, count)];
-
-    const list = cl.sort((a, b) => {return a.price - b.price});
-
-    console.log(list);
-    return list;
-  }
-
-  getIata() {
-    return this.fetchIata().pipe(map(
-      response => {
-          console.log(response);
-          return response;     
-      }
-    ),
-    catchError(error => { 
-      console.log('error ', error);
-      return of(null); })    
-    );
-  }
+  }  
 
 // Offers
 // https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/v2/prices/special-offers
@@ -195,4 +96,3 @@ export class FlightWidgetService {
 // });
 
 }
-

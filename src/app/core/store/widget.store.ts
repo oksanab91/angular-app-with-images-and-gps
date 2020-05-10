@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Store } from './store';
 import { WidgetFlightState } from './store-state';
-import { FlightWidgetService } from '@core/service/flight-widget.service';
 import { FlightFilter } from '@models/models';
-import { of } from 'rxjs';
+import { Observable, concat } from 'rxjs';
+import { WidgetStoreService } from '@core/service';
+import { map } from 'rxjs/operators';
 
 
 const InitWidgetState: WidgetFlightState = {
-    flights$: of([]),
+    flights: [],    
     filter: new FlightFilter(),
+    cities: [],
+    citiesLoaded: false,
     message: null
 };
 
@@ -16,9 +19,9 @@ const InitWidgetState: WidgetFlightState = {
     providedIn: 'root'
 })
 export class WidgetStore extends Store<WidgetFlightState> {    
-    constructor (private mutator: FlightWidgetService) {
+    constructor (private mutator: WidgetStoreService) {
         super(new WidgetFlightState());
-        this.setState( InitWidgetState );
+        this.setState( InitWidgetState );        
     }
 
     setFilter(filter: FlightFilter) {
@@ -41,35 +44,70 @@ export class WidgetStore extends Store<WidgetFlightState> {
         });  
     }
 
-    getChipFlights() {
-        console.log('in store');
-        const observable = this.mutator.getChipFlights(this.state.filter);
+    getChipFlights(): Observable<WidgetFlightState> {        
+        const getData = this.mutator.getChipFlights(this.state.filter);
 
-        this.setState({
-            ...this.state,
-            flights$: observable
-        });
-                
+        return getData.pipe(map(data => {
+            this.setState({
+                ...this.state,
+                flights: data
+            });
+            return this.state;
+        }));                 
     }
 
-    getDirectFlights () {        
-        const observable = this.mutator.getDirectFlights(this.state.filter);
+    getDirectFlightsFull(): Observable<WidgetFlightState> {
+        const flights = this.getDirectFlights();
+        const cities = this.getCities();
 
-        this.setState({
-            ...this.state,
-            flights$: observable
-        });
+        return concat(cities, flights);
+    }
+
+    getChipFlightsFull(): Observable<WidgetFlightState> {
+        const flights = this.getChipFlights();
+        const cities = this.getCities();
+
+        return concat(cities, flights);
+    }
+
+    getDirectFlights (): Observable<WidgetFlightState> {
+        const getData = this.mutator.getDirectFlights(this.state.filter);        
+
+        return getData.pipe(map(data => {
+            this.setState({
+                ...this.state,
+                flights: data
+            });
+            return this.state;
+        }));        
     }
     
     getIata () {        
-        const observable = this.mutator.getIata();
+        const getData = this.mutator.getIata();
 
-        this.setState({
-            ...this.state,
-            flights$: observable            
-        });
+        return getData.pipe(map(data => {
+            this.setState({
+                ...this.state,
+                flights: data
+            });
+            return this.state;
+        }));
+    }
+
+    getCities (): Observable<WidgetFlightState>  {
+        const getData = this.mutator.loadCities();
+
+        return getData.pipe(map(data => {
+            this.setState({
+                ...this.state,
+                cities: [...data],
+                citiesLoaded: true
+            });
+            return this.state;
+        }));        
     }
 
 }
 
-export const flightsSelect$ = (state: WidgetFlightState) => state.flights$;
+export const flightsSelect = (state: WidgetFlightState) => state.flights;
+export const citiesSelect = (state: WidgetFlightState) => state.cities;
