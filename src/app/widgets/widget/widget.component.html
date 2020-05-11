@@ -14,19 +14,19 @@
 
       <div class="card-block">              
         <h6 class="card-subtitle">{{widget.price | currency : widget.currency}}</h6>
-        <h6 class="card-subtitle">{{widget.currency}}</h6>
+        <!-- <h6 class="card-subtitle">{{widget.currency}}</h6> -->
         <h6 class="card-subtitle">{{widget.cityOrigin.name}}</h6>
         <p class="card-text text-muted">Expires: {{widget.expires_at | date: "longDate"}}</p>
         <!-- <p class="card-text text-muted">{{widget.expires_at | date: "fullDate"}}</p> -->
       </div>
 
-      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+      <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
       <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
 
       <div class="card-block card-footer">                
-        <a href="#" class="btn btn-small btn-card-edit" [routerLink]="['/person-list']" aria-label="Show Detail">
+        <!-- <a href="#" class="btn btn-small btn-card-edit" [routerLink]="['/home']" aria-label="Show Detail">
           <i class="fa fa-info fa-sm"></i>                             
-        </a>
+        </a> -->
         <button class="btn btn-small btn-card-delete" (click)="show()" aria-label="Close">
           <i class="fa fa-trash fa-sm"></i>                         
         </button>             

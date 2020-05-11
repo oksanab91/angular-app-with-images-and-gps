@@ -1,7 +1,7 @@
 <div class="container-fluid list-container-fluid">
     <div class="row row-list">      
-        <ng-container *ngFor="let flight of (store.state$ | async).flights as flights; trackBy: trackByFn">          
-          <div class="col-md-12 col-sm-12 col-12 col-lg-4 card-container">                   
+        <ng-container *ngFor="let flight of flights; trackBy: trackByFn">                   
+          <div class="col-md-12 card-container">                   
             <widget [widget]="flight"></widget>
           </div>
         </ng-container>

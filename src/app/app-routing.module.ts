@@ -1,26 +1,23 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
-import { HomeComponent } from './home/home.component';
+import { AppStartComponent } from './app-start/app-start.component';
 
 
-const routes: Routes = [  
-  { path: 'home', component: HomeComponent },  
-  { path: 'person-list', 
-    loadChildren: () => import('./item-list/person-list.module').then(m => m.PersonListModule)    
-  },
+const routes: Routes = [
+  { path: 'start', component: AppStartComponent },
+  { path: 'home' , 
+    loadChildren: () => import('./app-home/home.module').then(m => m.HomeModule)
+  },  
   { path: 'edit/:id',
     loadChildren: () => import('./item-edit/person-edit.module').then(m => m.PersonEditModule)
   },
   { path: 'add/:id',
     loadChildren: () => import('./item-edit/person-edit.module').then(m => m.PersonEditModule)
-  },
-  { path: 'widget', 
-    loadChildren: () => import('./widgets/widget.module').then(m => m.WidgetModule)    
-  },
+  },  
   { path: 'about',
     loadChildren: () => import('./about/about.module').then(m => m.AboutModule)
   },
-  { path: '', redirectTo: '/home', pathMatch: 'full' }
+  { path: '', redirectTo: '/start', pathMatch: 'full' }
 ];
 
 @NgModule({

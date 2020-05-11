@@ -5,19 +5,16 @@ import { SharedModule } from '@shared/shared.module';
 import { PersonListComponent } from './person-list/person-list.component';
 import { PersonComponent } from './person/person.component';
 import { CardPlusComponent } from './card-plus/card-plus.component';
-import { NavSearchComponent } from './nav-search/nav-search.component';
 
 @NgModule({
     declarations: [
-        PersonListComponent,
-        PersonComponent,
-        CardPlusComponent,
-        NavSearchComponent
+      PersonListComponent, PersonComponent, CardPlusComponent               
     ],
     imports: [
-        CommonModule,        
-        SharedModule,        
-        RouterModule.forChild([{ path: '', component: PersonListComponent }])        
-    ]      
+      CommonModule,      
+      RouterModule,
+      SharedModule        
+    ],
+    exports: [PersonListComponent]      
   })
   export class PersonListModule { }

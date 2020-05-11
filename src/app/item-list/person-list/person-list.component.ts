@@ -1,5 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { PersonListStore } from '@core/store';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Person } from 'src/app/models';
 
 @Component({
   selector: 'person-list',
@@ -7,15 +7,14 @@ import { PersonListStore } from '@core/store';
   templateUrl: './person-list.component.html',
   styleUrls: ['./person-list.component.scss'],
 })
-export class PersonListComponent implements OnInit {  
-  
-  constructor(public store: PersonListStore) {    
+export class PersonListComponent {  
+  @Input() personList: Person[];
+
+  constructor() {    
    }
   
   trackByFn(index, item) {
     return item.id;
   }
-
-  ngOnInit() {   
-  }
+  
 }

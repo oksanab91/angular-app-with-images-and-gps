@@ -1,0 +1,13 @@
+  <nav-search></nav-search>
+  
+  <div class="container-fluid h-100">
+    <div class="row">
+      <div class="col-md-10 aside-part">        
+        <person-list [personList]="(store.state$ | async).list"></person-list>
+      </div>  
+  
+      <div class="col-md-2 aside-part">        
+          <flight-widget [flights]="(widgetStore.state$ | async).flights"></flight-widget>
+      </div>
+    </div>
+  </div>  

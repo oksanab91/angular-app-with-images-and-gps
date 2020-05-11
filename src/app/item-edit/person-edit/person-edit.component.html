@@ -1,7 +1,7 @@
 <div class="container container-form">
   
   <div class="row form-header">
-    <a [routerLink]="['/person-list']" class="btn btn-close" role="button" aria-label="Close">
+    <a [routerLink]="['/home']" class="btn btn-close" role="button" aria-label="Close">
       <span>&times;</span>
     </a>
   </div>
@@ -110,7 +110,7 @@
       </div>
 
       <div class="form-footer">
-        <a [routerLink]="['/person-list']" class="btn btn-small btn-cancel" role="button" aria-label="Cancel">
+        <a [routerLink]="['/home']" class="btn btn-small btn-cancel" role="button" aria-label="Cancel">
           <span>Close</span>
         </a>                
         <button class="btn btn-small btn-submit" type="submit" [disabled]="personForm.invalid || personForm.disabled">

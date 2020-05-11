@@ -2,6 +2,10 @@
 @import "components/images";
 @import "components/button";
 
-.app-card .card-body {
-    padding-bottom: 0;
+.app-card {
+    min-width: 250px;
+
+    .card-body {
+        padding-bottom: 0;
+    }    
 }
