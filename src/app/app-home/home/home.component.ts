@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit, OnDestroy{
 
   ngOnInit() {
     this.filter = new FlightFilter();
-    this.filter = {...this.filter, destination: 'HRK', origin: 'TLV', displayCount: 6, currency: 'USD'};    
+    this.filter = {...this.filter, destination: 'HRK', origin: 'TLV', displayCount: 3, currency: 'USD'};    
     this.widgetStore.setFilter(this.filter);
 
     this.getChipFlights();

@@ -4,8 +4,39 @@
 
 .app-card {
     min-width: 250px;
+    min-height: auto;
 
     .card-body {
-        padding-bottom: 0;
-    }    
+        padding-bottom: 15px;
+
+        .card-footer {
+            padding: 0;
+            padding-top: 15px;
+        }
+    }
+    
+    .block-info {
+        display: inline-flex;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .btn-accordeon {
+        transition: 0.4s;
+    }
+}
+
+.collapse, .show {
+    max-height: 0;
+    transition: max-height 0.4s ease-in-out;
+}
+
+.collapse:not(.show) {
+    display: block;
+    max-height: 0;   
+}
+
+.show {
+    display: block;
+    max-height: 200px;    
 }
