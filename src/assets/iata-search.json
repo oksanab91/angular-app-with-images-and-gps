@@ -1,0 +1,42 @@
+[
+    {
+        "iata_code": "SU",
+        "name": "Aeroflot",
+        "icao_code": "AFL"
+    },
+    {
+        "iata_code": "EY",
+        "name": "Etihad Airways",
+        "icao_code": "ETD"
+    },
+    {
+        "iata_code": "QR",
+        "name": "Qatar Airways",
+        "icao_code": "QTR"
+    },
+    {
+        "iata_code": "PC",
+        "name": "Pegasus Airlines",
+        "icao_code": "PGT"
+    },
+    {
+        "iata_code": "PS",
+        "name": "UIA",
+        "icao_code": "AUI"
+    },
+    {
+        "iata_code": "JU",
+        "name": "Air Serbia",
+        "icao_code": "ASL"
+    },
+    {
+        "iata_code": "9U",
+        "name": "Air Moldova",
+        "icao_code": "MLD"
+    },
+    {
+        "iata_code": "W6",
+        "name": "Wizz Air",
+        "icao_code": "WZZ"
+    }
+]

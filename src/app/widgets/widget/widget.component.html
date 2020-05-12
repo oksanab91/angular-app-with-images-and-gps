@@ -1,41 +1,41 @@
-<div class="accordion" id="card-accordeon">
+<div class="accordion" id="card-accordion">
   <div class="card app-card">    
-    <div class="card-header" id="headingOne">
-      <div class="card-block block-info">
-        <h5>
-          {{widget.cityDestination.name}}
-        </h5>
-        <h5><i class="fas fa-globe"></i></h5>
-      </div>
+    <div class="card-header" id="accordionHeading">
+      <a class="card-link" data-toggle="collapse" data-target="#collapsePanel" 
+        aria-expanded="true" aria-controls="collapsePanel" (click) = "collapse()">
 
-      <h5>{{widget.price | currency : widget.currency}}</h5>
-
-      <h2 class="mb-0">
-        <button class="btn btn-small btn-accordeon" type="button" data-toggle="collapse" 
-          data-target="#collapsePanel" aria-expanded="true" aria-controls="collapsePanel"
-          (click) = "collapse()">
-          <i class="fas fa-chevron-down fa-sm"></i>
-        </button>
-      </h2>
+        <div class="card-block block-info">
+          <h5>
+            {{widget.cityDestination.name}}
+          </h5>
+          <h5><i class="fas fa-globe"></i></h5>
+        </div>
+        <h5>{{widget.price | currency : widget.currency}}</h5>
+      </a>
     </div>
 
-    <div id="collapsePanel" [ngClass]="show? 'show' : 'collapse'" aria-labelledby="headingOne" data-parent="#card-accordeon">
+    <div id="collapsePanel" [ngClass]="show? 'show' : 'collapse'" aria-labelledby="headingOne" data-parent="#card-accordion">
       <div class="card-body">
+        
         <div class="card-block">
           <h5 class="card-title">{{widget.airline}}</h5>            
           <a href="{{widget.cityDestination.googleMapUrl}}" class="maps-link" *ngIf="hasMapUrl()" aria-label="Map">
             <i class="fas fa-map-marked-alt fa-sm"></i>
             <span class="card-text text-muted">  {{widget.cityDestination.name}}</span>
-          </a>
+          </a>          
+          <p class="card-text text-muted">Depart: {{widget.cityOrigin.name}}</p>
         </div>
 
-        <div class="card-block block-info">              
-          <h6 class="card-subtitle text-muted">{{widget.price | currency : widget.currency}}</h6>        
-          <h6 class="card-subtitle text-muted">{{expiresOffer()}}</h6>
-          <!-- <h6 class="card-subtitle">{{widget.cityOrigin.name}}</h6> -->
-          
-          <!-- <p class="card-text text-muted">Expires: {{widget.expires_at | date: "longDate"}}</p> -->
-          <!-- <p class="card-text text-muted">{{widget.expires_at | date: "fullDate"}}</p> -->
+        <div class="card-block">
+          <div class="card-block block-info">
+            <h6 class="card-subtitle">{{widget.price | currency : widget.currency}}</h6>
+            <h6 class="card-subtitle text-muted">{{expiresOffer()}}</h6>
+          </div>
+        </div>
+
+        <div class="card-block block-widget">          
+          <p class="card-text"><b>Depart: </b>{{widget.departure_at | date: "MMM d, y h:mm a"}}</p>          
+          <p class="card-text"><b>Return: </b>{{widget.return_at | date: "MMM d, y h:mm a"}}</p>        
         </div>
 
       </div>

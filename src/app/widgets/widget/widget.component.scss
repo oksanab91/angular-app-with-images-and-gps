@@ -3,16 +3,11 @@
 @import "components/button";
 
 .app-card {
-    min-width: 250px;
+    min-width: 280px;
     min-height: auto;
 
     .card-body {
         padding-bottom: 15px;
-
-        .card-footer {
-            padding: 0;
-            padding-top: 15px;
-        }
     }
     
     .block-info {
@@ -21,8 +16,32 @@
         justify-content: space-between;
     }
 
-    .btn-accordeon {
-        transition: 0.4s;
+    .block-widget {
+        font-size: 15px; 
+        padding: 15px 0;        
+    }
+
+    .btn-submit {
+        margin: auto;
+    }
+    
+    #accordionHeading {
+        background-color: $btnColorDark; //#353b48;
+        color: $btnActiveColor;
+        opacity: 1;
+        transition: opacity 0.4s ease-in-out;
+        
+        &:hover {
+            opacity: 0.9;            
+        }
+        .card-link {
+            h5 {
+                font-weight: 200;
+            }
+            .card-block > h5 {
+                font-weight: 200;                
+            }
+        }        
     }
 }
 
@@ -38,5 +57,5 @@
 
 .show {
     display: block;
-    max-height: 200px;    
+    max-height: 300px;    
 }

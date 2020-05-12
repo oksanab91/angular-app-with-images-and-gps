@@ -8,8 +8,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit, OnDestroy{
-  iata$;
+export class HomeComponent implements OnInit, OnDestroy{  
   filter: FlightFilter;
   subscription: Subscription;
 
@@ -17,7 +16,7 @@ export class HomeComponent implements OnInit, OnDestroy{
 
   ngOnInit() {
     this.filter = new FlightFilter();
-    this.filter = {...this.filter, destination: 'HRK', origin: 'TLV', displayCount: 3, currency: 'USD'};    
+    this.filter = {...this.filter, destination: 'HRK', origin: 'TLV', displayCount: 5, currency: 'USD'};    
     this.widgetStore.setFilter(this.filter);
 
     this.getChipFlights();
@@ -36,14 +35,5 @@ export class HomeComponent implements OnInit, OnDestroy{
     if(this.subscription) this.subscription.unsubscribe();
     this.subscription = this.widgetStore.getChipFlightsFull().subscribe();
   }
-
-  getIata() {
-    // this.iata$ = this.service.getIata().pipe(tap(
-    //   response => {
-    //       console.log(response);               
-    //   }
-    // ));
-    // this.iata$.subscribe();
-
-  }
+  
 }

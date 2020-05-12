@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { FlightFilter, City } from '@models/models';
+import { FlightFilter, City, Iata } from '@models/models';
 import configRapidapi from 'src/app/config.rapidapi';
 
 
@@ -49,14 +49,17 @@ export class FlightWidgetService {
     return this.http.get(url,  {headers: this.headers});
   }
 
-  fetchIata() {   
+  fetchIata() {
+    let url = "../../assets/iata-search.json";
     this.headers = new HttpHeaders({
       "x-rapidapi-host": configRapidapi.x_rapidapi_iata_host,
       "x-rapidapi-key": this.x_rapidapi_key
     });
-    const url = 'https://iata-and-icao-codes.p.rapidapi.com/airlines';
+
+    if(configRapidapi.environment != 'dev') 
+      url = 'https://iata-and-icao-codes.p.rapidapi.com/airlines';
     
-    return this.http.get(url,  {headers: this.headers});
+    return this.http.get<Iata[]>(url,  {headers: this.headers});
   }
   
   fetchCities() {

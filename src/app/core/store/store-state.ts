@@ -1,5 +1,4 @@
-import { Person, Alert, Picture, Flight, FlightFilter, City } from '@models/models';
-import { Observable } from 'rxjs';
+import { Person, Alert, Picture, Flight, FlightFilter, City, Iata } from '@models/models';
 
 export class PersonListState {
     list: Person[] = [];
@@ -22,6 +21,7 @@ export class WidgetFlightState {
   flights: Flight[];  
   filter: FlightFilter;
   cities: City[] = [];
+  iata: Iata[] = [];
   citiesLoaded: boolean;
   message: string;
 }

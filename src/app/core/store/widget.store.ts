@@ -11,6 +11,7 @@ const InitWidgetState: WidgetFlightState = {
     flights: [],    
     filter: new FlightFilter(),
     cities: [],
+    iata: [],
     citiesLoaded: false,
     message: null
 };
@@ -59,15 +60,17 @@ export class WidgetStore extends Store<WidgetFlightState> {
     getDirectFlightsFull(): Observable<WidgetFlightState> {
         const flights = this.getDirectFlights();
         const cities = this.getCities();
+        const iata = this.getIata();
 
-        return concat(cities, flights);
+        return concat(cities, iata, flights);
     }
 
     getChipFlightsFull(): Observable<WidgetFlightState> {
         const flights = this.getChipFlights();
         const cities = this.getCities();
+        const iata = this.getIata();
 
-        return concat(cities, flights);
+        return concat(cities, iata, flights);
     }
 
     getDirectFlights (): Observable<WidgetFlightState> {
@@ -82,13 +85,13 @@ export class WidgetStore extends Store<WidgetFlightState> {
         }));        
     }
     
-    getIata () {        
-        const getData = this.mutator.getIata();
+    getIata (): Observable<WidgetFlightState> {        
+        const getData = this.mutator.loadIatas();
 
         return getData.pipe(map(data => {
             this.setState({
                 ...this.state,
-                flights: data
+                iata: [...data]
             });
             return this.state;
         }));
@@ -111,3 +114,4 @@ export class WidgetStore extends Store<WidgetFlightState> {
 
 export const flightsSelect = (state: WidgetFlightState) => state.flights;
 export const citiesSelect = (state: WidgetFlightState) => state.cities;
+export const iataSelect = (state: WidgetFlightState) => state.iata;

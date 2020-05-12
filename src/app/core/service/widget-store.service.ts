@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { City, FlightFilter, Flight, IFlights } from '@models/models';
+import { City, FlightFilter, Flight, IFlights, Iata } from '@models/models';
 import { FlightWidgetService } from './flight-widget.service';
 import { Observable, of } from 'rxjs';
 import { map, catchError, shareReplay } from 'rxjs/operators';
@@ -10,9 +10,16 @@ import { map, catchError, shareReplay } from 'rxjs/operators';
 })
 export class WidgetStoreService {
   private cities: City[] = [];
+  private iata: Iata[] = [];
   private cities$: Observable<City[]> = null;
+  private iata$: Observable<Iata[]> = null;
 
   constructor(private widgetService: FlightWidgetService) {
+  }
+
+  getIata(code: string): Iata {
+    if(!code) return null;
+    return this.iata.find(item => item.iata_code == code);
   }
 
   getCity(code: string): City {    
@@ -24,12 +31,24 @@ export class WidgetStoreService {
     return this.cityList;
   }
 
+  loadIatas(): Observable<Iata[]> {
+    return this.iataList;
+  }
+
   private get cityList(): Observable<City[]> {    
     if (this.cities.length > 0) return of(this.cities);
     else if(this.cities$) return this.cities$;
 
     this.cities$ = this.getCities();
     return this.cities$;
+  }
+
+  private get iataList(): Observable<Iata[]> {       
+    if (this.iata.length > 0) return of(this.iata);
+    else if(this.iata$) return this.iata$;
+
+    this.iata$ = this.getIatas();
+    return this.iata$;
   }
 
   //============= Flights ===================
@@ -86,10 +105,13 @@ export class WidgetStoreService {
     );
   }
 
-  getIata() {
-    return this.widgetService.fetchIata().pipe(map(
-      response => { return response }
-    ),
+  getIatas(): Observable<Iata[]> {
+    return this.widgetService.fetchIata().pipe(
+      map(response => {        
+        this.iata = [...response];
+
+        return this.iata;
+      }),
     catchError(error => { return of(null); })
     );
   }
@@ -115,9 +137,12 @@ export class WidgetStoreService {
       mapFlights.forEach((flight: Flight, k: string) => {
         const cityOrigin = this.getCity(filter.origin);
         const cityDest = this.getCity(key);
+        const airline = this.getIata(flight.airline)?.name;
+        
         flights = [...flights, 
           {...flight, 
-            destination: key, origin: filter.origin, cityOrigin: cityOrigin, cityDestination: cityDest, currency: filter.currency}
+            destination: key, origin: filter.origin, cityOrigin: cityOrigin, 
+            cityDestination: cityDest, currency: filter.currency, airline: airline}
         ];
       });
 

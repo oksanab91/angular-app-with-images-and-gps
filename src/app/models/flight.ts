@@ -38,3 +38,9 @@ export class City {
     country_code: string;
     googleMapUrl: string;
 }
+
+export interface Iata {
+    iata_code: string;
+    name: string;
+    icao_code: string;
+}

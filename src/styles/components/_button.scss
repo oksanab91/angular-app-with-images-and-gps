@@ -35,7 +35,10 @@
     justify-content: center;
     align-items: center;
     border-radius: 50%;    
-    text-decoration: none;  
+    text-decoration: none;
+    transition-property: background-color, color;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;     
 }
 
 button {
