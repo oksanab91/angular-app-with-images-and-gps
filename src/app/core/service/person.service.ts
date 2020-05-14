@@ -1,18 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, from } from 'rxjs';
 import { Person, GpsCoordinate, Address, PersonMapped } from '@models/models';
 import { GpsCoordinateService } from './gps-coordinate.service';
 import { mergeMap, toArray, map } from 'rxjs/operators';
+import { ApiPersonService } from './api-person.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class PersonService {
-  private headers: HttpHeaders;
-  
-  constructor(private http: HttpClient, private gpsService: GpsCoordinateService) {    
+    
+  constructor(private apiService: ApiPersonService, private gpsService: GpsCoordinateService) {    
   }  
 
   setPerson(personMapped: PersonMapped, gps: GpsCoordinate): Person {
@@ -82,27 +81,9 @@ export class PersonService {
   private formatAddressField(field: string): string {
     return field.replace(/,/g, ',+').replace(/\s/g, '+');
   }
-
-  // ============== http calls ===========
+  
   index(): Observable<Person[]> {
-    const url = "../../assets/people.json";
-    return this.http.get<Person[]>(url);        
-  }
-
-  // add(payload) {
-  //   const url = "../../assets/people.json";
-  //   return this.http.post(url, payload, {headers: this.headers});
-  // }
-
-  // delete(payload) {
-  //   const url = "../../assets/people.json";
-  //   return this.http.delete(url + '/' + payload.id, {headers: this.headers});
-  // }
-
-  // save(payload) {
-  //   const url = "../../assets/people.json";
-  //   return this.http.put(url + '/' + payload.id, payload, {headers: this.headers});
-  // }
-  // =========================  
+    return this.apiService.index();          
+  } 
 
 }

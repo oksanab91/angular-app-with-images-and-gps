@@ -7,7 +7,7 @@ import configRapidapi from 'src/app/config.rapidapi';
 @Injectable({
   providedIn: 'root'
 })
-export class FlightWidgetService {
+export class ApiFlightWidgetService {
   private headers: HttpHeaders;
   private x_rapidapi_host: string;
   private x_rapidapi_key: string;

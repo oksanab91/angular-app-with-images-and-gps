@@ -10,9 +10,7 @@ const InitModalImageState: ModalImageState = {
     message: null
 };
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class ModalImageStore extends Store<ModalImageState> {
     constructor () {
         super(new ModalImageState());

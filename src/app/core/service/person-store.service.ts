@@ -25,7 +25,15 @@ export class PersonStoreService {
 
     get(id: number): Person {
         if (id < 0) return null;        
-        return this.listFull.find(item => item.id == id);       
+        return this.listFull.find(item => item.id == id);
+    }
+
+    remove(id: number): Observable<Person[]> {
+        return this.personListFull.pipe(map( list => {
+            this.listFull = [...list.filter(item => item.id !== id)]
+            return this.listFull;
+            }            
+        ))
     }
 
     add(person: Person): Observable<Person> {    
@@ -74,7 +82,7 @@ export class PersonStoreService {
             const filtered = items.filter(item => { return rx.test(item.name) });
             
             this.listFull = [...filtered];            
-            return filtered;
+            return this.listFull;
             })      
         );        
     }

@@ -35,13 +35,14 @@ export class PersonListStore extends Store<PersonListState> {
         });
     }
     
-    removePerson (id: number, name: string) {
+    async removePerson (id: number, name: string) {
+        const items = await this.mutator.remove(id).toPromise();
         let message = {type: 'warning', message: `${name} deleted successfully`};       
         if(id<0) message = {type: 'danger', message: `error deleting ${name}`};        
 
         this.setState({
             ...this.state,
-            list: this.state.list.filter(item => item.id !== id),
+            list: [...items],
             message: message
         });        
     }

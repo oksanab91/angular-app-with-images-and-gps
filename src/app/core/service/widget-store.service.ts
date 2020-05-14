@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { City, FlightFilter, Flight, IFlights, Iata } from '@models/models';
-import { FlightWidgetService } from './flight-widget.service';
+import { ApiFlightWidgetService } from './api-flight-widget.service';
 import { Observable, of } from 'rxjs';
 import { map, catchError, shareReplay } from 'rxjs/operators';
 
@@ -14,7 +14,7 @@ export class WidgetStoreService {
   private cities$: Observable<City[]> = null;
   private iata$: Observable<Iata[]> = null;
 
-  constructor(private widgetService: FlightWidgetService) {
+  constructor(private widgetService: ApiFlightWidgetService) {
   }
 
   getIata(code: string): Iata {

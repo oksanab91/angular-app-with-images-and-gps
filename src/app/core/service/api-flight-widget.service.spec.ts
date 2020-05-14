@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FlightWidgetService } from './flight-widget.service';
+import { ApiFlightWidgetService } from './api-flight-widget.service';
 
 describe('FlightWidgetService', () => {
-  let service: FlightWidgetService;
+  let service: ApiFlightWidgetService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(FlightWidgetService);
+    service = TestBed.inject(ApiFlightWidgetService);
   });
 
   it('should be created', () => {

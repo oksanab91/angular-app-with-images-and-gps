@@ -18,8 +18,8 @@ export class PersonComponent implements OnInit {
   ngOnInit() {
   }
 
-  remove(person: Person) {
-    this.store.removePerson(person.id, person.name);
+  async remove(person: Person) {
+    await this.store.removePerson(person.id, person.name);
     this.alertService.set(messageSelect(this.store.state));
   }
 
