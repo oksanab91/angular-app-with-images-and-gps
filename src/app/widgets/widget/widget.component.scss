@@ -2,9 +2,18 @@
 @import "components/images";
 @import "components/button";
 
+:host {
+    padding: 9px 9px 0 0
+}
+
 .app-card {
-    min-width: 280px;
+    min-width: auto;
     min-height: auto;
+
+    .card {
+        border-radius: 0;
+        border: none;
+    }
 
     .card-body {
         padding-bottom: 15px;
@@ -58,4 +67,10 @@
 .show {
     display: block;
     max-height: 300px;    
+}
+
+@media screen and (max-width: 800px) {
+    :host {
+        padding: 0
+    }
 }

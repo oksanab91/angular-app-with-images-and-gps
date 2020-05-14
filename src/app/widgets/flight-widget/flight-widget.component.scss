@@ -4,16 +4,11 @@
     top: 80px;
 }
 
-.card-container {
-    padding: 9px 9px 0 0
-}
-
 .row-list {
     position: relative;    
     margin: 0;
     padding: 9px 9px 9px 0
 }
-
   
   @media screen and (max-width: 800px) {
     .list-container-fluid {
@@ -21,11 +16,7 @@
     }
 
     .row-list {        
-        padding: 9px 0 0 0;        
-    }
-
-    .card-container {
-        padding: 0; 
+        padding: 9px 0 0 0;
     }
    
   }

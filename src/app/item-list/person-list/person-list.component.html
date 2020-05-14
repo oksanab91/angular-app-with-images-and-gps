@@ -1,19 +1,12 @@
 <div class="container-fluid list-container-fluid">
   <div class="row row-list">
-    <ng-container *ngFor="let person of personList; trackBy: trackByFn">      
-      <div class="col-md-12 col-sm-12 col-12 col-lg-4 card-container">
-        <person [person]="person"></person>      
-      </div>
+    <ng-container *ngFor="let person of personList; trackBy: trackByFn">
+        <person [person]="person" class="col-md-12 col-sm-12 col-12 col-lg-4"></person>
     </ng-container>
-
-    <div class="col-md-12 col-sm-12 col-12 col-lg-4 card-container" *ngIf="personList">
-      <card-plus></card-plus>            
-    </div>
+    <card-plus class="col-md-12 col-sm-12 col-12 col-lg-4" *ngIf="personList"></card-plus>    
   </div>
   
-  <div class="row row-list row-alert justify-content-center">
-    <div class="col-md-12 col-sm-12 col-12 col-lg-4">
-      <app-alert></app-alert>
-    </div>
-  </div>
+  <div class="row row-list row-alert justify-content-center">    
+    <app-alert class="col-md-12 col-sm-12 col-12 col-lg-4"></app-alert>
+  </div>  
 </div>
