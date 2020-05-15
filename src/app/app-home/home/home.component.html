@@ -3,11 +3,11 @@
   <div class="container-fluid h-100">
     <div class="row">
       <div class="col-lg-10 col-md-8 col-sm-9 col-12 aside-part">        
-        <person-list [personList]="(store.state$ | async).list"></person-list>
+        <person-list [personList]="personList$ | async"></person-list>
       </div>  
   
       <div class="col-lg-2 col-md-4 col-sm-3 col-12 aside-part">        
-          <flight-widget [flights]="(widgetStore.state$ | async).flights"></flight-widget>
+          <flight-widget [flights]="widgetList$ | async"></flight-widget>
       </div>
     </div>
   </div>  

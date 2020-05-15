@@ -112,6 +112,6 @@ export class WidgetStore extends Store<WidgetFlightState> {
 
 }
 
-export const flightsSelect = (state: WidgetFlightState) => state.flights;
+export const flightsSelect = (state: Observable<WidgetFlightState>) => state.pipe(map(st => st.flights));
 export const citiesSelect = (state: WidgetFlightState) => state.cities;
 export const iataSelect = (state: WidgetFlightState) => state.iata;

@@ -3,6 +3,8 @@ import { Store } from './store';
 import { PersonListState, PersonState } from './store-state';
 import { Person } from '@models/models';
 import { PersonStoreService } from '@core/service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -57,8 +59,9 @@ export class PersonListStore extends Store<PersonListState> {
     }
 }
 
-export const personListSelect = (state: PersonListState) => state.list;
+export const personListSelect = (state: Observable<PersonListState>) => state.pipe(map(st => st.list)) ;
 export const messageSelect = (state: PersonListState) => state.message;
+
 
 //============== Person Store ==================
 

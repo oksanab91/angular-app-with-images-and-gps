@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { ModalImageState } from './store-state';
 import { Store } from './store';
 import { Picture } from '@models/models';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 
 const InitModalImageState: ModalImageState = {
@@ -51,6 +53,6 @@ export class ModalImageStore extends Store<ModalImageState> {
 
 }
 
-export const imageSelect = (state: ModalImageState) => state.image;
+export const imageSelect = (state: Observable<ModalImageState>) => state.pipe(map(st => st.image));
 export const imageUrlSelect = (state: ModalImageState) => state.image.url;
 export const imageCaptionSelect = (state: ModalImageState) => state.image.caption;
