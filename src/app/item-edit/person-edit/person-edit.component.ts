@@ -9,12 +9,14 @@ import {
   personSelect, imageUrlSelect, imageCaptionSelect } from '@core/store';
 import { PersonService, AlertService } from '@core/service';
 import { Person } from '@models/models';
+import { fadeInAnimation } from 'src/app/app-animations';
 
 
 @Component({
   selector: 'person-edit',
   templateUrl: './person-edit.component.html',
-  styleUrls: ['./person-edit.component.scss']
+  styleUrls: ['./person-edit.component.scss'],  
+  animations: [fadeInAnimation]  
 })
 export class PersonEditComponent implements OnInit, OnDestroy {  
   person: Person;
