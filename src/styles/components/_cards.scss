@@ -88,24 +88,79 @@
     height: 100%;
 }
 
+.widget-card {
+    @include app-card;
+    min-width: auto;
+    min-height: auto;
+
+    .card {
+        border-radius: 0;
+        border: none;
+
+        .collapse, .show {
+            max-height: 0;
+            transition: max-height 0.4s ease-in-out;
+        }
+        
+        .collapse:not(.show) {
+            display: block;
+            max-height: 0;   
+        }
+        
+        .show {
+            display: block;
+            max-height: 300px;    
+        }
+    }
+
+    .card-body {
+        padding-bottom: 15px;
+    }
+    
+    .block-info {
+        display: inline-flex;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .block-widget {
+        font-size: 15px; 
+        padding: 15px 0;        
+    }
+
+    .btn-submit {
+        margin: auto;
+    }
+    
+    #accordionHeading {
+        background-color: $btnColorDark;
+        color: $btnActiveColor;
+        opacity: 1;
+        transition: opacity 0.4s ease-in-out;
+        
+        &:hover {
+            opacity: 0.9;            
+        }
+        .card-link {
+            h5 {
+                font-weight: 200;
+            }
+            .card-block > h5 {
+                font-weight: 200;                
+            }
+        }        
+    }
+}
+
 
 @media screen and (max-width: 800px) {
     .card-block-left {
         text-align-last: end;
     }
 
-    .card-plus {        
-        padding: 9px;
-        min-height: 80px;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        // top: 120px;        
-        height: 80px;        
-        min-width: 80px;        
-        
-        .justify-content {
-            justify-content: flex-start;
-        }
+    .card-plus {
+        margin-bottom: -100px;
+        min-height: 105px;
+        height: 105px;
     }
 }

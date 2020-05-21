@@ -24,4 +24,5 @@ export class WidgetFlightState {
   iata: Iata[] = [];
   citiesLoaded: boolean;
   message: string;
+  show: boolean;
 }

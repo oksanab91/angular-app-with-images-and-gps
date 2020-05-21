@@ -1,0 +1,18 @@
+<div class="footer justify-content-around w-100">    
+    <div style="padding: 5px;">
+      <a href="#" [routerLink]="['add', -1]" class="btn-plus btn-plus-mobile" aria-label="Add"><i class="fa fa-plus"></i></a>
+      New
+    </div>
+    <div style="padding: 5px;">
+        <button class="btn btn-plus btn-plus-mobile" aria-label="Widgets" (click)="onWidgetsShow()">
+          <i [ngClass]="widgetsShow? 'fas fa-times' : 'fas fa-external-link-alt'"></i>          
+        </button>
+        Widgets
+    </div>
+    <div style="padding: 5px;">          
+        <a href="#" [routerLink]="['/home']" class="btn-plus btn-plus-mobile" aria-label="Home">
+          <i class="fas fa-home"></i>
+        </a>
+        Home     
+    </div>   
+  </div>

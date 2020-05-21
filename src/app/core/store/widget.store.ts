@@ -13,7 +13,8 @@ const InitWidgetState: WidgetFlightState = {
     cities: [],
     iata: [],
     citiesLoaded: false,
-    message: null
+    message: null,
+    show: false
 };
 
 @Injectable({
@@ -43,6 +44,13 @@ export class WidgetStore extends Store<WidgetFlightState> {
         this.setState({
             ...InitWidgetState
         });  
+    }
+
+    setShow(show: boolean) {
+        this.setState({
+            ...this.state,
+            show: show
+        });
     }
 
     getChipFlights(): Observable<WidgetFlightState> {        
@@ -115,3 +123,6 @@ export class WidgetStore extends Store<WidgetFlightState> {
 export const flightsSelect = (state: Observable<WidgetFlightState>) => state.pipe(map(st => st.flights));
 export const citiesSelect = (state: WidgetFlightState) => state.cities;
 export const iataSelect = (state: WidgetFlightState) => state.iata;
+export const showSelect$ = (state: Observable<WidgetFlightState>) => state.pipe(map(st => st.show));
+export const showSelect = (state: WidgetFlightState) => state.show;
+

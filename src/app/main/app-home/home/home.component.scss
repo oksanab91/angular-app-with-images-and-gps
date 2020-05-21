@@ -2,20 +2,20 @@
     padding: 0;
 }
 
-.row-list {
-    position: relative;    
-    margin: 0;
-    padding: 9px;
-}
+// .row-list {
+//     position: relative;    
+//     margin: 0;
+//     padding: 9px;
+// }
 
 .row-alert {
     padding-top: 0;
-}
-  
+} 
+
   @media screen and (max-width: 800px) {
-    .row-list {        
-        padding: 9px 0 0 0;        
-    }
+    // .row-list {        
+    //     padding: 9px 0 0 0;        
+    // }
 
     // .row-alert {
     //     padding-top: 0;

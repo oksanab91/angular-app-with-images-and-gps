@@ -1,0 +1,10 @@
+<div class="container-fluid list-container-fluid">
+    <div class="card card-widget-tool">
+        <div>
+            <button class="btn btn-plus btn-plus-mobile" aria-label="Show Widgets" (click)="onShow()">
+                <i [ngClass]="show? 'fas fa-times' : 'fas fa-external-link-alt'"></i>                
+            </button>
+            <span style="padding: 5px;">{{btnCaption}}</span>
+        </div>
+    </div>
+</div>

@@ -1,10 +1,10 @@
 @import "../abstracts/app-variables";
 
-@mixin button-hover($backgroundColor: $btnColorDark) {
+@mixin button-hover($backgroundColor: $btnColorDark, $color: $btnActiveColor) {
     @include box-shadow;
     @include container-border;	
     background-color: $backgroundColor;
-    color: $btnActiveColor;
+    color: $color;
     cursor: $cursor;
 }
 
@@ -24,8 +24,8 @@
     display: inline-block;    
 }
 
-@mixin button-round($diameter: 60px, $color: $btnColor) {
-    background-color: $btnActiveColor;
+@mixin button-round($diameter: 60px, $color: $btnColor, $background-color: $btnActiveColor) {
+    background-color: $background-color;
     color: $color;
     margin-bottom: auto;
     margin-top: auto;
@@ -104,7 +104,8 @@ a:hover {
     @include button-round;
     @include container-border;
     @include box-shadow;
-
+    margin: auto;
+    
     &:hover{
         @include button-hover;       
     }
@@ -144,12 +145,18 @@ a:hover {
     @include sprite-icon('/assets/sprite-icone.png', -281px, 0);    
 }
 
-// #image-round {
-//     border-radius: 50%;
-// }
-
 @media screen and (max-width: 800px) {
     .btn-sm-icon, .btn-card-edit, .btn-card-delete, btn-close, .btn-cancel, .btn-submit {
         @include container-border;
-    }    
+    }
+    
+    .btn-plus-mobile{
+        @include button-round(60px, $btnActiveColor, $btnColorLight);
+        @include container-border;
+        @include box-shadow;        
+            
+        &:hover{
+            @include button-hover($btnColorLight);
+        }
+    }
 }
