@@ -1,3 +1,5 @@
+@import "layout/containers";
+
 .list-container-fluid {
     padding: 0;
     position: absolute;
@@ -9,10 +11,6 @@
     margin: 0;
     padding: 9px;
 }
-
-// .row-alert {
-//     padding-top: 0;
-// }
   
   @media screen and (max-width: 800px) {
     .list-container-fluid {
@@ -20,19 +18,9 @@
     }
 
     .row-list {        
-        padding: 9px 0 0 0;        
+        margin: 0;
+        padding: 0;       
     }
-
-    // .card-container {
-    //     padding: 0;
-    
-    //     // &:nth-last-child(2) {
-    //     //     padding-bottom: 0;
-    //     // }
-    //     // &:last-child {
-    //     //     padding: 0 9px;
-    //     // }
-    // }
 
     // .row-alert {
     //     padding-top: 0;

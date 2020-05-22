@@ -1,12 +1,12 @@
   <nav-search></nav-search>
   
-  <div class="container-fluid" style="padding-left: 0; padding-right: 0;">
-    <div class="row">
-      <div class="col-lg-10 col-md-8 col-sm-9 col-12 aside-part">        
+  <div class="container-fluid">
+    <div class="row clear-all">
+      <div class="col-lg-10 col-md-8 col-sm-9 col-12 clear-all">        
         <person-list [personList]="personList$ | async"></person-list>
       </div>  
   
-      <div class="col-lg-2 col-md-4 col-sm-3 col-12 aside-part">        
+      <div class="col-lg-2 col-md-4 col-sm-3 col-12 clear-all">        
         <flight-widget [flights]="widgetList$ | async" *ngIf="(widgetsShow$ | async)"></flight-widget>
       </div>
     </div>

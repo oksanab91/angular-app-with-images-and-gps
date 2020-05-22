@@ -7,22 +7,30 @@
     background-color: #fff;        
 }
 
-.footer {
-    padding: 18px 0 9px 18px;
+.nav-items {    
+    padding: 18px 0;
     position: absolute;    
     text-align: center;
     left: 0;
     top: 80px;
-    z-index: 1000;    
+    z-index: 1000;
+    
+    .nav-item {
+        padding: 5px;
+    }
 }
 
+.clear-all {
+    margin: 0;
+    padding: 0;
+}
 
 @media screen and (max-width: 800px) {
     .container-form {
         margin-top: 0;
     }
 
-    .footer {
+    .nav-items {
         position: fixed;
         top: auto;
         left: 0;
@@ -35,4 +43,5 @@
         color: $btnActiveColor;
         text-align: center;
      }
+
 }
