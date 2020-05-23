@@ -2,10 +2,17 @@
 $errorMessageColor: #cc0000;
 $boxShadowColor: #3d4851; // #875e5e; ??
 $backgroundColor: #f4f5f5;
+$backgroundColorLight: #ffffff;
 
 $font: "font-family: 'Open Sans', sans-serif";
-$font-size: 18px;
+$fontSize: 16px;
+$mobileFontSize: 15px;
+$widgetFontSize: 15px;
 $cursor: pointer;
+$paddingNormal: .9rem;
+$paddingSmall: .6rem;
+$paddingExSm: 5px;
+$paddingLarge: 2rem;
 
 $inputDisabled: rgb(233, 236, 239);
 $inputBorderColor: rgba(73, 80, 87, 0.5);
@@ -13,6 +20,9 @@ $inputLineHeight: 1.1rem;
 
 $cardMinWidth: 300px;
 $cardMinHeight: 300px;
+$modalMaxWidth: 450px;
+$modalMinWidth: 250px;
+
 
 $btnColorDark: #006097; // #0063cc;
 $btnColorLight: #0071b3;
@@ -21,6 +31,10 @@ $btnWarnColor: #e74c3c;
 $btnEditColor: #26734d;
 $btnColor: #212529;
 $btnActiveColor: #ffffff;
+
+$btnDiameter: 3.75rem;
+$containerMargine: 5rem;
+$mobileContainerMargine: 7rem;
 
 @mixin box-shadow {
     // box-shadow: 0 0 30px -15px #3d4851;
@@ -37,5 +51,7 @@ $btnActiveColor: #ffffff;
     background-color: rgba(0,0,0,0.4);
 }
 
-// background: #3d4851;
-//     opacity: 0.4;
+@mixin clear-all {
+    margin: 0;
+    padding: 0;
+}

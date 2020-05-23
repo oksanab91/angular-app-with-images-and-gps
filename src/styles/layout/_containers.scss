@@ -1,28 +1,43 @@
 @import "../abstracts/app-variables";
 
+$mobileNavHeight: 6.6rem;
+
 .container-form {
     @include box-shadow;
     @include container-border;
-    margin-top: 15px;
-    background-color: #fff;        
+    margin-top: $paddingNormal;
+    background-color: $backgroundColorLight;        
 }
 
-.nav-items {    
-    padding: 18px 0;
+.list-container-fluid {
+    padding: 0;
+    position: absolute;
+    top: $containerMargine;
+}
+
+.row-list {
+    position: relative;    
+    margin: 0;
+    padding: $paddingSmall;
+} 
+
+.nav-items {
+    list-style-type: none;
+    margin: 0;    
+    padding: calc(#{$paddingSmall} * 2);    
     position: absolute;    
     text-align: center;
     left: 0;
-    top: 80px;
+    top: $containerMargine;    
     z-index: 1000;
     
-    .nav-item {
-        padding: 5px;
+    .nav-item {        
+        padding-bottom: $paddingSmall;
     }
 }
 
 .clear-all {
-    margin: 0;
-    padding: 0;
+    @include clear-all;
 }
 
 @media screen and (max-width: 800px) {
@@ -30,6 +45,14 @@
         margin-top: 0;
     }
 
+    .list-container-fluid {
+        top: $mobileContainerMargine;
+    }
+
+    .row-list {        
+        @include clear-all;
+    }
+    
     .nav-items {
         position: fixed;
         top: auto;
@@ -37,8 +60,8 @@
         bottom: 0;
         display: flex;
         width: 100%;
-        height: auto;
-        padding: 5px;
+        height: $mobileNavHeight;
+        padding: $paddingExSm;        
         background-color: $btnColorDark;
         color: $btnActiveColor;
         text-align: center;

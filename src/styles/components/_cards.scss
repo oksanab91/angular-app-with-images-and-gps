@@ -1,5 +1,7 @@
 @import "../abstracts/app-variables";
 
+$mobileCardPlusHeight: 6.7rem;
+
 @mixin app-card {    
     min-width: $cardMinWidth;
     min-height: $cardMinHeight;
@@ -13,7 +15,7 @@
     @include app-card;
     
     h6{
-        padding-top: 25px;
+        padding-top: 1.6rem;
     }
 
     h5 {
@@ -26,7 +28,7 @@
     }
     
     // .fa-sm {
-    //     font-size: $font-size;
+    //     font-size: $fontSize;
     // }
 }
 
@@ -52,13 +54,12 @@
 .card-block-left {
     margin-top: auto;
     margin-bottom: auto;
-    padding: 10px 0 10px 10px;    
+    padding: $paddingSmall 0 $paddingSmall $paddingSmall;    
 }
 
-.card-block-list {    
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+.card-block-list {
+    @include clear-all;    
+    list-style-type: none;    
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -70,7 +71,7 @@
     display: flex;
     justify-content: flex-end;
     border: none;
-    padding: 15px 0;    
+    padding: $paddingNormal 0;    
     background-color: transparent;
 
     >* {    
@@ -81,7 +82,7 @@
 
 .card-title {    
     margin: 0;
-    padding: 15px 0;
+    padding: $paddingNormal 0;
 }
 
 .row-max-height {
@@ -109,12 +110,12 @@
         
         .show {
             display: block;
-            max-height: 300px;    
+            max-height: $cardMinWidth;    
         }
     }
 
     .card-body {
-        padding-bottom: 15px;
+        padding-bottom: $paddingNormal;
     }
     
     .block-info {
@@ -124,8 +125,8 @@
     }
 
     .block-widget {
-        font-size: 15px; 
-        padding: 15px 0;        
+        font-size: $widgetFontSize; 
+        padding: $paddingNormal 0;        
     }
 
     .btn-submit {
@@ -159,8 +160,8 @@
     }
 
     .card-plus {
-        margin-bottom: -100px;
-        min-height: 105px;
-        height: 105px;
+        margin-bottom: -$mobileCardPlusHeight;
+        min-height: $mobileCardPlusHeight;
+        height: $mobileCardPlusHeight;
     }
 }

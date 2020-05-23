@@ -1,22 +1,12 @@
-.list-container-fluid {
-    padding: 0;
-    position: absolute;
-    top: 80px;
+@import "layout/containers";
+
+
+.row-list {   
+    padding: $paddingSmall $paddingSmall $paddingSmall 0
 }
 
-.row-list {
-    position: relative;    
-    margin: 0;
-    padding: 9px 9px 9px 0
-}
-  
-  @media screen and (max-width: 800px) {
-    .list-container-fluid {
-        top: 110px;
-    }
-
+@media screen and (max-width: 800px) {  
     .row-list {        
-        padding: 9px 0 0 0;
+        padding: $paddingSmall 0 0 0;
     }
-   
-  }
+}

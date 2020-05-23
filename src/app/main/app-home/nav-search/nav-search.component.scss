@@ -1,8 +1,8 @@
+@import "abstracts/app-variables";
+@import "components/form";
 
 .navbar {
-    // box-shadow: 0 0 30px -15px #875e5e;
-    // box-shadow: 0 1px 10px rgba(61,72,81,0.4);
-    border: 1px solid rgba(73, 80, 87, 0.5);
+    @include input-border;
 }
 
 .navbar .container-fluid {
@@ -12,38 +12,38 @@
 .searchbar{
     margin-bottom: auto;
     margin-top: auto;
-    height: 60px;
+    height: $btnDiameter;
     background-color: #353b48;
     border-radius: 30px;
-    padding: 10px;
+    padding: $paddingSmall;
 }
 
 .search-input{
-    color: white;
+    color: $btnActiveColor;
     border: 0;
     outline: 0;
     background: none;
     width: 0;
     caret-color:transparent;
-    line-height: 40px;
+    line-height: 2.5rem;
     transition: width 0.4s linear;
 }
 
 .searchbar:hover > .search-input{
-    padding: 0 10px;
+    padding: 0 $paddingSmall;
     width: 450px;
-    caret-color:red;
+    caret-color: $btnWarnColor;
     transition: width 0.4s linear;
 }
 
 .searchbar:hover > .search-icon{
-    background: white;
-    color: #e74c3c;
+    background: $btnActiveColor;
+    color: $btnWarnColor;
 }
 
 .search-icon{
-    height: 40px;
-    width: 40px;
+    height: 2.5rem;
+    width: 2.5rem;
     float: right;
     display: flex;
     justify-content: center;
@@ -65,7 +65,7 @@
     }
 
     .searchbar:hover > .search-input{
-        padding: 0 5px;
+        padding: 0 $paddingExSm;
         width: 250px;        
     }
 }

@@ -1,18 +1,18 @@
-<div class="nav-items justify-content-around w-100">    
-  <div class="nav-item">
+<ul class="nav-items justify-content-around w-100">
+  <li class="nav-item">
     <a href="#" [routerLink]="['add', -1]" class="btn-plus btn-plus-mobile" aria-label="Add"><i class="fa fa-plus"></i></a>
     New
-  </div>
-  <div class="nav-item">
-      <button class="btn btn-plus btn-plus-mobile" aria-label="Widgets" (click)="onWidgetsShow()">
-        <i [ngClass]="widgetsShow? 'fas fa-times' : 'fas fa-external-link-alt'"></i>          
-      </button>
-      Widgets
-  </div>
-  <div class="nav-item">          
-      <a href="#" [routerLink]="['/home']" class="btn-plus btn-plus-mobile" aria-label="Home">
-        <i class="fas fa-home"></i>
-      </a>
-      Home     
-  </div>   
-</div>
+  </li>
+  <li class="nav-item">
+    <button class="btn btn-plus btn-plus-mobile" aria-label="Widgets" (click)="onWidgetsShow()">
+      <i [ngClass]="widgetsShow? 'fas fa-times' : 'fas fa-external-link-alt'"></i>          
+    </button>
+    Widgets
+  </li>
+  <li class="nav-item">
+    <a href="#" [routerLink]="['/home']" class="btn-plus btn-plus-mobile" aria-label="Home">
+      <i class="fas fa-home"></i>
+    </a>
+    Home  
+  </li>
+</ul>

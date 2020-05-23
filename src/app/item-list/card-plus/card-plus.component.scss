@@ -2,7 +2,7 @@
 @import "components/button";
 
 :host { 
-    padding: 9px;
+    padding: $paddingSmall;
 }
 
 @media screen and (max-width: 800px) {

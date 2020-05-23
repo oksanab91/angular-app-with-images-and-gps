@@ -8,14 +8,6 @@
     cursor: $cursor;
 }
 
-// @mixin button-submit() {
-//     // @include box-shadow;    
-//     @include container-border;    
-// 	color: $btnColorDark;	
-// 	cursor: $cursor;
-//     background-color: $btnActiveColor;
-// }
-
 @mixin sprite-icon($url, $left, $top) {
     width: 24px;
     height: 14px;
@@ -24,7 +16,7 @@
     display: inline-block;    
 }
 
-@mixin button-round($diameter: 60px, $color: $btnColor, $background-color: $btnActiveColor) {
+@mixin button-round($diameter: $btnDiameter, $color: $btnColor, $background-color: $btnActiveColor) {
     background-color: $background-color;
     color: $color;
     margin-bottom: auto;
@@ -61,7 +53,7 @@ a:hover {
 
     span {
         position: absolute;
-        padding-bottom: 5px;
+        padding-bottom: $paddingExSm;
     }
     &:hover:not([disabled]) {
         @include button-hover($btnSecondColorDark);                     
@@ -113,7 +105,7 @@ a:hover {
 
 .btn-sm-icon {
     padding-right: 0;
-    font-size: $font-size;
+    font-size: $fontSize;
 
     &:focus {
         border: none;
@@ -121,7 +113,7 @@ a:hover {
         box-shadow: none;
     }
     &:hover {
-        color: #e74c3c;
+        color: $btnWarnColor;
     }
     &:active {
         position: relative;
@@ -131,13 +123,13 @@ a:hover {
 
 .maps-link{
     color: $btnColor;
-    font-size: $font-size;
+    font-size: $fontSize;
     text-decoration: none;
 
     &:hover {
         text-decoration: none;
         cursor:$cursor;
-        color: #e74c3c; 
+        color: $btnWarnColor; 
     }
 }
 
@@ -151,7 +143,7 @@ a:hover {
     }
     
     .btn-plus-mobile{
-        @include button-round(60px, $btnActiveColor, $btnColorLight);
+        @include button-round($btnDiameter, $btnActiveColor, $btnColorLight);
         @include container-border;
         @include box-shadow;        
             

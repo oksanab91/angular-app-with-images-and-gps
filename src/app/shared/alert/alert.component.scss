@@ -1,7 +1,9 @@
+@import "abstracts/app-variables";
+
 .alert {
     overflow-wrap: break-word;
 
-    padding: 9px;
+    padding: $paddingSmall;
     min-height: 80px;
     position: fixed;
     bottom: 0;

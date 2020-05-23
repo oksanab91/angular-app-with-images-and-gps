@@ -1,2 +1,6 @@
 @import "components/button";
 @import "layout/containers";
+
+:host {
+    padding: 0;
+}
