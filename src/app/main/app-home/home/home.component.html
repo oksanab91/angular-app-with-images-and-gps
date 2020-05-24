@@ -1,17 +1,15 @@
-  <nav-search></nav-search>
-  
-  <div class="container-fluid">
-    <div class="row clear-all">
-      <div class="col-lg-10 col-md-8 col-sm-9 col-12 clear-all">        
-        <person-list [personList]="personList$ | async"></person-list>
-      </div>  
-  
-      <div class="col-lg-2 col-md-4 col-sm-3 col-12 clear-all">        
-        <flight-widget [flights]="widgetList$ | async" *ngIf="(widgetsShow$ | async)"></flight-widget>
-      </div>
+<nav-search></nav-search>
+
+<div class="container-fluid">
+  <div class="row clear-all">
+    <div class="col-lg-10 col-md-8 col-sm-9 col-12 clear-all">        
+      <person-list [personList]="personList$ | async"></person-list>
     </div>
-  </div>
-  
-  <!-- <div class="row row-list row-alert justify-content-end">     -->
-    <app-alert class="col-md-12 col-sm-12 col-12 col-lg-4"></app-alert>
-  <!-- </div>  -->  
+
+    <div class="col-lg-2 col-md-4 col-sm-3 col-12 clear-all">       
+      <flight-widget [flights]="widgetList$ | async" *ngIf="(widgetsShow$ | async)"></flight-widget>
+    </div>
+  </div>    
+</div>
+
+<app-alert></app-alert>

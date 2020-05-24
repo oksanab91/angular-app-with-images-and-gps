@@ -15,8 +15,10 @@ export class AlertService {
   }
 
   set(alert: Alert){
-    this.alerts = [];
     this.alerts = [...this.alerts, { type: alert.type, message: alert.message }];
+    setTimeout(() => { 
+      if(this.alerts.indexOf(alert)) this.close(alert); 
+    }, 3000);
   }
 
   close(alert: Alert) {

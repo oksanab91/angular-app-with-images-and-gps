@@ -1,18 +1,16 @@
 @import "abstracts/app-variables";
+@import "components/cards";
 
-.alert {
-    overflow-wrap: break-word;
-
-    padding: $paddingSmall;
-    min-height: 80px;
+:host {
+    padding: 0;
     position: fixed;
     bottom: 0;
     right: 0;
-    // top: 120px;        
-    // height: 80px;        
-    // min-width: 80px;        
-    
-    // .justify-content {
-    //     justify-content: flex-end;
-    // }
+}
+
+
+@media screen and (max-width: 800px) {
+    .container {
+        margin-bottom: $mobileCardPlusHeight;
+    }
 }
