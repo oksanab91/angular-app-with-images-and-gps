@@ -115,7 +115,8 @@ $mobileCardPlusHeight: 6.7rem;
     }
 
     .card-body {
-        padding-bottom: $paddingNormal;
+        padding-bottom: 0;
+        padding-top: 0;        
     }
     
     .block-info {
@@ -134,6 +135,7 @@ $mobileCardPlusHeight: 6.7rem;
     }
     
     #accordionHeading {
+        padding-bottom: 0;
         background-color: $btnColorDark;
         color: $btnActiveColor;
         opacity: 1;

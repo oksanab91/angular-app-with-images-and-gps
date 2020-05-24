@@ -6,11 +6,8 @@ import { fadeInAnimation } from 'src/app/app-animations';
   selector: 'person-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './person-list.component.html',
-  styleUrls: ['./person-list.component.scss'],
-  // make fade in animation available to this component
+  styleUrls: ['./person-list.component.scss'],  
   animations: [fadeInAnimation],
-
-  // attach the fade in animation to the host (root) element of this component
   host: { '[@fadeInAnimation]': '' }
 })
 export class PersonListComponent {  

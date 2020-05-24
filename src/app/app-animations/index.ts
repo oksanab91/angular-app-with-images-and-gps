@@ -1,9 +1,12 @@
-import { fadeInAnimation } from './fadeInOut.animation';
+import { fadeInAnimation, fadeInOutAnimation } from './fadeInOut.animation';
 import { slideInOutAnimation } from './slideInOut.animation';
+import { slideListInOutAnimation } from './slideListInOut.animation';
 
 export const animations = [
     fadeInAnimation,
-    slideInOutAnimation
+    fadeInOutAnimation,
+    slideInOutAnimation,
+    slideListInOutAnimation
 ];
 
 export * from './fadeInOut.animation';

@@ -1,13 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { Flight } from '@models/models';
-import { fadeInAnimation } from 'src/app/app-animations';
+import { slideListInOutAnimation } from 'src/app/app-animations/slideListInOut.animation';
 
 @Component({
   selector: 'flight-widget',
   templateUrl: './flight-widget.component.html',
   styleUrls: ['./flight-widget.component.scss'],  
-  animations: [fadeInAnimation],
-  host: { '[@fadeInAnimation]': '' }
+  animations: [slideListInOutAnimation],
+  host: { '[@slideListInOutAnimation]': '' }
 })
 export class FlightWidgetComponent {
   @Input() flights: Flight[];
