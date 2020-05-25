@@ -57,6 +57,12 @@ $mobileCardPlusHeight: 6.7rem;
     padding: $paddingSmall 0 $paddingSmall $paddingSmall;    
 }
 
+.card-block {
+    .card-text {
+        white-space: break-spaces;
+    }
+}
+
 .card-block-list {
     @include clear-all;    
     list-style-type: none;    
