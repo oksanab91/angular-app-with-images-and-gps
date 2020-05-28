@@ -6,7 +6,7 @@
 
         <div class="card-block block-info">
           <h5>
-            {{widget.cityDestination.name}}
+            {{widget.cityDestination?.name}}
           </h5>
           <h5><i class="fab fa-fly"></i></h5>
         </div>
@@ -19,11 +19,11 @@
         
         <div class="card-block">
           <h5 class="card-title">{{widget.airline}}</h5>            
-          <a href="{{widget.cityDestination.googleMapUrl}}" class="maps-link" *ngIf="hasMapUrl()" aria-label="Map">
+          <a href="{{widget.cityDestination?.googleMapUrl}}" class="maps-link" *ngIf="hasMapUrl()" aria-label="Map">
             <i class="fas fa-map-marked-alt fa-sm"></i>
-            <span class="card-text text-muted">  {{widget.cityDestination.name}}</span>
+            <span class="card-text text-muted">  {{widget.cityDestination?.name}}</span>
           </a>          
-          <p class="card-text text-muted">Depart: {{widget.cityOrigin.name}}</p>
+          <p class="card-text text-muted">Depart: {{widget.cityOrigin?.name}}</p>
         </div>
 
         <div class="card-block">

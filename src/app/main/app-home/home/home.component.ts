@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PersonListStore, WidgetStore, personListSelect, flightsSelect, showSelect$ } from '@core/store';
+import { PersonListStore, WidgetStore, personListSelect$, flightsSelect$, showSelect$ } from '@core/store';
 import { FlightFilter, Person, Flight } from '../../../models';
 import { Subscription, Observable } from 'rxjs';
 
@@ -24,11 +24,11 @@ export class HomeComponent implements OnInit, OnDestroy{
     this.widgetStore.setFilter(this.filter);
     this.widgetStore.setShow(false);
     
-    this.personList$ = personListSelect(this.store.state$)
-    this.widgetList$ = flightsSelect(this.widgetStore.state$)
+    this.personList$ = personListSelect$(this.store.state$)
+    this.widgetList$ = flightsSelect$(this.widgetStore.state$)
     this.widgetsShow$ = showSelect$(this.widgetStore.state$)
     
-    this.getChipFlights();
+    this.getDirectFlights();
   }
 
   ngOnDestroy() {

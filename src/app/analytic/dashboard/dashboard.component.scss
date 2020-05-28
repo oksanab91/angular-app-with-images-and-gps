@@ -1,0 +1,63 @@
+@import "components/form";
+@import "layout/containers";
+
+.container{
+    font-size: $widgetFontSize;
+}
+
+.container-header {
+    padding: 1rem 1rem;    
+    h5, h6 {
+        text-align: center;
+    }
+}
+.chart-container {
+    display: block;
+    position: relative;
+    margin: auto;
+    height: 70vh;
+    width: 70vw;
+}
+
+
+@media only screen and (max-width: 812px) {
+    .chart-container {
+        margin: 0;
+        height: 58vh;
+        width: 95vw;
+    }
+    .container-header {
+        padding-left: 0;
+        padding-right: 0;
+        padding-bottom: 5px;
+    }
+    .container-form {
+        padding-left: 5px;
+        padding-right: 5px;
+        height: 90vh;
+        max-width: 100%;
+    }
+}
+
+@media only screen and (max-width: 670px) {
+    .chart-container {        
+        height: 55vh;
+    }
+    .container-form {
+        border: none;
+        box-shadow: none;
+    }      
+}
+
+@media only screen and (max-width: 568px) {
+    .chart-container {       
+        height: 45vh;
+    }
+}
+
+@media only screen and (max-width: 414px) {
+    .chart-container {  
+        height: 60vh;
+    }
+      
+}

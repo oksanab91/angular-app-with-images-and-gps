@@ -1,0 +1,20 @@
+
+<div class="container container-form">
+  <div class="container-header">
+    <h5>{{title}}</h5>
+    <h6>{{subTitle}}</h6>
+  </div>
+  <ng-container *ngIf="(chartFilled$ | async) === true && (chartData$ | async) as lineChart">
+    <div class="chart-container">
+      <canvas baseChart
+        [datasets]="lineChart.lineChartData"
+        [labels]="lineChart.lineChartLabels"
+        [options]="lineChart.lineChartOptions"
+        [colors]="lineChart.lineChartColors"
+        [legend]="lineChart.lineChartLegend"
+        [chartType]="lineChart.lineChartType"
+        [plugins]="lineChart.lineChartPlugins">
+      </canvas>
+    </div>
+  </ng-container>
+</div>

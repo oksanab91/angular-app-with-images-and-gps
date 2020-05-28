@@ -1,4 +1,7 @@
-import { Person, Alert, Picture, Flight, FlightFilter, City, Iata } from '@models/models';
+import { Person, Alert, Picture, Flight, FlightFilter, City, Iata, CurrConverterFilter, CurrencyConverter, IInsuranceRowSet } from '@models/models';
+import { CurrencyQuake } from '@models/models';
+import { LineChart } from 'src/app/analytic/line-chart';
+import { Color } from 'ng2-charts';
 
 export class PersonListState {
     list: Person[] = [];
@@ -25,4 +28,43 @@ export class WidgetFlightState {
   citiesLoaded: boolean;
   message: string;
   show: boolean;
+}
+
+// to do ========================
+export class WidgetSettingsState {
+  widgets: IWidget[] = [];
+  filter: IWidgetFilter;  
+  sort: string;
+}
+
+export interface IWidget {
+  id: number;
+  name: string;
+  show: boolean;
+}
+
+export interface IWidgetFilter {
+  displayCount: number;
+}
+// ============================
+
+export class CurrencyQuakeState {
+  data: CurrencyQuake[]
+  filter: string
+  displayCount: number
+  message: string
+}
+
+export class CurrencyConverterState {
+  data: CurrencyConverter[]
+  filter: CurrConverterFilter  
+  message: string
+}
+
+export class InsuranceAnalyticState {
+  data: IInsuranceRowSet[]
+  filter: {dates: string[], chartLabels: string[], options: {}, colors: Color[]}  
+  message: string
+  chart: LineChart
+  chartFilled: boolean
 }

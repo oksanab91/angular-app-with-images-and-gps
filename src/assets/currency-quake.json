@@ -1,0 +1,114 @@
+[
+    {
+        "pair": "audcad",
+        "change": -0.064
+    },
+    {
+        "pair": "audchf",
+        "change": -0.1023
+    },
+    {
+        "pair": "audjpy",
+        "change": -0.1152
+    },
+    {
+        "pair": "audnzd",
+        "change": 0.0168
+    },
+    {
+        "pair": "audusd",
+        "change": -0.0934
+    },
+    {
+        "pair": "cadchf",
+        "change": 0.0244
+    },
+    {
+        "pair": "cadjpy",
+        "change": -0.0636
+    },
+    {
+        "pair": "chfjpy",
+        "change": -0.0459
+    },
+    {
+        "pair": "euraud",
+        "change": 0.0612
+    },
+    {
+        "pair": "eurcad",
+        "change": -0.0112
+    },
+    {
+        "pair": "eurchf",
+        "change": -0.0175
+    },
+    {
+        "pair": "eurgbp",
+        "change": -0.005
+    },
+    {
+        "pair": "eurjpy",
+        "change": -0.0512
+    },
+    {
+        "pair": "eurnzd",
+        "change": 0.0851
+    },
+    {
+        "pair": "eurusd",
+        "change": -0.0341
+    },
+    {
+        "pair": "gbpaud",
+        "change": 0.0571
+    },
+    {
+        "pair": "gbpcad",
+        "change": -0.0085
+    },
+    {
+        "pair": "gbpchf",
+        "change": -0.0135
+    },
+    {
+        "pair": "gbpjpy",
+        "change": -0.0785
+    },
+    {
+        "pair": "gbpnzd",
+        "change": 0.0806
+    },
+    {
+        "pair": "gbpusd",
+        "change": -0.037
+    },
+    {
+        "pair": "nzdcad",
+        "change": -0.0763
+    },
+    {
+        "pair": "nzdchf",
+        "change": -0.0978
+    },
+    {
+        "pair": "nzdjpy",
+        "change": -0.1554
+    },
+    {
+        "pair": "nzdusd",
+        "change": -0.1165
+    },
+    {
+        "pair": "usdcad",
+        "change": 0.0064
+    },
+    {
+        "pair": "usdchf",
+        "change": 0.0051
+    },
+    {
+        "pair": "usdjpy",
+        "change": -0.039
+    }
+]

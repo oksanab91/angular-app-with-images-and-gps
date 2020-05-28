@@ -4,17 +4,24 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 The application displays cards with items' details and allows to manage the data, including add, delete and modify options.
 
-The app creates links with gps coordinates per entered address.
+The app builds map links per entered address and it has an option to update item's image.
 
-Also, it has an option to find and update item's image.
+Widgets bar displays data extracted from the third-party APIs, for example, chip flights, direct flights.
+
+The Dashboard renders analytical charts.
 
 
 ### Main libraries and techniques:
 
 - [Bootstrap 4](https://getbootstrap.com/docs/4.4/getting-started/introduction/) and Font Awesome Web Application icons for   design and styling
-- In-memory cache technique to improve app performance
 - [RxJs](https://angular.io/guide/rx-library) to get and manage data
+- In-memory cache technique to improve app performance
+- Simple state management with only Services and RxJS
 - [Nominatim](https://nominatim.org/release-docs/develop/api/Overview/) to find address longitude and latitude dynamically
+- [ngx-xml2json](https://www.npmjs.com/package/ngx-xml2json) package to conver xml data to json
+- [ng2-charts](https://www.npmjs.com/package/ng2-charts) - beautiful charts for Angular2 based on Chart.js
+- [RapidApi](https://rapidapi.com/olehmirosh/api/plerdy/endpoints) endpoints for widgets dynamically loaded data
+- [bituachnet.cma.gov.il](https://bituachnet.cma.gov.il/bituachTsuotUI/Tsuot/UI/dafmakdim.aspx) site data for creating insurance policies analytical charts
 
 ## Views:
 
@@ -23,6 +30,9 @@ Also, it has an option to find and update item's image.
 - Person Edit/Add
 - Navigation bar with search panel
 - Modal Image selector
+- Widgets List
+- Dashboard
+- Main navigation bar
 
 ## Components:
 
@@ -34,6 +44,8 @@ Also, it has an option to find and update item's image.
 - Alert
 - NavSearch
 - ImageModal
+- Widgets
+- Dashboard
 
 ## Services:
 
@@ -41,6 +53,8 @@ Also, it has an option to find and update item's image.
 - GpsCoordinate
 - Alert
 - Modal
+- Widget
+- Analytics
 
 ## Development server
 

@@ -1,0 +1,14 @@
+{
+    "amount": "1.0000",
+    "base_currency_code": "EUR",
+    "base_currency_name": "Euro",
+    "rates": {
+        "GBP": {
+            "currency_name": "Pound Sterling",
+            "rate": "0.8528",
+            "rate_for_amount": "0.8528"
+        }
+    },
+    "status": "success",
+    "updated_date": "2020-01-20"
+}

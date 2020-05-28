@@ -59,7 +59,7 @@ export class PersonListStore extends Store<PersonListState> {
     }
 }
 
-export const personListSelect = (state: Observable<PersonListState>) => state.pipe(map(st => st.list)) ;
+export const personListSelect$ = (state: Observable<PersonListState>) => state.pipe(map(st => st.list)) ;
 export const messageSelect = (state: PersonListState) => state.message;
 
 

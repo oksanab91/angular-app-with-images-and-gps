@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { FlightFilter, City, Iata } from '@models/models';
+import { RestApiService } from './rest-api.service';
 import configRapidapi from 'src/app/config.rapidapi';
 
 
@@ -8,68 +9,48 @@ import configRapidapi from 'src/app/config.rapidapi';
   providedIn: 'root'
 })
 export class ApiFlightWidgetService {
-  private headers: HttpHeaders;
-  private x_rapidapi_host: string;
-  private x_rapidapi_key: string;
-  private x_access_token: string;
-
   constructor(private http: HttpClient) {
-    this.x_access_token = configRapidapi.x_access_token;
-    this.x_rapidapi_host = configRapidapi.x_rapidapi_flight_host;
-    this.x_rapidapi_key = configRapidapi.x_rapidapi_key;
-   }
-
-   private setHeaders() {
-    this.headers = new HttpHeaders({      
-      "x-rapidapi-host": this.x_rapidapi_host,
-      "x-rapidapi-key": this.x_rapidapi_key,
-      "x-access-token": this.x_access_token      
-    });
-   }
-
-  fetchChipFlights(filter: FlightFilter) {    
-    this.setHeaders();
-    let url = "../../assets/chip-flights-search.json";
-
-    if(configRapidapi.environment != 'dev') 
-      url = `https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/v1/prices/cheap?destination=-&origin=${filter.origin}` +
-      `&depart_date=${filter.depart_date || ''}&return_date=${filter.return_date  || ''}&currency=${filter.currency || 'USD'}&page=${filter.page || 'None'}`;
-
-    return this.http.get(url,  {headers: this.headers});
   }
 
-  fetchDirectFlights(filter: FlightFilter) {    
-    this.setHeaders();
-    let url = "../../assets/flights-search.json";
-    
-    if(configRapidapi.environment != 'dev') 
-      url = `https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/v1/prices/direct/?` +
-        `return_date=${filter.return_date || ''}&depart_date=${filter.depart_date || ''}&destination=${filter.destination}&origin=${filter.origin}`;
-    
-    return this.http.get(url,  {headers: this.headers});
+  fetchChipFlights(filter: FlightFilter) {    
+    const api = new RestApiService(this.http, 'chip-flights-search.json');
+    api.apiHost = configRapidapi.x_rapidapi_flight_host;
+    api.accessToken = configRapidapi.x_access_token;
+    api.setHeaders();
+    api. url = `https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/v1/prices/cheap?destination=-&origin=${filter.origin}` +
+      `&depart_date=${filter.depart_date || ''}&return_date=${filter.return_date  || ''}&currency=${filter.currency || 'USD'}&page=${filter.page || 'None'}`;   
+
+    return api.fetch();
+  }
+
+  fetchDirectFlights(filter: FlightFilter) {
+    const api = new RestApiService(this.http, 'flights-search.json');
+    api.apiHost = configRapidapi.x_rapidapi_flight_host;
+    api.accessToken = configRapidapi.x_access_token;
+    api.setHeaders();
+    api.url = `https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/v1/prices/direct/?` +
+      `return_date=${filter.return_date || ''}&depart_date=${filter.depart_date || ''}&destination=${filter.destination}&origin=${filter.origin}`;
+        
+    return api.fetch();
   }
 
   fetchIata() {
-    let url = "../../assets/iata-search.json";
-    this.headers = new HttpHeaders({
-      "x-rapidapi-host": configRapidapi.x_rapidapi_iata_host,
-      "x-rapidapi-key": this.x_rapidapi_key
-    });
-
-    if(configRapidapi.environment != 'dev') 
-      url = 'https://iata-and-icao-codes.p.rapidapi.com/airlines';
+    const api = new RestApiService(this.http, 'iata-search.json');
+    api.apiHost = configRapidapi.x_rapidapi_iata_host;
+    api.url = 'https://iata-and-icao-codes.p.rapidapi.com/airlines';
+    api.setHeadersShort();
     
-    return this.http.get<Iata[]>(url,  {headers: this.headers});
+    return api.fetch<Iata[]>();
   }
   
-  fetchCities() {
-    this.setHeaders();
-    let url = "../../assets/city-search.json";
-
-    if(configRapidapi.environment != 'dev')
-      url = `https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/data/en-GB/cities.json`;
-
-    return this.http.get<City[]>(url, {headers: this.headers});
+  fetchCities() {    
+    const api = new RestApiService(this.http, 'city-search.json');
+    api.apiHost = configRapidapi.x_rapidapi_flight_host;
+    api.accessToken = configRapidapi.x_access_token;
+    api.setHeaders();
+    api.url = `https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/data/en-GB/cities.json`;
+        
+    return api.fetch<City[]>();
   }
 
   fetchAutoCompleteCity() {

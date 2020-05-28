@@ -15,7 +15,7 @@ export class Flight {
     return_at: string; //2020-10-17T19:20:00Z,
     expires_at: string; //2020-05-10T12:16:00Z
     cityOrigin: City;
-    cityDestination: City;
+    cityDestination?: City;
     currency: string;
 }
 
@@ -29,9 +29,14 @@ export class FlightFilter {
     displayCount: number;
 }
 
+export interface IFilter{
+    fl: FlightFilter | null;
+} 
+
+
 export class City {
     time_zone: string;
-    name: string;
+    name?: string;
     coordinates: GpsCoordinate;
     code: string;
     name_translations: {key: string, value: string};

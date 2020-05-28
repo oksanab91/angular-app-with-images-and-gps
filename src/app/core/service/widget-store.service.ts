@@ -53,9 +53,12 @@ export class WidgetStoreService {
 
   //============= Flights ===================
   mapCity(city: City): City {
-    const url = `https://www.google.com/maps/search/?api=1&query=${city.coordinates.lat},${city.coordinates.lon}`;  
-    return {...city, googleMapUrl: url };
-  } 
+    let url = '';
+    if(city.coordinates) url = `https://www.google.com/maps/search/?api=1&query=${city.coordinates.lat},${city.coordinates.lon}`;
+
+    return {...city, googleMapUrl: url, name: !city.name ? '' : city.name };    
+  }
+
   getChipFlights(filter: FlightFilter) {
     return this.widgetService.fetchChipFlights(filter).pipe(map(
       response => {
@@ -77,42 +80,46 @@ export class WidgetStoreService {
   getDirectFlights(filter: FlightFilter) {    
     return this.widgetService.fetchDirectFlights(filter).pipe(map(
       response => {         
-          if(response['success']) {            
-            const data = response['data'];
-            const flightsCollect = this.mapFlightsCollection(data, filter);
-          
-            return this.filterFlights(flightsCollect, filter.displayCount);
-          }            
-          else{
-            return "Server returned error " + response['error'];
-          }    
+        if(response['success']) {
+          const data = response['data'];
+          const flightsCollect = this.mapFlightsCollection(data, filter);
+        
+          return this.filterFlights(flightsCollect, filter.displayCount);
+        }
+        else{
+          return "Server returned error " + response['error'];
+        }
       }
     ),
     catchError(error => { return of(null); })
     );
   }  
 
-  private getCities(): Observable<City[]> {
-    return this.widgetService.fetchCities().pipe(
-      map(response => {        
-        const data = response.map(item => this.mapCity(item));
+  private getCities() {
+    return this.widgetService.fetchCities().pipe(map(
+      (response) => {        
+        // const res = response.filter(i => i.name != null);        
+        const data = response.map(item => this.mapCity(item) );        
         this.cities = [...data];
 
         return this.cities;
       }),
       shareReplay(),    
-      catchError(error => { return of(null); })
+      catchError(error => {
+        console.log(error);
+        return of([]); 
+      })
     );
   }
 
   getIatas(): Observable<Iata[]> {
     return this.widgetService.fetchIata().pipe(
-      map(response => {        
+      map(response => {                
         this.iata = [...response];
 
         return this.iata;
       }),
-    catchError(error => { return of(null); })
+    catchError(error => { return of([]); })
     );
   }
 

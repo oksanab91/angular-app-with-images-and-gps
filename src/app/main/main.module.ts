@@ -17,13 +17,16 @@ import { NavMainComponent } from '../nav-main/nav-main.component';
     WidgetModule,    
     RouterModule.forChild([
       { path: '', component: MainLayoutComponent,
-        children: [
+        children: [          
           { path: '', component: HomeComponent },        
           { path: 'edit/:id',
             loadChildren: () => import('../item-edit/person-edit.module').then(m => m.PersonEditModule)
           },
           { path: 'add/:id',
             loadChildren: () => import('../item-edit/person-edit.module').then(m => m.PersonEditModule)
+          },
+          { path: 'analytic',
+            loadChildren: () => import('../analytic/analytic.module').then(m => m.AnalyticModule)
           }
         ]}     
     ])
