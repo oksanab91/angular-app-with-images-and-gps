@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit{
   widgetList$: Observable<Flight[]>;
   widgetJobsList$: Observable<JobBasic[]>;
   values$: Observable<any>;
-  widgettoDisplay = 'chipflights'; //'greenhousejobs' 'chipflights' 'remotivejobs'
+  widgettoDisplay = 'greenhousejobs'; //'greenhousejobs' 'chipflights' 'remotivejobs'
   //widget setting - to display one type of widgets ??
   showFlights = this.widgettoDisplay === 'chipflights' || this.widgettoDisplay === 'directflights';
   showJobs = this.widgettoDisplay === 'remotivejobs' || this.widgettoDisplay === 'greenhousejobs';
