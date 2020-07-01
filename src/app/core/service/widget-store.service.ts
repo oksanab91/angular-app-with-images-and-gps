@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
-import { City, FlightFilter, Flight, IFlights, Iata } from '@models/models';
+import { City, FlightFilter, Flight, IFlights, Iata, JobRemote, JobFilter, JobGreenhouse, JobBasic } from '@models/models';
 import { ApiFlightWidgetService } from './api-flight-widget.service';
 import { Observable, of } from 'rxjs';
 import { map, catchError, shareReplay } from 'rxjs/operators';
+import { JobSearchService } from './api-job-search.service';
+import configJobs from 'src/app/config.job-search-api';
+import { HelperService } from './helper.service';
 
 
 @Injectable({
@@ -10,11 +13,15 @@ import { map, catchError, shareReplay } from 'rxjs/operators';
 })
 export class WidgetStoreService {
   private cities: City[] = [];
-  private iata: Iata[] = [];
+  private iata: Iata[] = [];  
+  private jobCategories: any[] = [];
   private cities$: Observable<City[]> = null;
-  private iata$: Observable<Iata[]> = null;
+  private iata$: Observable<Iata[]> = null;  
+  private jobCategories$: Observable<any[]> = null;
 
-  constructor(private widgetService: ApiFlightWidgetService) {
+  constructor(private widgetService: ApiFlightWidgetService, 
+              private jobSearchService: JobSearchService,
+              private helper: HelperService) {
   }
 
   getIata(code: string): Iata {
@@ -35,6 +42,10 @@ export class WidgetStoreService {
     return this.iataList;
   }
 
+  loadJobCategories(): Observable<any[]> {
+    return this.jobCategoryList;
+  }
+
   private get cityList(): Observable<City[]> {    
     if (this.cities.length > 0) return of(this.cities);
     else if(this.cities$) return this.cities$;
@@ -51,11 +62,17 @@ export class WidgetStoreService {
     return this.iata$;
   }
 
+  private get jobCategoryList(): Observable<any[]> {    
+    if (this.jobCategories.length > 0) return of(this.jobCategories);
+    else if(this.jobCategories$) return this.jobCategories$;
+
+    this.jobCategories$ = this.getJobCategories();
+    return this.jobCategories$;
+  }
+
   //============= Flights ===================
   mapCity(city: City): City {
-    let url = '';
-    if(city.coordinates) url = `https://www.google.com/maps/search/?api=1&query=${city.coordinates.lat},${city.coordinates.lon}`;
-
+    const url = this.widgetService.getMappedCityUrl(city);    
     return {...city, googleMapUrl: url, name: !city.name ? '' : city.name };    
   }
 
@@ -98,7 +115,6 @@ export class WidgetStoreService {
   private getCities() {
     return this.widgetService.fetchCities().pipe(map(
       (response) => {        
-        // const res = response.filter(i => i.name != null);        
         const data = response.map(item => this.mapCity(item) );        
         this.cities = [...data];
 
@@ -123,7 +139,124 @@ export class WidgetStoreService {
     );
   }
 
-  // ====================================  
+  getRemotiveJobSearch(filter: JobFilter) {
+    return this.jobSearchService.fetchRemotiveJobSearch(filter).pipe(map(      
+      response => {        
+        if(response['jobs']) {          
+          const jobs = response['jobs'];
+          const data = this.filterJobs(jobs, 10);
+          return [...data];
+        }
+        else{
+          return "Server returned error " + response['error'];
+        }
+      }
+    ),
+    catchError(error => {
+      console.log(error)
+      return of(null); })
+    );
+  }  
+
+  getJobCategories(): Observable<any[]> {
+    return this.jobSearchService.fetchJobCategory().pipe(
+      map( response => {              
+        this.jobCategories = [...response['jobs']]
+        return this.jobCategories
+      }),     
+      catchError(error => { return of([]); })
+    );
+  }
+  
+  getGreenhouseJobs(filter: JobFilter) {    
+    return this.jobSearchService.fetchGreenHouseJobs(filter).pipe(map(      
+      response => {        
+        if(response['jobs']) {          
+          let jobs = response['jobs'];
+         
+          jobs = jobs.map(i => {
+            return {...i, location: i.location['name']}           
+          }) as JobGreenhouse[]
+
+          const data = this.filterGreenhouseJobs(jobs, 10);
+          return [...data];
+        }
+        else{
+          return "Server returned error " + response['error'];
+        }
+      }
+    ),
+    catchError(error => {
+      console.log(error)
+      return of(null); })
+    );
+  }  
+
+  private mapRemoteJob(job: JobRemote): JobBasic {
+    return {
+      id: job.id,
+      url: job.url,
+      title: job.title,
+      salary: job.salary,          
+      location: job.candidate_required_location,
+      date: job.publication_date,
+      description: job.description,
+      company_name: job.company_name,
+      category: '',
+      tags: [],
+      job_type: '',
+      site: configJobs.remotive_host //'Remotive.io'         
+    }       
+  }
+
+  private filterGreenhouseJobs(collect: JobGreenhouse[], count?: number) {
+    let list = collect.filter(val =>
+      {
+        if(val.location.toLowerCase() === 'anywhere' || val.location.toLowerCase() === 'remote'){
+          return this.helper.calculateDateDiff('', val.updated_at) < 8
+        }
+      }          
+    )      
+    .sort((a, b) => {
+      const aDate = new Date(a.updated_at).getTime()
+      const bDate = new Date(b.updated_at).getTime()        
+      return bDate - aDate
+    })
+    .map(v => {
+      return {
+        id: v.id,
+        url: v.absolute_url,
+        title: v.title,
+        salary: v.salary,          
+        location: v.location,
+        date: v.updated_at,
+        description: v.description,
+        company_name: v.company_name,
+        category: '',
+        tags: [],
+        job_type: '',
+        site: configJobs.greenhouse_host //'Greenhouse.io'         
+      }                
+    })
+
+    count = (count && count > list.length) ? list.length : count || 0 ;    
+    let cl  =[...list.slice(0, count)];
+
+    return cl;
+  }
+
+  private filterJobs(collect: JobRemote[], count?: number) {
+    let list = collect.filter(val => {
+      if(val.candidate_required_location.toLowerCase() === 'anywhere'){        
+        return this.helper.calculateDateDiff('', val.publication_date) < 8      
+      }
+    })
+    count = (count && count > list.length) ? list.length : count || 0 ;    
+    let cl  =[...list.slice(0, count)].map(j => this.mapRemoteJob(j))
+
+    return cl;
+  }  
+  
   private mapFlightsCollection(data: JSON, filter: FlightFilter) {
     let flightsArr: Flight[] = [];
     let flightsCollect: IFlights[] = [];

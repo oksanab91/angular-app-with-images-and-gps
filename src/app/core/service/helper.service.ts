@@ -15,4 +15,14 @@ export class HelperService {
         
     return obj
   }
+
+  calculateDateDiff(a: string, b: string){
+    let dif = 0
+    const aday=1000*60*60*24;
+
+    if(!a) dif = Date.now() - new Date(b).getTime()    
+    if(a) dif = new Date(a).getTime() - new Date(b).getTime()
+               
+    return Math.round(dif/aday)
+  }
 }

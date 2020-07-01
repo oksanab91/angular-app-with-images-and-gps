@@ -2,7 +2,7 @@ import { Store } from './store';
 import { PersonListStore, personListSelect$, messageSelect, personSelect, pictureSelect } from './person-list.store';
 import { ModalImageStore } from './modal-image.store';
 import { PersonListState, PersonState, ModalImageState, WidgetFlightState, CurrencyQuakeState, CurrencyConverterState } from './store-state';
-import { flightsSelect$, citiesSelect, iataSelect, showSelect$, showSelect } from './widget.store';
+import { flightsSelect$, citiesSelect, iataSelect, showSelect$, showSelect, showJobsSelect$, jobSearchSelect$, greenhouseJobsSelect$ } from './widget.store';
 import { currencyQuakeSelect$, currencyConvertSelect$, insuranceDynamicsSelect$, dynamicsChartSelect$, dynamicsChartFilledSelect$ } from './analytic.store';
 
 export const stores = [
@@ -11,7 +11,7 @@ export const stores = [
     CurrencyConverterState, personListSelect$, messageSelect, personSelect, pictureSelect, 
     flightsSelect$, citiesSelect, iataSelect, showSelect$, showSelect,
     currencyQuakeSelect$, currencyConvertSelect$, insuranceDynamicsSelect$, 
-    dynamicsChartSelect$, dynamicsChartFilledSelect$
+    dynamicsChartSelect$, dynamicsChartFilledSelect$, showJobsSelect$, jobSearchSelect$, greenhouseJobsSelect$
 ];
 
 export * from './store';

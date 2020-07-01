@@ -1,4 +1,4 @@
-import { Person, Alert, Picture, Flight, FlightFilter, City, Iata, CurrConverterFilter, CurrencyConverter, IInsuranceRowSet } from '@models/models';
+import { Person, Alert, Picture, Flight, FlightFilter, City, Iata, CurrConverterFilter, CurrencyConverter, IInsuranceRowSet, JobRemote, JobFilter, JobGreenhouse, JobBasic } from '@models/models';
 import { CurrencyQuake } from '@models/models';
 import { LineChart } from 'src/app/analytic/line-chart';
 import { Color } from 'ng2-charts';
@@ -28,6 +28,14 @@ export class WidgetFlightState {
   citiesLoaded: boolean;
   message: string;
   show: boolean;
+}
+
+export class WidgetJobSearchState {
+  remoteJobs: JobBasic[]
+  greenHousejobs: JobBasic[] 
+  filter: JobFilter
+  message: string
+  show: boolean; 
 }
 
 // to do ========================

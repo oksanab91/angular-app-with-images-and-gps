@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WidgetStore } from '@core/store';
+import { WidgetStore, WidgetJobSearchStore } from '@core/store';
 
 @Component({
   selector: 'nav-main',
@@ -8,7 +8,7 @@ import { WidgetStore } from '@core/store';
 })
 export class NavMainComponent implements OnInit {
   widgetsShow: boolean
-  constructor(private widgetStore: WidgetStore) { }
+  constructor(private widgetStore: WidgetStore, private widgetJobStore: WidgetJobSearchStore) { }
 
   ngOnInit(): void {
   }
@@ -16,6 +16,7 @@ export class NavMainComponent implements OnInit {
   onWidgetsShow() {
     this.widgetsShow = !this.widgetsShow;
     this.widgetStore.setShow(this.widgetsShow);    
+    this.widgetJobStore.setShow(this.widgetsShow);
   }
 
 }

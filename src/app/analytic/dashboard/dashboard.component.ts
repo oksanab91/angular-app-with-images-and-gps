@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     colors: [
       {
         borderColor: 'rgba(179, 0, 0, 1)',
-        backgroundColor: 'rgba(179, 0, 0, 0.2)',
+        backgroundColor: 'rgba(204, 0, 0, 0.2)',
         borderWidth: 1
       },
       {
@@ -43,8 +43,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
         borderWidth: 1
       },
       {
-        borderColor: 'rgba(0, 51, 153, 1)',
-        backgroundColor: 'rgba(0, 51, 153, 0.2)',
+        borderColor: 'rgba(51, 102, 204, 1)',
+        backgroundColor: 'rgba(51, 102, 204, 0.2)',
         borderWidth: 1
       },      
       {
@@ -53,13 +53,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
         borderWidth: 1
       },
       {
-        borderColor: 'rgba(115, 0, 153, 1)',
-        backgroundColor: 'rgba(115, 0, 153, 0.2)',
+        borderColor: 'rgba(204, 0, 102, 1)',
+        backgroundColor: 'rgba(204, 0, 102, 0.2)',
         borderWidth: 1
       },
       {
-        borderColor: 'rgba(51, 51, 51, 1)',
-        backgroundColor: 'rgba(51, 51, 51, 0.2)',
+        borderColor: 'rgba(204, 51, 0, 1)',
+        backgroundColor: 'rgba(204, 51, 0, 0.2)',
         borderWidth: 1
       },
       {

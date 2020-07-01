@@ -29,11 +29,6 @@ export class FlightFilter {
     displayCount: number;
 }
 
-export interface IFilter{
-    fl: FlightFilter | null;
-} 
-
-
 export class City {
     time_zone: string;
     name?: string;

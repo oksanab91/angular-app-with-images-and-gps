@@ -1,3 +1,4 @@
+@import "abstracts/app-variables";
 @import "components/cards";
 @import "components/button";
 
@@ -9,4 +10,9 @@
     :host {
         padding: 0
     }
+}
+
+.block-info h5{
+    word-break: break-word;
+    padding-right: 5px;
 }

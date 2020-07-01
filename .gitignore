@@ -46,9 +46,12 @@ testem.log
 .DS_Store
 Thumbs.db
 
-src/assets/analytic
+src/assets
+proxy.conf.json
 config.rapidapi.ts
 config.analytics.ts
+config.gps.ts
+config.job-search-api.ts
 src/app/analytic/service/api-analytic.service.ts
 src/app/analytic/service/analytic-insurance.service.ts
 src/app/models/analytic-insurance.ts

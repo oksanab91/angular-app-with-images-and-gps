@@ -1,21 +1,29 @@
 import { Injectable } from '@angular/core';
 import { Store } from './store';
-import { WidgetFlightState } from './store-state';
-import { FlightFilter } from '@models/models';
+import { WidgetFlightState, WidgetJobSearchState } from './store-state';
+import { FlightFilter, JobFilter } from '@models/models';
 import { Observable, concat } from 'rxjs';
 import { WidgetStoreService } from '@core/service';
 import { map } from 'rxjs/operators';
 
 
 const InitWidgetState: WidgetFlightState = {
-    flights: [],    
-    filter: new FlightFilter(),
+    flights: [],
     cities: [],
     iata: [],
+    filter: new FlightFilter(),
     citiesLoaded: false,
     message: null,
     show: false
 };
+
+const InitWidgetJobsState: WidgetJobSearchState = {
+    remoteJobs: [],
+    greenHousejobs: [],   
+    filter: new JobFilter,
+    message: '',
+    show: false
+}
 
 @Injectable({
     providedIn: 'root'
@@ -126,3 +134,88 @@ export const iataSelect = (state: WidgetFlightState) => state.iata;
 export const showSelect$ = (state: Observable<WidgetFlightState>) => state.pipe(map(st => st.show));
 export const showSelect = (state: WidgetFlightState) => state.show;
 
+
+@Injectable({
+    providedIn: 'root'
+})
+export class WidgetJobSearchStore extends Store<WidgetJobSearchState> {    
+    constructor (private mutator: WidgetStoreService) {
+        super(new WidgetJobSearchState());
+        this.setState( InitWidgetJobsState );        
+    }
+
+    reset() {        
+        this.setState({
+            ...InitWidgetJobsState
+        });  
+    }
+
+    setShow(show: boolean) {
+        this.setState({
+            ...this.state,
+            show: show
+        });
+    }
+
+    setFilter(filter: JobFilter) {
+        this.setState({
+            ...this.state,
+            filter: {...filter}
+        });
+    }
+
+    clearFilter() {
+        this.setState({
+            ...this.state,
+            filter: new JobFilter()
+        });
+    }
+
+    getRemotiveJobSearch (): Observable<WidgetJobSearchState> {        
+        const getData = this.mutator.getRemotiveJobSearch(this.state.filter);        
+
+        return getData.pipe(map(data => {                        
+            this.setState({
+                ...this.state,
+                remoteJobs: data
+            });
+            return this.state;
+        }));
+    }
+
+    getGreenhouseJobs (): Observable<WidgetJobSearchState> {        
+        const getData = this.mutator.getGreenhouseJobs(this.state.filter);        
+
+        return getData.pipe(map(data => {            
+            this.setState({
+                ...this.state,
+                greenHousejobs: data
+            });
+            return this.state;
+        }));
+    }
+
+    // getJobCategories (): Observable<WidgetJobSearchState> {        
+    //     const getData = this.mutator.loadJobCategories();
+
+    //     return getData.pipe(map(data => {
+    //         this.setState({
+    //             ...this.state,
+    //             categories: [...data]
+    //         });
+    //         return this.state;
+    //     }));
+    // }
+
+    // getJobSearchFull(): Observable<WidgetJobSearchState> {
+    //     const jobs = this.getRemotiveJobSearch();
+    //     const categories = this.getJobCategories();
+    //     const iata = this.getIata();
+
+    //     return concat(categories, iata, jobs);
+    // }
+}
+
+export const jobSearchSelect$ = (state: Observable<WidgetJobSearchState>) => state.pipe(map(st => st.remoteJobs));
+export const greenhouseJobsSelect$ = (state: Observable<WidgetJobSearchState>) => state.pipe(map(st => st.greenHousejobs));
+export const showJobsSelect$ = (state: Observable<WidgetJobSearchState>) => state.pipe(map(st => st.show));

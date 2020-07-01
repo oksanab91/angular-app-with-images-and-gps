@@ -5,7 +5,7 @@ import { SharedModule } from '@shared/shared.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ApiAnalyticService } from './service/api-analytic.service';
 import { AnalyticStore } from '@core/store/analytic.store';
-import { HelperService } from './helper.service';
+import { HelperService } from '@core/service/helper.service';
 
 
 @NgModule({

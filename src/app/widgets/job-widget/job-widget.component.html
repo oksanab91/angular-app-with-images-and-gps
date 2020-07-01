@@ -1,0 +1,38 @@
+
+<div class="accordion widget-card" id="card-accordion">
+  <div class="card">    
+    <div class="card-header" id="accordionHeading">
+      <a class="card-link" data-toggle="collapse" data-target="#collapsePanel" 
+        aria-expanded="true" aria-controls="collapsePanel" (click) = "collapse()">
+
+        <div class="card-block block-info">
+          <h5>
+            {{widget.title}}
+          </h5>
+          <h5><i class="fas fa-briefcase fa-sm"></i></h5>
+        </div>          
+      </a>
+    </div>
+  
+    <div id="collapsePanel" [ngClass]="show? 'show' : 'collapse'" aria-labelledby="headingOne" data-parent="#card-accordion">
+      <div class="card-body">          
+        <div class="card-block block-widget">
+          <h5 class="card-title">{{widget.company_name}}</h5>            
+          <a href="{{widget.url}}" class="maps-link" aria-label="Map">
+            <i class="fas fa-map-marked-alt fa-sm"></i>
+            <span class="card-text text-muted">  {{widget.site}}</span>              
+          </a>            
+        </div>
+
+        <div class="card-block">
+          <h6 class="card-subtitle">{{widget.location}}</h6>
+          <div class="card-block block-widget">              
+            <p class="card-text text-muted">Salary: {{widget.salary | currency: 'USD'}}</p>            
+            <p class="card-text text-muted"><b>Published: </b>{{widget.date | date: "MMM d, y"}}</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

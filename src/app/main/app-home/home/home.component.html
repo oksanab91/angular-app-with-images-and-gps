@@ -6,8 +6,16 @@
       <person-list [personList]="personList$ | async"></person-list>
     </div>
 
-    <div class="col-lg-2 col-md-4 col-sm-3 col-12 clear-all">       
-      <flight-widget [flights]="widgetList$ | async" *ngIf="(widgetsShow$ | async)"></flight-widget>
+    <div class="col-lg-2 col-md-4 col-sm-3 col-12 clear-all">
+      <ng-container *ngIf="(widgetsShow$ | async) && (values$ | async) as values">
+
+        <flight-widgets *ngIf="showFlights" [flights]="widgetList$ | async">
+        </flight-widgets>
+
+        <job-widgets *ngIf="showJobs" [jobs]="widgetJobsList$ | async">          
+        </job-widgets>
+
+      </ng-container>
     </div>
   </div>    
 </div>

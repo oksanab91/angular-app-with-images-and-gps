@@ -1,12 +1,12 @@
-@import "layout/containers";
+@import "components/cards";
+@import "components/button";
 
-
-.row-list {   
-    padding: $paddingSmall $paddingSmall $paddingSmall 0
+:host {
+    padding: $paddingSmall $paddingSmall 0 0
 }
 
-@media screen and (max-width: 800px) {  
-    .row-list {        
-        padding: $paddingSmall 0 0 0;
+@media screen and (max-width: 800px) {
+    :host {
+        padding: 0
     }
 }

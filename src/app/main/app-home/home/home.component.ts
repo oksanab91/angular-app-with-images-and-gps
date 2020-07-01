@@ -1,53 +1,98 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PersonListStore, WidgetStore, personListSelect$, flightsSelect$, showSelect$ } from '@core/store';
-import { FlightFilter, Person, Flight } from '../../../models';
-import { Subscription, Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { PersonListStore, WidgetStore, WidgetJobSearchStore, 
+          personListSelect$, flightsSelect$, showSelect$, 
+          showJobsSelect$, jobSearchSelect$, greenhouseJobsSelect$,
+        } from '@core/store';
+import { FlightFilter, Person, Flight, JobFilter, JobBasic } from '../../../models';
+import { Observable, forkJoin, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit, OnDestroy{  
+export class HomeComponent implements OnInit{  
   filter: FlightFilter;
-  widgetShow: boolean;
+  jobsFilter: JobFilter;
   widgetsShow$: Observable<boolean>;
-  subscription: Subscription;
+  widgetsJobsShow$: Observable<boolean>;
   personList$: Observable<Person[]>;
   widgetList$: Observable<Flight[]>;
+  widgetJobsList$: Observable<JobBasic[]>;
+  values$: Observable<any>;
+  widgettoDisplay = 'chipflights'; //'greenhousejobs' 'chipflights' 'remotivejobs'
+  //widget setting - to display one type of widgets ??
+  showFlights = this.widgettoDisplay === 'chipflights' || this.widgettoDisplay === 'directflights';
+  showJobs = this.widgettoDisplay === 'remotivejobs' || this.widgettoDisplay === 'greenhousejobs';
 
-  constructor(public store: PersonListStore, public widgetStore: WidgetStore) { }
+  constructor(public store: PersonListStore, public widgetStore: WidgetStore, public widgetJobsStore: WidgetJobSearchStore) { }
 
-  ngOnInit() {
-    this.filter = new FlightFilter();
-    this.filter = {...this.filter, destination: 'HRK', origin: 'TLV', displayCount: 5, currency: 'USD'};    
-    this.widgetStore.setFilter(this.filter);
-    this.widgetStore.setShow(false);
-    
+  ngOnInit() {    
+    this.initWidgetFlights()
+    this.initWidgetJobs()
+
     this.personList$ = personListSelect$(this.store.state$)
     this.widgetList$ = flightsSelect$(this.widgetStore.state$)
-    this.widgetsShow$ = showSelect$(this.widgetStore.state$)
-    
-    this.getDirectFlights();
+    if(this.widgettoDisplay === 'remotivejobs')
+      this.widgetJobsList$ = jobSearchSelect$(this.widgetJobsStore.state$)
+    else if(this.widgettoDisplay === 'greenhousejobs')
+      this.widgetJobsList$ = greenhouseJobsSelect$(this.widgetJobsStore.state$)   
+   
+    this.getCombine()
   }
 
-  ngOnDestroy() {
-    if(this.subscription) this.subscription.unsubscribe();
+  initWidgetFlights() {
+    this.filter = new FlightFilter(); //CNS, DRW, NAN
+    this.filter = {...this.filter, destination: 'CNS', origin: 'SYD', displayCount: 10, currency: 'AUD'};    
+    this.widgetStore.setFilter(this.filter);
+    this.widgetStore.setShow(false);
+    this.widgetsShow$ = showSelect$(this.widgetStore.state$)   
+  }
+
+  initWidgetJobs() {
+    this.jobsFilter = new JobFilter();
+    this.jobsFilter = {...this.jobsFilter,
+      candidate_required_location: 'anywhere', 
+      category: 'software-dev', 
+      tags: 'c-sharp,.net,angular,javascript,css,php,java', 
+      displayCount: 60};
+
+    this.widgetJobsStore.setFilter(this.jobsFilter);
+    this.widgetJobsStore.setShow(false);
+    this.widgetsJobsShow$ = showJobsSelect$(this.widgetJobsStore.state$)    
   }
   
-  getDirectFlights() {    
-    if(this.subscription) this.subscription.unsubscribe();
-    this.subscription = this.widgetStore.getDirectFlightsFull().subscribe();
+  getCombine() {
+    this.values$ = forkJoin(
+      this.getChipFlights(),
+      this.getDirectFlights(),
+      this.getJobs(),
+      this.getGreenhouseJobs()
+    ).pipe(
+      map(([first, second, third, fourth]) => {        
+        return { first, second, third, fourth };
+      })
+    );
+  }
+  getJobs() {
+    if(this.widgettoDisplay === 'remotivejobs') return this.widgetJobsStore.getRemotiveJobSearch();
+    return of(null)
   }
 
-  getChipFlights() {    
-    if(this.subscription) this.subscription.unsubscribe();
-    this.subscription = this.widgetStore.getChipFlightsFull().subscribe();
+  getGreenhouseJobs() {
+    if(this.widgettoDisplay === 'greenhousejobs') return this.widgetJobsStore.getGreenhouseJobs();
+    return of(null)
   }
 
-  onWidgetShow() {
-    this.widgetShow = !this.widgetShow;
-    this.widgetStore.setShow(this.widgetShow);    
+  getDirectFlights() {
+    if(this.widgettoDisplay === 'directflights') return this.widgetStore.getDirectFlightsFull();
+    return of(null)
+  }
+
+  getChipFlights() {
+    if(this.widgettoDisplay === 'chipflights') return this.widgetStore.getChipFlightsFull();
+    return of(null)    
   }
   
 }

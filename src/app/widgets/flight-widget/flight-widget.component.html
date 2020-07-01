@@ -1,7 +1,44 @@
-<div class="container-fluid list-container-fluid">
-    <div class="row row-list">      
-        <ng-container *ngFor="let flight of flights; trackBy: trackByFn">
-            <widget [widget]="flight" class="col-md-12"></widget>
-        </ng-container>
+<div class="accordion widget-card" id="card-accordion">
+  <div class="card">    
+    <div class="card-header" id="accordionHeading">
+      <a class="card-link" data-toggle="collapse" data-target="#collapsePanel" 
+        aria-expanded="true" aria-controls="collapsePanel" (click) = "collapse()">
+
+        <div class="card-block block-info">
+          <h5>
+            {{widget.cityDestination?.name}}
+          </h5>
+          <h5><i class="fab fa-fly"></i></h5>
+        </div>
+        <h5>{{widget.price | currency : widget.currency}}</h5>
+      </a>
+    </div>
+
+    <div id="collapsePanel" [ngClass]="show? 'show' : 'collapse'" aria-labelledby="headingOne" data-parent="#card-accordion">
+      <div class="card-body">
+        
+        <div class="card-block">
+          <h5 class="card-title">{{widget.airline}}</h5>            
+          <a href="{{widget.cityDestination?.googleMapUrl}}" class="maps-link" *ngIf="hasMapUrl()" aria-label="Map">
+            <i class="fas fa-map-marked-alt fa-sm"></i>
+            <span class="card-text text-muted">  {{widget.cityDestination?.name}}</span>
+          </a>          
+          <p class="card-text text-muted">Depart: {{widget.cityOrigin?.name}}</p>
+        </div>
+
+        <div class="card-block">
+          <div class="card-block block-info">
+            <h6 class="card-subtitle">{{widget.price | currency : widget.currency}}</h6>
+            <h6 class="card-subtitle text-muted">{{expiresOffer()}}</h6>
+          </div>
+        </div>
+
+        <div class="card-block block-widget">          
+          <p class="card-text"><b>Depart: </b>{{widget.departure_at | date: "MMM d, y h:mm a"}}</p>          
+          <p class="card-text"><b>Return: </b>{{widget.return_at | date: "MMM d, y h:mm a"}}</p>        
+        </div>
+
+      </div>
     </div>
   </div>
+</div>

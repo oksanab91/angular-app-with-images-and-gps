@@ -39,6 +39,19 @@
         "country_code": "AU"
     },
     {
+        "time_zone": "Australia/Brisbane",
+        "name": "Cairns",
+        "coordinates": {
+            "lon": 145.75404,
+            "lat": -16.876537
+        },
+        "code": "CNS",
+        "name_translations": {
+            "en": "Cairns"
+        },
+        "country_code": "AU"
+    },
+    {
         "time_zone": "Europe/London",
         "name": "London",
         "coordinates": {

@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import configRapidapi from 'src/app/config.rapidapi';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RestApiService {  
-  private headers: HttpHeaders
+  private headers: HttpHeaders = new HttpHeaders()
   apiHost: string
   apiKey: string
   accessToken: string
+  url_devpath: string 
   private apiUrl: string
     
-  constructor(private http: HttpClient, private json: string) {    
-    this.apiKey = configRapidapi.x_rapidapi_key;
+  constructor(private http: HttpClient, private json: string, private environment: string) {    
   }  
 
   setHeaders(): void {
@@ -35,12 +34,18 @@ export class RestApiService {
   setHeadersXML(): void {    
     this.headers = new HttpHeaders({
       'Content-Type': 'text/xml',
-      'Accept': 'application/xml'     
+      'Accept': 'application/xml'
     });
   }
 
-  set url(url: string) {
-    if(configRapidapi.environment === 'dev') this.apiUrl = configRapidapi.url_devpath + this.json;
+  setHeadersTxt(): void {    
+    this.headers = new HttpHeaders({
+      'Content-Type': 'text/plain'      
+    });
+  }
+  
+  set url(url: string) {    
+    if(this.environment === 'dev') this.apiUrl = this.url_devpath + this.json;
     else this.apiUrl = url;    
   }
 
@@ -49,7 +54,7 @@ export class RestApiService {
   }
 
   fetch<T>(): Observable<T> {
-    return this.http.get<T>(this.url,  {headers: this.headers});
+    return this.http.get<T>(this.url,  {headers: this.headers});   
   }
 
   get(): Observable<string> {    

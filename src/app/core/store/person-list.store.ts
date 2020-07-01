@@ -15,8 +15,6 @@ export class PersonListStore extends Store<PersonListState> {
     constructor (private mutator: PersonStoreService) {
         super(new PersonListState());
         this.load();
-
-        // super("todo", new TodoMutators(), new TodoState());
     }
 
     async load () {        

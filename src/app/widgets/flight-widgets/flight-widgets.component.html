@@ -1,0 +1,7 @@
+<div class="container-fluid list-container-fluid">
+    <div class="row row-list">      
+        <ng-container *ngFor="let flight of flights; trackBy: trackByFn">
+            <flight-widget [widget]="flight" class="col-md-12"></flight-widget>
+        </ng-container>
+    </div>
+  </div>

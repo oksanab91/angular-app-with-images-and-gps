@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { GpsCoordinate } from '@models/models';
 import { map, catchError, shareReplay } from 'rxjs/operators';
+import configApi from 'src/app/config.gps';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,7 @@ export class GpsCoordinateService {
   }
 
   fetch(address: string): Observable<GpsCoordinate> {           
-    return this.index().pipe(
+    return this.index(address).pipe(
       map((data: any) => {        
         let gpsData = null;        
         if(data.length>0) gpsData = {lat: data[0].lat, lng: data[0].lon};
@@ -46,14 +47,12 @@ export class GpsCoordinateService {
     );
   }
 
-  index() {
-    //https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyDKvvBgAkSCugEbXckutuAFuqPzthsCnJ8
-    //https://nominatim.openstreetmap.org/search?format=json&q=1600+Amphitheatre+Parkway+Mountain+View+CA+USA
-    //https://nominatim.openstreetmap.org/search?format=json&q=58+La+Guardia+Tel-Aviv+Israel
-    const url = "../../assets/search.json";  
+  index(address: string) {    
+    let url = '';
    
-    // const url = `https://nominatim.openstreetmap.org/search?format=json&q=${address}`;
-        
+    if(configApi.environment === 'dev') url = configApi.url_devpath + 'search.json';
+    else url = `https://${configApi.open_map_host}/search?format=json&q=${address}`;
+            
     return this.http.get(url);
   }
   

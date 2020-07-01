@@ -22,6 +22,8 @@ The Dashboard renders analytical charts.
 - [ng2-charts](https://www.npmjs.com/package/ng2-charts) - beautiful charts for Angular2 based on Chart.js
 - [RapidApi](https://rapidapi.com/olehmirosh/api/plerdy/endpoints) endpoints for widgets dynamically loaded data
 - [bituachnet.cma.gov.il](https://bituachnet.cma.gov.il/bituachTsuotUI/Tsuot/UI/dafmakdim.aspx) site data for creating insurance policies analytical charts
+- [Remotive.io API](https://remotive.io/api-documentation) endpoints for active remote job listings on Remotive job board
+- [Greenhouse.io API](https://www.greenhouse.io/api) to access data from Greenhouse
 
 ## Views:
 
@@ -44,7 +46,7 @@ The Dashboard renders analytical charts.
 - Alert
 - NavSearch
 - ImageModal
-- Widgets
+- Widgets: flights, jobs
 - Dashboard
 
 ## Services:
