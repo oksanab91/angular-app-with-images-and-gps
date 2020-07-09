@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { JobGreenhouse } from '@models/models';
+import { Component, Input } from '@angular/core';
+import { JobBasic } from '@models/models';
 import { slideListInOutAnimation } from 'src/app/app-animations/slideListInOut.animation';
 
 @Component({
@@ -11,7 +11,7 @@ import { slideListInOutAnimation } from 'src/app/app-animations/slideListInOut.a
 })
 export class JobWidgetsComponent {
   
-  @Input() jobs: JobGreenhouse[];
+  @Input() jobs: JobBasic[];
 
   constructor() {    
   }

@@ -216,6 +216,6 @@ export class WidgetJobSearchStore extends Store<WidgetJobSearchState> {
     // }
 }
 
-export const jobSearchSelect$ = (state: Observable<WidgetJobSearchState>) => state.pipe(map(st => st.remoteJobs));
+export const remotejobsSelect$ = (state: Observable<WidgetJobSearchState>) => state.pipe(map(st => st.remoteJobs));
 export const greenhouseJobsSelect$ = (state: Observable<WidgetJobSearchState>) => state.pipe(map(st => st.greenHousejobs));
 export const showJobsSelect$ = (state: Observable<WidgetJobSearchState>) => state.pipe(map(st => st.show));

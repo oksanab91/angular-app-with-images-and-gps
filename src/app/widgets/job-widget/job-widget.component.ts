@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { JobBasic, JobGreenhouse } from '@models/models';
+import { JobBasic } from '@models/models';
 
 @Component({
   selector: 'job-widget',

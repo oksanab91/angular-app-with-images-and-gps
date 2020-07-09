@@ -36,7 +36,7 @@ export class GpsCoordinateService {
     return this.index(address).pipe(
       map((data: any) => {        
         let gpsData = null;        
-        if(data.length>0) gpsData = {lat: data[0].lat, lng: data[0].lon};
+        if(data.length>0) gpsData = {lat: data[0].lat, lon: data[0].lon};
         
         return this.mapCachedGps(address, gpsData as GpsCoordinate);      
       }),

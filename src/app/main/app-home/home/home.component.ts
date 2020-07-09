@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PersonListStore, WidgetStore, WidgetJobSearchStore, 
           personListSelect$, flightsSelect$, showSelect$, 
-          showJobsSelect$, jobSearchSelect$, greenhouseJobsSelect$,
+          showJobsSelect$, remotejobsSelect$, greenhouseJobsSelect$,
         } from '@core/store';
 import { FlightFilter, Person, Flight, JobFilter, JobBasic } from '../../../models';
 import { Observable, forkJoin, of } from 'rxjs';
@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit{
     this.personList$ = personListSelect$(this.store.state$)
     this.widgetList$ = flightsSelect$(this.widgetStore.state$)
     if(this.widgettoDisplay === 'remotivejobs')
-      this.widgetJobsList$ = jobSearchSelect$(this.widgetJobsStore.state$)
+      this.widgetJobsList$ = remotejobsSelect$(this.widgetJobsStore.state$)
     else if(this.widgettoDisplay === 'greenhousejobs')
       this.widgetJobsList$ = greenhouseJobsSelect$(this.widgetJobsStore.state$)   
    
