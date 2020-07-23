@@ -15,15 +15,19 @@
     </div>
   
     <div id="collapsePanel" [ngClass]="show? 'show' : 'collapse'" aria-labelledby="headingOne" data-parent="#card-accordion">
-      <div class="card-body">          
-        <div class="card-block block-widget">
-          <h5 class="card-title">{{widget.company_name}}</h5>            
+      <div class="card-body">
+          
+        <div class="card-block block-widget">          
+          <a *ngIf="companyUrl(); else compName" href="{{companyUrl()}}" class="maps-link" aria-label="Company Url">
+            <h5 class="card-title">{{widget.company_name}}</h5>
+          </a>
+          <ng-template #compName><h5 class="card-title">{{widget.company_name}}</h5></ng-template>
+                      
           <a href="{{widget.url}}" class="maps-link" aria-label="Map">
             <i class="fas fa-map-marked-alt fa-sm"></i>
             <span class="card-text text-muted">  {{widget.site}}</span>              
           </a>            
         </div>
-
         <div class="card-block">
           <h6 class="card-subtitle">{{widget.location}}</h6>
           <div class="card-block block-widget">              

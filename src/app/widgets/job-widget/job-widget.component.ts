@@ -17,4 +17,8 @@ export class JobWidgetComponent {
     this.show = !this.show;
   }
 
+  companyUrl() {
+    if(this.widget.tags.length > 1) return this.widget.tags[1]
+    return ''
+  }
 }

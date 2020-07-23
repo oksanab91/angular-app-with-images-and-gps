@@ -39,5 +39,13 @@ export class JobSearchService {
     return api.fetch<JobGreenhouse[]>()
   }
   
+  fetchGithubJobs() {
+    const api = new RestApiService(this.http, 'github-jobs.json', configJobSearchApi.environment);
+    api.setHeadersJson()       
+    api.url_devpath = configJobSearchApi.url_devpath
+    api.url = configJobSearchApi.base_url + `https://${configJobSearchApi.githubapi_host}/positions.json?&location=Remote&search=developer`   
+            
+    return api.fetch()
+  }
 
 }

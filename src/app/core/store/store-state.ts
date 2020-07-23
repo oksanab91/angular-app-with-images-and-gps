@@ -36,9 +36,10 @@ export class WidgetFlightState {
 
 export class WidgetJobSearchState {
   remoteJobs: JobBasic[]
-  greenHousejobs: JobBasic[] 
+  greenHousejobs: JobBasic[]
+  githubJobs: JobBasic[] 
   filter: JobFilter
-  message: string
+  message: Alert = null
   show: boolean; 
 }
 

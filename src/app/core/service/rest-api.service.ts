@@ -40,7 +40,13 @@ export class RestApiService {
 
   setHeadersTxt(): void {    
     this.headers = new HttpHeaders({
-      'Content-Type': 'text/plain'      
+      'Content-Type': 'text/plain; charset=UTF-8'
+    });
+  }
+
+  setHeadersJson(): void {    
+    this.headers = new HttpHeaders({
+     'Content-Type': 'application/json'      
     });
   }
   

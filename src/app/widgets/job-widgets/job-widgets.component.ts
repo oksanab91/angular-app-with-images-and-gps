@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { JobBasic } from '@models/models';
 import { slideListInOutAnimation } from 'src/app/app-animations/slideListInOut.animation';
+import { AlertService } from '@core/service';
 
 @Component({
   selector: 'job-widgets',
@@ -13,7 +14,8 @@ export class JobWidgetsComponent {
   
   @Input() jobs: JobBasic[];
 
-  constructor() {    
+  constructor(private alertService: AlertService) {
+    this.alertService.reset();
   }
   
   trackByFn(index, item) {    

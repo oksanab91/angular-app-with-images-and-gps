@@ -20,8 +20,9 @@ const InitWidgetState: WidgetFlightState = {
 const InitWidgetJobsState: WidgetJobSearchState = {
     remoteJobs: [],
     greenHousejobs: [],   
+    githubJobs: [],   
     filter: new JobFilter,
-    message: '',
+    message: null,
     show: false
 }
 
@@ -153,7 +154,8 @@ export class WidgetJobSearchStore extends Store<WidgetJobSearchState> {
     setShow(show: boolean) {
         this.setState({
             ...this.state,
-            show: show
+            show: show,
+            message: {type: 'warning', message: `Loading...`}
         });
     }
 
@@ -177,7 +179,8 @@ export class WidgetJobSearchStore extends Store<WidgetJobSearchState> {
         return getData.pipe(map(data => {                        
             this.setState({
                 ...this.state,
-                remoteJobs: data
+                remoteJobs: data,
+                message: null
             });
             return this.state;
         }));
@@ -189,7 +192,21 @@ export class WidgetJobSearchStore extends Store<WidgetJobSearchState> {
         return getData.pipe(map(data => {            
             this.setState({
                 ...this.state,
-                greenHousejobs: data
+                greenHousejobs: data,
+                message: null
+            });
+            return this.state;
+        }));
+    }
+
+    getGithubJobs (): Observable<any> {        
+        const getData = this.mutator.getGithubJobSearch();        
+
+        return getData.pipe(map(data => {
+            this.setState({
+                ...this.state,
+                githubJobs: data,
+                message: null
             });
             return this.state;
         }));
@@ -218,4 +235,6 @@ export class WidgetJobSearchStore extends Store<WidgetJobSearchState> {
 
 export const remotejobsSelect$ = (state: Observable<WidgetJobSearchState>) => state.pipe(map(st => st.remoteJobs));
 export const greenhouseJobsSelect$ = (state: Observable<WidgetJobSearchState>) => state.pipe(map(st => st.greenHousejobs));
+export const githubJobsSelect$ = (state: Observable<WidgetJobSearchState>) => state.pipe(map(st => st.githubJobs));
 export const showJobsSelect$ = (state: Observable<WidgetJobSearchState>) => state.pipe(map(st => st.show));
+export const jobsMessageSelect = (state: WidgetJobSearchState) => state.message;

@@ -158,6 +158,19 @@ export class WidgetStoreService {
     );
   }  
 
+  getGithubJobSearch() {
+    return this.jobSearchService.fetchGithubJobs().pipe(map(      
+      response => {            
+        const data = this.filterGithubJobs(response, 10);
+        return [...data];        
+      }
+    ),
+    catchError(error => {
+      console.log(error)
+      return of(null); })
+    );
+  }
+
   getJobCategories(): Observable<any[]> {
     return this.jobSearchService.fetchJobCategory().pipe(
       map( response => {              
@@ -244,6 +257,41 @@ export class WidgetStoreService {
 
     return cl;
   }
+
+  private filterGithubJobs(collect, count?: number) {    
+    try{
+      let list = collect.filter((val: JSON) => {
+          if(val['location'].toLowerCase().includes('remote')){
+            return this.helper.calculateDateDiff('', val['created_at']) < 15
+          }
+        }          
+      )
+      .map(v => {
+        return {
+          id: v['id'],
+          title: v['title'],
+          url: v['url'],
+          date: v['created_at'],
+          company_name: v['company'],          
+          location: v['location'],        
+          description: v['description'],
+          job_type: v['type'],        
+          tags: [v['company_logo'], v['company_url']],
+          salary: '',
+          category: '',
+          site: configJobs.githubapi_host
+        }                
+      })      
+          
+      count = (count && count > list.length) ? list.length : count || 0 ;    
+      let cl  =[...list.slice(0, count)];
+
+      return cl;
+    }
+    catch(err){
+      console.log(err)
+    }
+  } 
 
   private filterJobs(collect: JobRemote[], count?: number) {
     let list = collect.filter(val => {

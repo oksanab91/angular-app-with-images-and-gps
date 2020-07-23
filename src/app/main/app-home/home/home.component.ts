@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PersonListStore, WidgetStore, WidgetJobSearchStore, 
           personListSelect$, flightsSelect$, showSelect$, 
-          showJobsSelect$, remotejobsSelect$, greenhouseJobsSelect$,
+          showJobsSelect$, remotejobsSelect$, 
+          greenhouseJobsSelect$, githubJobsSelect$,
         } from '@core/store';
 import { FlightFilter, Person, Flight, JobFilter, JobBasic } from '../../../models';
 import { Observable, forkJoin, of } from 'rxjs';
@@ -21,10 +22,10 @@ export class HomeComponent implements OnInit{
   widgetList$: Observable<Flight[]>;
   widgetJobsList$: Observable<JobBasic[]>;
   values$: Observable<any>;
-  widgettoDisplay = 'greenhousejobs'; //'greenhousejobs' 'chipflights' 'remotivejobs'
+  widgettoDisplay = 'remotivejobs'; //'greenhousejobs' 'chipflights' 'remotivejobs' 'githubjobs'
   //widget setting - to display one type of widgets ??
   showFlights = this.widgettoDisplay === 'chipflights' || this.widgettoDisplay === 'directflights';
-  showJobs = this.widgettoDisplay === 'remotivejobs' || this.widgettoDisplay === 'greenhousejobs';
+  showJobs = this.widgettoDisplay === 'remotivejobs' || this.widgettoDisplay === 'greenhousejobs' || this.widgettoDisplay === 'githubjobs';
 
   constructor(public store: PersonListStore, public widgetStore: WidgetStore, public widgetJobsStore: WidgetJobSearchStore) { }
 
@@ -37,7 +38,9 @@ export class HomeComponent implements OnInit{
     if(this.widgettoDisplay === 'remotivejobs')
       this.widgetJobsList$ = remotejobsSelect$(this.widgetJobsStore.state$)
     else if(this.widgettoDisplay === 'greenhousejobs')
-      this.widgetJobsList$ = greenhouseJobsSelect$(this.widgetJobsStore.state$)   
+      this.widgetJobsList$ = greenhouseJobsSelect$(this.widgetJobsStore.state$)
+    else if(this.widgettoDisplay === 'githubjobs')
+      this.widgetJobsList$ = githubJobsSelect$(this.widgetJobsStore.state$)
    
     this.getCombine()
   }
@@ -68,10 +71,11 @@ export class HomeComponent implements OnInit{
       this.getChipFlights(),
       this.getDirectFlights(),
       this.getJobs(),
-      this.getGreenhouseJobs()
+      this.getGreenhouseJobs(),
+      this.getGithubJobs()
     ).pipe(
-      map(([first, second, third, fourth]) => {        
-        return { first, second, third, fourth };
+      map(([first, second, third, fourth, fifth]) => {
+        return { first, second, third, fourth, fifth };
       })
     );
   }
@@ -82,6 +86,11 @@ export class HomeComponent implements OnInit{
 
   getGreenhouseJobs() {
     if(this.widgettoDisplay === 'greenhousejobs') return this.widgetJobsStore.getGreenhouseJobs();
+    return of(null)
+  }
+
+  getGithubJobs() {    
+    if(this.widgettoDisplay === 'githubjobs') return this.widgetJobsStore.getGithubJobs();
     return of(null)
   }
 
