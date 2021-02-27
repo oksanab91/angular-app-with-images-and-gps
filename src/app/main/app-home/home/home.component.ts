@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit{
   widgetList$: Observable<Flight[]>;
   widgetJobsList$: Observable<JobBasic[]>;
   values$: Observable<any>;
-  widgettoDisplay = 'remotivejobs'; //'greenhousejobs' 'chipflights' 'remotivejobs' 'githubjobs'
+  widgettoDisplay = 'greenhousejobs'; //'greenhousejobs' 'chipflights' 'remotivejobs' 'githubjobs'
   //widget setting - to display one type of widgets ??
   showFlights = this.widgettoDisplay === 'chipflights' || this.widgettoDisplay === 'directflights';
   showJobs = this.widgettoDisplay === 'remotivejobs' || this.widgettoDisplay === 'greenhousejobs' || this.widgettoDisplay === 'githubjobs';
@@ -68,14 +68,16 @@ export class HomeComponent implements OnInit{
   
   getCombine() {
     this.values$ = forkJoin(
-      this.getChipFlights(),
-      this.getDirectFlights(),
-      this.getJobs(),
-      this.getGreenhouseJobs(),
-      this.getGithubJobs()
+      
+      {
+        first: this.getChipFlights(),
+        second: this.getDirectFlights(),
+        third: this.getJobs(),
+        fourth: this.getGreenhouseJobs(),
+        fifth: this.getGithubJobs()}
     ).pipe(
-      map(([first, second, third, fourth, fifth]) => {
-        return { first, second, third, fourth, fifth };
+      map((res) => {
+        return { first: res.first, second: res.second, third: res.third, fourth: res.fourth, fifth: res.fifth };
       })
     );
   }
